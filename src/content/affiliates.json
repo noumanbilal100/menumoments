@@ -1,0 +1,1722 @@
+{
+  "generatedAt": "2026-09-30T13:08:44.905Z",
+  "totals": {
+    "uniqueLinks": 213,
+    "totalOccurrences": 340,
+    "networks": 1
+  },
+  "byNetwork": [
+    {
+      "network": "Amazon Associates",
+      "uniqueLinks": 213,
+      "occurrences": 340,
+      "postsAffected": 20,
+      "links": [
+        {
+          "url": "https://amzn.to/47oY2m5",
+          "occurrences": 5,
+          "firstText": "",
+          "posts": [
+            "best-air-fryer-guide-instant-pot-air-fryer-reviews"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4owpqVw",
+          "occurrences": 5,
+          "firstText": "",
+          "posts": [
+            "best-air-fryer-guide-instant-pot-air-fryer-reviews"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3Jbtpqg",
+          "occurrences": 4,
+          "firstText": "",
+          "posts": [
+            "best-air-fryer-guide-instant-pot-air-fryer-reviews"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4mbeQll",
+          "occurrences": 4,
+          "firstText": "",
+          "posts": [
+            "best-air-fryer-guide-instant-pot-air-fryer-reviews"
+          ]
+        },
+        {
+          "url": "https://amzn.to/45N5vdD",
+          "occurrences": 4,
+          "firstText": "",
+          "posts": [
+            "best-beverage-refrigerator"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4692Xpf",
+          "occurrences": 4,
+          "firstText": "",
+          "posts": [
+            "best-beverage-refrigerator"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4poucF9",
+          "occurrences": 4,
+          "firstText": "",
+          "posts": [
+            "best-beverage-refrigerator"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4oXt6jf",
+          "occurrences": 4,
+          "firstText": "",
+          "posts": [
+            "best-blenders-for-smoothies"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4iE6W2T",
+          "occurrences": 4,
+          "firstText": "",
+          "posts": [
+            "best-stand-mixer-for-beginners-top-kitchenaid-cuisinart-reviewed"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4pdyhLw",
+          "occurrences": 4,
+          "firstText": "Buy",
+          "posts": [
+            "festive-shamrock-and-gold-macarons-recipe-for-st-patricks-day"
+          ]
+        },
+        {
+          "url": "https://amzn.to/47sFDoy",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-beverage-refrigerator"
+          ]
+        },
+        {
+          "url": "https://amzn.to/47xeHUR",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-beverage-refrigerator"
+          ]
+        },
+        {
+          "url": "https://amzn.to/429mKDz",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-beverage-refrigerator"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4692ALb",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-beverage-refrigerator"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4mUxG0s",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-beverage-refrigerator"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4mSgHMe",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-beverage-refrigerator"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4lNJ4JQ",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-blenders-for-smoothies"
+          ]
+        },
+        {
+          "url": "https://amzn.to/46bwXlh",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-blenders-for-smoothies"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3HwVYhB",
+          "occurrences": 3,
+          "firstText": "Buy on Amazon",
+          "posts": [
+            "best-blenders-for-smoothies"
+          ]
+        },
+        {
+          "url": "https://amzn.to/41qhxaj",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-coffee-makers"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3VmSEZr",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-coffee-makers"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3HwUfZF",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-coffee-makers"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3JzkxLo",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-coffee-makers"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4n36Brq",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-coffee-makers"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4moiDeD",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-microwaves-top-ovens-reviewed-for-every-kitchen"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4lbtfwi",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-microwaves-top-ovens-reviewed-for-every-kitchen"
+          ]
+        },
+        {
+          "url": "https://amzn.to/41b2Ckf",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-microwaves-top-ovens-reviewed-for-every-kitchen"
+          ]
+        },
+        {
+          "url": "https://amzn.to/45zaeiQ",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-microwaves-top-ovens-reviewed-for-every-kitchen"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3HiJJot",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-microwaves-top-ovens-reviewed-for-every-kitchen"
+          ]
+        },
+        {
+          "url": "https://amzn.to/451NOGW",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-microwaves-top-ovens-reviewed-for-every-kitchen"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3HhzUXV",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-microwaves-top-ovens-reviewed-for-every-kitchen"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4l7svIN",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-microwaves-top-ovens-reviewed-for-every-kitchen"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3Jgbmz3",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-microwaves-top-ovens-reviewed-for-every-kitchen"
+          ]
+        },
+        {
+          "url": "https://amzn.to/41ISjUO",
+          "occurrences": 3,
+          "firstText": "Link",
+          "posts": [
+            "best-popover-pans-bake-perfect-popovers-every-time"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4nflzLD",
+          "occurrences": 3,
+          "firstText": "Link",
+          "posts": [
+            "best-popover-pans-bake-perfect-popovers-every-time"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4pfs2r5",
+          "occurrences": 3,
+          "firstText": "Link",
+          "posts": [
+            "best-popover-pans-bake-perfect-popovers-every-time"
+          ]
+        },
+        {
+          "url": "https://amzn.to/46wCvag",
+          "occurrences": 3,
+          "firstText": "Link",
+          "posts": [
+            "best-popover-pans-bake-perfect-popovers-every-time"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3I2jqn5",
+          "occurrences": 3,
+          "firstText": "Link",
+          "posts": [
+            "best-popover-pans-bake-perfect-popovers-every-time"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4pfsfKT",
+          "occurrences": 3,
+          "firstText": "Link",
+          "posts": [
+            "best-popover-pans-bake-perfect-popovers-every-time"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4iI1dJi",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-stand-mixer-for-beginners-top-kitchenaid-cuisinart-reviewed"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4pUlqOA",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-stand-mixer-for-beginners-top-kitchenaid-cuisinart-reviewed"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3MGj33i",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-stand-mixer-for-beginners-top-kitchenaid-cuisinart-reviewed"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4psNWXO",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-stand-mixer-for-beginners-top-kitchenaid-cuisinart-reviewed"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3MkTBAj",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-stand-mixer-for-bread-dough"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4pluGLL",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-stand-mixer-for-bread-dough"
+          ]
+        },
+        {
+          "url": "https://amzn.to/44G2wCE",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-stand-mixer-for-bread-dough"
+          ]
+        },
+        {
+          "url": "https://amzn.to/48Tyqy0",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-stand-mixer-for-bread-dough"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4iHgABF",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-stand-mixer-for-bread-dough"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3KEt4xg",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-stand-mixer-for-bread-dough"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3KIuHKs",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-stand-mixer-for-bread-dough"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4pVcoRs",
+          "occurrences": 3,
+          "firstText": "",
+          "posts": [
+            "best-stand-mixer-for-bread-dough"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3Jrm7P7",
+          "occurrences": 2,
+          "firstText": "",
+          "posts": [
+            "best-air-fryer-guide-instant-pot-air-fryer-reviews"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3UmJiwo",
+          "occurrences": 2,
+          "firstText": "Buy on Amazon",
+          "posts": [
+            "best-air-fryer-guide-instant-pot-air-fryer-reviews"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3JES2fr",
+          "occurrences": 2,
+          "firstText": "",
+          "posts": [
+            "best-beverage-refrigerator"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3HPSLK2",
+          "occurrences": 2,
+          "firstText": "",
+          "posts": [
+            "best-blenders-for-smoothies"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3JuqDg6",
+          "occurrences": 2,
+          "firstText": "",
+          "posts": [
+            "best-blenders-for-smoothies"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4mC2nHt",
+          "occurrences": 2,
+          "firstText": "",
+          "posts": [
+            "best-blenders-for-smoothies"
+          ]
+        },
+        {
+          "url": "https://amzn.to/47hj8D5",
+          "occurrences": 2,
+          "firstText": "",
+          "posts": [
+            "best-blenders-for-smoothies"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3JzrgF6",
+          "occurrences": 2,
+          "firstText": "",
+          "posts": [
+            "best-blenders-for-smoothies"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3Y8os5F",
+          "occurrences": 2,
+          "firstText": "",
+          "posts": [
+            "stand-mixer-for-cakes-what-to-look-for-best-stand-mixer-buying-guide"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4oxnV8p",
+          "occurrences": 2,
+          "firstText": "",
+          "posts": [
+            "stand-mixer-for-cakes-what-to-look-for-best-stand-mixer-buying-guide"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3YfUqNn",
+          "occurrences": 2,
+          "firstText": "",
+          "posts": [
+            "stand-mixer-for-cakes-what-to-look-for-best-stand-mixer-buying-guide"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3XyBY2r",
+          "occurrences": 2,
+          "firstText": "",
+          "posts": [
+            "stand-mixer-for-cakes-what-to-look-for-best-stand-mixer-buying-guide"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4ax5qNO",
+          "occurrences": 2,
+          "firstText": "",
+          "posts": [
+            "stand-mixer-for-cakes-what-to-look-for-best-stand-mixer-buying-guide"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4oPilOV",
+          "occurrences": 1,
+          "firstText": "Buffalo Wild Wings Sauce Variety Pack",
+          "posts": [
+            "applebees-happy-hour-menu-delights-times-and-specials-explained"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4ry4Y8d",
+          "occurrences": 1,
+          "firstText": "Frank’s RedHot Buffalo Wing Sauce",
+          "posts": [
+            "applebees-happy-hour-menu-delights-times-and-specials-explained"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3XwUnN8",
+          "occurrences": 1,
+          "firstText": "Farm Rich Breaded Mozzarella Sticks",
+          "posts": [
+            "applebees-happy-hour-menu-delights-times-and-specials-explained"
+          ]
+        },
+        {
+          "url": "https://amzn.to/48qWSFz",
+          "occurrences": 1,
+          "firstText": "Wind &amp; Willow Spinach Artichoke Cheeseball Mix",
+          "posts": [
+            "applebees-happy-hour-menu-delights-times-and-specials-explained"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3Y3MNcV",
+          "occurrences": 1,
+          "firstText": "Beer Pint Glass Set",
+          "posts": [
+            "applebees-happy-hour-menu-delights-times-and-specials-explained"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4oxv4p0",
+          "occurrences": 1,
+          "firstText": "Beer Sampler Flight Board",
+          "posts": [
+            "applebees-happy-hour-menu-delights-times-and-specials-explained"
+          ]
+        },
+        {
+          "url": "https://amzn.to/44MBGsz",
+          "occurrences": 1,
+          "firstText": "Jose Cuervo Classic Margarita Mix",
+          "posts": [
+            "applebees-happy-hour-menu-delights-times-and-specials-explained"
+          ]
+        },
+        {
+          "url": "https://amzn.to/44MrAb8",
+          "occurrences": 1,
+          "firstText": "Premium Bartender Cocktail Shaker Set",
+          "posts": [
+            "applebees-happy-hour-menu-delights-times-and-specials-explained"
+          ]
+        },
+        {
+          "url": "https://amzn.to/48xJD6a",
+          "occurrences": 1,
+          "firstText": "cocktail shaker set",
+          "posts": [
+            "applebees-happy-hour-menu-delights-times-and-specials-explained"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4peCEWH",
+          "occurrences": 1,
+          "firstText": "margarita salt rimmer",
+          "posts": [
+            "applebees-happy-hour-menu-delights-times-and-specials-explained"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3Y2o20C",
+          "occurrences": 1,
+          "firstText": "Ninja Air Fryer",
+          "posts": [
+            "applebees-happy-hour-menu-delights-times-and-specials-explained"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3K6GQZC",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "applebees-happy-hour-menu-delights-times-and-specials-explained"
+          ]
+        },
+        {
+          "url": "https://amzn.to/49SqXAr",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "applebees-happy-hour-menu-delights-times-and-specials-explained"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4oxzzjl",
+          "occurrences": 1,
+          "firstText": "Buy On Amazon",
+          "posts": [
+            "best-beverage-refrigerator"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4n8adZm",
+          "occurrences": 1,
+          "firstText": "Buy on Amazon",
+          "posts": [
+            "best-blenders-for-smoothies"
+          ]
+        },
+        {
+          "url": "https://amzn.to/47neAet",
+          "occurrences": 1,
+          "firstText": "Breville Fresh &amp; Furious",
+          "posts": [
+            "best-blenders-for-smoothies"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4mNdRI0",
+          "occurrences": 1,
+          "firstText": "Magic Bullet",
+          "posts": [
+            "best-blenders-for-smoothies"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3HXfq74",
+          "occurrences": 1,
+          "firstText": "Shop All Smoothie Blenders on Amazon",
+          "posts": [
+            "best-blenders-for-smoothies"
+          ]
+        },
+        {
+          "url": "https://amzn.to/45EAIQe",
+          "occurrences": 1,
+          "firstText": "",
+          "posts": [
+            "best-coffee-makers"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4mC8IT6",
+          "occurrences": 1,
+          "firstText": "Buy on Amazon (Matte Blackr)",
+          "posts": [
+            "best-coffee-makers"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3HM53TO",
+          "occurrences": 1,
+          "firstText": "Buy on Amazon (Candy Apple Red)",
+          "posts": [
+            "best-coffee-makers"
+          ]
+        },
+        {
+          "url": "https://amzn.to/45bVW7T",
+          "occurrences": 1,
+          "firstText": "Toshiba EM131A5C-BS",
+          "posts": [
+            "best-microwaves-top-ovens-reviewed-for-every-kitchen"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3UK4VqA",
+          "occurrences": 1,
+          "firstText": "BLACK+DECKER EM720CB7",
+          "posts": [
+            "best-microwaves-top-ovens-reviewed-for-every-kitchen"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3IWYPkd",
+          "occurrences": 1,
+          "firstText": "BLACK+DECKER EM031MB11",
+          "posts": [
+            "best-microwaves-top-ovens-reviewed-for-every-kitchen"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3HaeHzi",
+          "occurrences": 1,
+          "firstText": "Nostalgia Retro Microwave",
+          "posts": [
+            "best-microwaves-top-ovens-reviewed-for-every-kitchen"
+          ]
+        },
+        {
+          "url": "https://amzn.to/45eIFdd",
+          "occurrences": 1,
+          "firstText": "Toshiba EM131A5C-BS",
+          "posts": [
+            "best-microwaves-top-ovens-reviewed-for-every-kitchen"
+          ]
+        },
+        {
+          "url": "https://amzn.to/45eIMWb",
+          "occurrences": 1,
+          "firstText": "BLACK+DECKER EM031MB11",
+          "posts": [
+            "best-microwaves-top-ovens-reviewed-for-every-kitchen"
+          ]
+        },
+        {
+          "url": "https://amzn.to/40OiWqK",
+          "occurrences": 1,
+          "firstText": "Chefman 900W (0.9 Cu Ft)",
+          "posts": [
+            "best-microwaves-top-ovens-reviewed-for-every-kitchen"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4og7G0x",
+          "occurrences": 1,
+          "firstText": "Commercial Chef 700W (0.7 Cu Ft)",
+          "posts": [
+            "best-microwaves-top-ovens-reviewed-for-every-kitchen"
+          ]
+        },
+        {
+          "url": "https://amzn.to/45z5Xfd",
+          "occurrences": 1,
+          "firstText": "BLACK+DECKER EM031MB11 – 1000W",
+          "posts": [
+            "best-microwaves-top-ovens-reviewed-for-every-kitchen"
+          ]
+        },
+        {
+          "url": "https://amzn.to/46Fw3OT",
+          "occurrences": 1,
+          "firstText": "Toshiba EM131A5C-BS – 1.2 Cu Ft",
+          "posts": [
+            "best-microwaves-top-ovens-reviewed-for-every-kitchen"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4fhuCbo",
+          "occurrences": 1,
+          "firstText": "Farberware 1.1 Cu Ft – 6 Presets",
+          "posts": [
+            "best-microwaves-top-ovens-reviewed-for-every-kitchen"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3HhMZ3p",
+          "occurrences": 1,
+          "firstText": "Toshiba EM131A5C-BS – Smart Sensor Tech",
+          "posts": [
+            "best-microwaves-top-ovens-reviewed-for-every-kitchen"
+          ]
+        },
+        {
+          "url": "https://amzn.to/40MuxH0",
+          "occurrences": 1,
+          "firstText": "Chefman 1000W",
+          "posts": [
+            "best-microwaves-top-ovens-reviewed-for-every-kitchen"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4mjFurM",
+          "occurrences": 1,
+          "firstText": "BLACK+DECKER EM720CB7",
+          "posts": [
+            "best-microwaves-top-ovens-reviewed-for-every-kitchen"
+          ]
+        },
+        {
+          "url": "https://amzn.to/40PjkFy",
+          "occurrences": 1,
+          "firstText": "Toshiba EM131A5C-BS with Smart Sensor",
+          "posts": [
+            "best-microwaves-top-ovens-reviewed-for-every-kitchen"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3J17ZvQ",
+          "occurrences": 1,
+          "firstText": "Toshiba EM131A5C-BS – 1.2 Cu Ft, 1100W Countertop Microwave",
+          "posts": [
+            "best-microwaves-top-ovens-reviewed-for-every-kitchen"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4mnmpEX",
+          "occurrences": 1,
+          "firstText": "BLACK+DECKER EM031MB11 – 1.1 Cu Ft, 1000W",
+          "posts": [
+            "best-microwaves-top-ovens-reviewed-for-every-kitchen"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4mug2Ql",
+          "occurrences": 1,
+          "firstText": "Farberware 1000W Microwave – 1.1 Cu Ft",
+          "posts": [
+            "best-microwaves-top-ovens-reviewed-for-every-kitchen"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4flJXYv",
+          "occurrences": 1,
+          "firstText": "Nostalgia Retro 700W Microwave (Aqua)",
+          "posts": [
+            "best-microwaves-top-ovens-reviewed-for-every-kitchen"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4opcyR6",
+          "occurrences": 1,
+          "firstText": "Buy on Amazon",
+          "posts": [
+            "best-microwaves-top-ovens-reviewed-for-every-kitchen"
+          ]
+        },
+        {
+          "url": "https://amzn.to/45ipWxE",
+          "occurrences": 1,
+          "firstText": "Buy on Amazon",
+          "posts": [
+            "best-microwaves-top-ovens-reviewed-for-every-kitchen"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3ISy4NR",
+          "occurrences": 1,
+          "firstText": "Buy on Amazon",
+          "posts": [
+            "best-microwaves-top-ovens-reviewed-for-every-kitchen"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3H6jvWn",
+          "occurrences": 1,
+          "firstText": "Buy on Amazon",
+          "posts": [
+            "best-microwaves-top-ovens-reviewed-for-every-kitchen"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4ozx3Jw",
+          "occurrences": 1,
+          "firstText": "Buy on Amazon",
+          "posts": [
+            "can-chickens-eat-pineapple-is-pineapple-safe-for-backyard-chickens"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3XwzFgd",
+          "occurrences": 1,
+          "firstText": "Buy on Amazon",
+          "posts": [
+            "can-chickens-eat-pineapple-is-pineapple-safe-for-backyard-chickens"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4iClqAn",
+          "occurrences": 1,
+          "firstText": "Buy on Amazon",
+          "posts": [
+            "can-chickens-eat-pineapple-is-pineapple-safe-for-backyard-chickens"
+          ]
+        },
+        {
+          "url": "https://amzn.to/48gCf08",
+          "occurrences": 1,
+          "firstText": "Buy on Amazon",
+          "posts": [
+            "can-chickens-eat-pineapple-is-pineapple-safe-for-backyard-chickens"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4ou6tS4",
+          "occurrences": 1,
+          "firstText": "Buy on Amazon",
+          "posts": [
+            "can-chickens-eat-pineapple-is-pineapple-safe-for-backyard-chickens"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3MCk7oP",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "fenugreek-horse-treat-recipe-for-healthy-and-happy-horses"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4pdxN8a",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "fenugreek-horse-treat-recipe-for-healthy-and-happy-horses"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4oHitjq",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "fenugreek-horse-treat-recipe-for-healthy-and-happy-horses"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3MfB48u",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "fenugreek-horse-treat-recipe-for-healthy-and-happy-horses"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4rEgf76",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "fenugreek-horse-treat-recipe-for-healthy-and-happy-horses"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4pkKKNG",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "fenugreek-horse-treat-recipe-for-healthy-and-happy-horses"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3XQmJ5b",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "fenugreek-horse-treat-recipe-for-healthy-and-happy-horses"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4pR0iZz",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "fenugreek-horse-treat-recipe-for-healthy-and-happy-horses"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4ouXIXO",
+          "occurrences": 1,
+          "firstText": "Triple Crown Balancer, Horse Supplement, 50 lbs",
+          "posts": [
+            "fenugreek-horse-treat-recipe-for-healthy-and-happy-horses"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4aomnKf",
+          "occurrences": 1,
+          "firstText": "Purina Enrich Plus Senior Ration Balancing Horse Feed, 50 lb",
+          "posts": [
+            "fenugreek-horse-treat-recipe-for-healthy-and-happy-horses"
+          ]
+        },
+        {
+          "url": "https://amzn.to/49OR1wf",
+          "occurrences": 1,
+          "firstText": "Stampede Alfalfa Pellets, Non-GMO, 40 lb",
+          "posts": [
+            "fenugreek-horse-treat-recipe-for-healthy-and-happy-horses"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3K6ENoo",
+          "occurrences": 1,
+          "firstText": "Farnam Equi Aid Natural Horse Psyllium Pellets, 20 Pounds",
+          "posts": [
+            "fenugreek-horse-treat-recipe-for-healthy-and-happy-horses"
+          ]
+        },
+        {
+          "url": "https://amzn.to/48AZiBK",
+          "occurrences": 1,
+          "firstText": "Manna Pro Weight Accelerator, 8 lb",
+          "posts": [
+            "fenugreek-horse-treat-recipe-for-healthy-and-happy-horses"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4iw0URG",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "festive-shamrock-and-gold-macarons-recipe-for-st-patricks-day"
+          ]
+        },
+        {
+          "url": "https://amzn.to/48uPB7B",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "festive-shamrock-and-gold-macarons-recipe-for-st-patricks-day"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4izJdR9",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "festive-shamrock-and-gold-macarons-recipe-for-st-patricks-day"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4iDkaNg",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "festive-shamrock-and-gold-macarons-recipe-for-st-patricks-day"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4ryWGwF",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "festive-shamrock-and-gold-macarons-recipe-for-st-patricks-day"
+          ]
+        },
+        {
+          "url": "https://amzn.to/49UJrAk",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "festive-shamrock-and-gold-macarons-recipe-for-st-patricks-day"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4oyosqG",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "festive-shamrock-and-gold-macarons-recipe-for-st-patricks-day"
+          ]
+        },
+        {
+          "url": "https://amzn.to/48ujiFT",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "festive-shamrock-and-gold-macarons-recipe-for-st-patricks-day"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3M6YNI9",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "festive-shamrock-and-gold-macarons-recipe-for-st-patricks-day"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4otVIyY",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "festive-shamrock-and-gold-macarons-recipe-for-st-patricks-day"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4pkKXjW",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "festive-shamrock-and-gold-macarons-recipe-for-st-patricks-day"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4pIFEdI",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "festive-shamrock-and-gold-macarons-recipe-for-st-patricks-day"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4peuiym",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "festive-shamrock-and-gold-macarons-recipe-for-st-patricks-day"
+          ]
+        },
+        {
+          "url": "https://amzn.to/444J5mU",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "festive-shamrock-and-gold-macarons-recipe-for-st-patricks-day"
+          ]
+        },
+        {
+          "url": "https://amzn.to/443pzXT",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "festive-shamrock-and-gold-macarons-recipe-for-st-patricks-day"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3K9M8nb",
+          "occurrences": 1,
+          "firstText": "buy",
+          "posts": [
+            "festive-shamrock-and-gold-macarons-recipe-for-st-patricks-day"
+          ]
+        },
+        {
+          "url": "https://amzn.to/41vviof",
+          "occurrences": 1,
+          "firstText": "Bosch",
+          "posts": [
+            "how-long-do-dishwashers-last-average-life"
+          ]
+        },
+        {
+          "url": "https://amzn.to/45iZnJS",
+          "occurrences": 1,
+          "firstText": "Miele",
+          "posts": [
+            "how-long-do-dishwashers-last-average-life"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4mClq4B",
+          "occurrences": 1,
+          "firstText": "KitchenAid",
+          "posts": [
+            "how-long-do-dishwashers-last-average-life"
+          ]
+        },
+        {
+          "url": "https://amzn.to/47DqaBY",
+          "occurrences": 1,
+          "firstText": "Whirlpool",
+          "posts": [
+            "how-long-do-dishwashers-last-average-life"
+          ]
+        },
+        {
+          "url": "https://amzn.to/46ZRfiD",
+          "occurrences": 1,
+          "firstText": "GE",
+          "posts": [
+            "how-long-do-dishwashers-last-average-life"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4fAWZ4u",
+          "occurrences": 1,
+          "firstText": "Samsung",
+          "posts": [
+            "how-long-do-dishwashers-last-average-life"
+          ]
+        },
+        {
+          "url": "https://amzn.to/47tTRWc",
+          "occurrences": 1,
+          "firstText": "LG",
+          "posts": [
+            "how-long-do-dishwashers-last-average-life"
+          ]
+        },
+        {
+          "url": "https://amzn.to/47zFLTd",
+          "occurrences": 1,
+          "firstText": "Maytag",
+          "posts": [
+            "how-long-do-dishwashers-last-average-life"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4mbpOGG",
+          "occurrences": 1,
+          "firstText": "Instant Pot",
+          "posts": [
+            "instant-pot-chicken-noodle-soup-easy-noodle-soup-recipe"
+          ]
+        },
+        {
+          "url": "https://amzn.to/48x4BC7",
+          "occurrences": 1,
+          "firstText": "Non-Stick Panini Press / Grill",
+          "posts": [
+            "jasons-deli-menu"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3XyxkBv",
+          "occurrences": 1,
+          "firstText": "Commercial-Style Deli Slicer",
+          "posts": [
+            "jasons-deli-menu"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4pKPHz8",
+          "occurrences": 1,
+          "firstText": "Serrated Sandwich Knife &amp; Spatula Set",
+          "posts": [
+            "jasons-deli-menu"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4phuCMZ",
+          "occurrences": 1,
+          "firstText": "Immersion Hand Blender",
+          "posts": [
+            "jasons-deli-menu"
+          ]
+        },
+        {
+          "url": "https://amzn.to/445zjAT",
+          "occurrences": 1,
+          "firstText": "Dutch Oven",
+          "posts": [
+            "jasons-deli-menu"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4asip3k",
+          "occurrences": 1,
+          "firstText": "Silicone Freezer Storage Trays",
+          "posts": [
+            "jasons-deli-menu"
+          ]
+        },
+        {
+          "url": "https://amzn.to/48ANQpP",
+          "occurrences": 1,
+          "firstText": "Large Capacity Salad Spinner",
+          "posts": [
+            "jasons-deli-menu"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3Y5igeK",
+          "occurrences": 1,
+          "firstText": "Salad Dressing Shaker &amp; Mixer Bottle",
+          "posts": [
+            "jasons-deli-menu"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4orPEHl",
+          "occurrences": 1,
+          "firstText": "Bento-Style Salad Container",
+          "posts": [
+            "jasons-deli-menu"
+          ]
+        },
+        {
+          "url": "https://amzn.to/49UR9dK",
+          "occurrences": 1,
+          "firstText": "High-Quality Aged Balsamic Vinegar",
+          "posts": [
+            "jasons-deli-menu"
+          ]
+        },
+        {
+          "url": "https://amzn.to/44K7RJ4",
+          "occurrences": 1,
+          "firstText": "Clean Label Gourmet Mustard",
+          "posts": [
+            "jasons-deli-menu"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3KcJf50",
+          "occurrences": 1,
+          "firstText": "Aioli",
+          "posts": [
+            "jasons-deli-menu"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3MCsf8P",
+          "occurrences": 1,
+          "firstText": "Low-Sodium Chicken or Vegetable Broth",
+          "posts": [
+            "jasons-deli-menu"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4optdT7",
+          "occurrences": 1,
+          "firstText": "Reusable/Decorative Sectioned Party Platter",
+          "posts": [
+            "jasons-deli-menu"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4pKzQAE",
+          "occurrences": 1,
+          "firstText": "Glass Meal Prep Containers",
+          "posts": [
+            "jasons-deli-menu"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4rqDm4K",
+          "occurrences": 1,
+          "firstText": "Deli-Style Sandwich and Salad Copycat Recipe Book",
+          "posts": [
+            "jasons-deli-menu"
+          ]
+        },
+        {
+          "url": "https://amzn.to/48gMHEW",
+          "occurrences": 1,
+          "firstText": "Blue Curacao Liqueur",
+          "posts": [
+            "outback-steakhouse-happy-hour-times-deals-and-menu-specials"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4orBjux",
+          "occurrences": 1,
+          "firstText": "Margarita Mix Kits",
+          "posts": [
+            "outback-steakhouse-happy-hour-times-deals-and-menu-specials"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3KuW5vh",
+          "occurrences": 1,
+          "firstText": "Martini Shaker Set",
+          "posts": [
+            "outback-steakhouse-happy-hour-times-deals-and-menu-specials"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4rGQCT9",
+          "occurrences": 1,
+          "firstText": "Sangria Wine Kit",
+          "posts": [
+            "outback-steakhouse-happy-hour-times-deals-and-menu-specials"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4iwNZPo",
+          "occurrences": 1,
+          "firstText": "Bloomin’ Onion Fry Mix",
+          "posts": [
+            "outback-steakhouse-happy-hour-times-deals-and-menu-specials"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4oBiKEr",
+          "occurrences": 1,
+          "firstText": "Chicken Wing Seasoning Kit",
+          "posts": [
+            "outback-steakhouse-happy-hour-times-deals-and-menu-specials"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4ivNrJw",
+          "occurrences": 1,
+          "firstText": "Air Fryer",
+          "posts": [
+            "outback-steakhouse-happy-hour-times-deals-and-menu-specials"
+          ]
+        },
+        {
+          "url": "https://amzn.to/48B0ftO",
+          "occurrences": 1,
+          "firstText": "Cheese Fry Topping Kit",
+          "posts": [
+            "outback-steakhouse-happy-hour-times-deals-and-menu-specials"
+          ]
+        },
+        {
+          "url": "https://amzn.to/48qXues",
+          "occurrences": 1,
+          "firstText": "Cocktail Shaker Set",
+          "posts": [
+            "outback-steakhouse-happy-hour-times-deals-and-menu-specials"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3Xx6dqn",
+          "occurrences": 1,
+          "firstText": "Wine &amp; Cocktail Glass Set",
+          "posts": [
+            "outback-steakhouse-happy-hour-times-deals-and-menu-specials"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3MzFEyq",
+          "occurrences": 1,
+          "firstText": "Ice Cube Trays",
+          "posts": [
+            "outback-steakhouse-happy-hour-times-deals-and-menu-specials"
+          ]
+        },
+        {
+          "url": "https://amzn.to/49NF8ql",
+          "occurrences": 1,
+          "firstText": "Serving Trays for Appetizers",
+          "posts": [
+            "outback-steakhouse-happy-hour-times-deals-and-menu-specials"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3KE6yVp",
+          "occurrences": 1,
+          "firstText": "USDA Choice Steaks",
+          "posts": [
+            "outback-steakhouse-happy-hour-times-deals-and-menu-specials"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4rAFerQ",
+          "occurrences": 1,
+          "firstText": "Steak Seasoning Rubs",
+          "posts": [
+            "outback-steakhouse-happy-hour-times-deals-and-menu-specials"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4pf1iqn",
+          "occurrences": 1,
+          "firstText": "Cast Iron Skillet or Grill Pan",
+          "posts": [
+            "outback-steakhouse-happy-hour-times-deals-and-menu-specials"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3MCN7g8",
+          "occurrences": 1,
+          "firstText": "Digital Meat Thermometer",
+          "posts": [
+            "outback-steakhouse-happy-hour-times-deals-and-menu-specials"
+          ]
+        },
+        {
+          "url": "https://amzn.to/48NNtt5",
+          "occurrences": 1,
+          "firstText": "Outback Steakhouse Gift Cards",
+          "posts": [
+            "outback-steakhouse-happy-hour-times-deals-and-menu-specials"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4iyLmNd",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "recipe-guide-heartumental-a-mindful-approach-to-cooking-at-home"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4rQYtO7",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "recipe-guide-heartumental-a-mindful-approach-to-cooking-at-home"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4pOvBEg",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "recipe-guide-heartumental-a-mindful-approach-to-cooking-at-home"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4aymQcO",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "recipe-guide-heartumental-a-mindful-approach-to-cooking-at-home"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4oC3yH3",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "recipe-guide-heartumental-a-mindful-approach-to-cooking-at-home"
+          ]
+        },
+        {
+          "url": "https://amzn.to/48P0xyo",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "recipe-guide-heartumental-a-mindful-approach-to-cooking-at-home"
+          ]
+        },
+        {
+          "url": "https://amzn.to/48rMcqb",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "recipe-guide-heartumental-a-mindful-approach-to-cooking-at-home"
+          ]
+        },
+        {
+          "url": "https://amzn.to/48uGB2B",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "recipe-guide-heartumental-a-mindful-approach-to-cooking-at-home"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3KcAZlw",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "recipe-guide-heartumental-a-mindful-approach-to-cooking-at-home"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4pfY465",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "recipe-guide-heartumental-a-mindful-approach-to-cooking-at-home"
+          ]
+        },
+        {
+          "url": "https://amzn.to/48xpYDu",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "recipe-guide-heartumental-a-mindful-approach-to-cooking-at-home"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4pDuBTk",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "recipe-guide-heartumental-a-mindful-approach-to-cooking-at-home"
+          ]
+        },
+        {
+          "url": "https://amzn.to/445rxHd",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "recipe-guide-heartumental-a-mindful-approach-to-cooking-at-home"
+          ]
+        },
+        {
+          "url": "https://amzn.to/49OPrdN",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "recipe-guide-heartumental-a-mindful-approach-to-cooking-at-home"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3KDGolA",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "recipe-guide-heartumental-a-mindful-approach-to-cooking-at-home"
+          ]
+        },
+        {
+          "url": "https://amzn.to/48u3frJ",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "recipe-guide-heartumental-a-mindful-approach-to-cooking-at-home"
+          ]
+        },
+        {
+          "url": "https://amzn.to/443CtVV",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "recipe-guide-heartumental-a-mindful-approach-to-cooking-at-home"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3KDGpWG",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "recipe-guide-heartumental-a-mindful-approach-to-cooking-at-home"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4ry17bf",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "recipe-guide-heartumental-a-mindful-approach-to-cooking-at-home"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4rA9Jy4",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "recipe-guide-heartumental-a-mindful-approach-to-cooking-at-home"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4rEzGN8",
+          "occurrences": 1,
+          "firstText": "(Buy)",
+          "posts": [
+            "recipe-guide-heartumental-a-mindful-approach-to-cooking-at-home"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4pOJl1S",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "recipe-guide-heartumental-a-mindful-approach-to-cooking-at-home"
+          ]
+        },
+        {
+          "url": "https://amzn.to/48Md6dH",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "recipe-guide-heartumental-a-mindful-approach-to-cooking-at-home"
+          ]
+        },
+        {
+          "url": "https://amzn.to/48O08w4",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "recipe-guide-heartumental-a-mindful-approach-to-cooking-at-home"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4iA25zG",
+          "occurrences": 1,
+          "firstText": "Buy",
+          "posts": [
+            "recipe-guide-heartumental-a-mindful-approach-to-cooking-at-home"
+          ]
+        },
+        {
+          "url": "https://amzn.to/3VdgjeW",
+          "occurrences": 1,
+          "firstText": "burger press",
+          "posts": [
+            "smash-burger-recipe-the-ultimate-guide-to-smash-burgers"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4mX8vdD",
+          "occurrences": 1,
+          "firstText": "spatula",
+          "posts": [
+            "smash-burger-recipe-the-ultimate-guide-to-smash-burgers"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4ov9hhH",
+          "occurrences": 1,
+          "firstText": "best stand mixer",
+          "posts": [
+            "stand-mixer-buying-guide-how-to-choose-the-best-stand-mixer-for-baking-cooking"
+          ]
+        },
+        {
+          "url": "https://amzn.to/4pkvsbN",
+          "occurrences": 1,
+          "firstText": "Occasional Home Baker",
+          "posts": [
+            "stand-mixer-for-cakes-what-to-look-for-best-stand-mixer-buying-guide"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+node_modules
+.next
+out
+.env
+.env.local
+.DS_Store
+*.log
+
+# WordPress export — migration source only, not needed to build.
+# May contain author emails / PII, so keep it out of the repo.
+*.WordPress.*.xml
+wp-export.xml
