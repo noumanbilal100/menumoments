@@ -16,7 +16,7 @@ const NAV = [
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-bone-50 text-char-500 dark:bg-char-600 dark:text-bone-50">
-      <header className="border-b border-bone-200 bg-white/80 backdrop-blur dark:border-char-500 dark:bg-char-500/80">
+      <header className="border-b border-bone-200 bg-bone-100/80 backdrop-blur dark:border-char-500 dark:bg-char-500/80">
         <div className="mx-auto flex max-w-6xl items-center gap-8 px-6 py-4">
           <Link href="/admin" className="font-display text-lg font-semibold">
             Menu Moments · Admin

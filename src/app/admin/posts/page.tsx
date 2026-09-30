@@ -55,7 +55,7 @@ export default async function AdminPostsPage({
       {/* Filters ------------------------------------------------------ */}
       <form
         method="get"
-        className="grid gap-3 rounded-2xl border border-bone-200 bg-white p-4 dark:border-char-500 dark:bg-char-500 sm:grid-cols-4"
+        className="grid gap-3 rounded-2xl border border-bone-200 bg-bone-100 p-4 dark:border-char-500 dark:bg-char-500 sm:grid-cols-4"
       >
         <div className="sm:col-span-2">
           <label htmlFor="q" className="text-[10px] font-semibold uppercase tracking-[0.2em] text-char-200">
@@ -119,7 +119,7 @@ export default async function AdminPostsPage({
       </form>
 
       {/* Table -------------------------------------------------------- */}
-      <div className="overflow-x-auto rounded-2xl border border-bone-200 bg-white dark:border-char-500 dark:bg-char-500">
+      <div className="overflow-x-auto rounded-2xl border border-bone-200 bg-bone-100 dark:border-char-500 dark:bg-char-500">
         <table className="min-w-full text-sm">
           <thead className="bg-bone-100 text-left text-[10px] font-semibold uppercase tracking-[0.15em] text-char-200 dark:bg-char-400">
             <tr>

@@ -23,7 +23,7 @@ function StatCard({
           ? 'text-char-200'
           : 'text-char-500 dark:text-bone-50';
   return (
-    <div className="rounded-2xl border border-bone-200 bg-white p-5 dark:border-char-500 dark:bg-char-500">
+    <div className="rounded-2xl border border-bone-200 bg-bone-100 p-5 dark:border-char-500 dark:bg-char-500">
       <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-char-200">{label}</p>
       <p className={`mt-2 font-display text-3xl ${toneClass}`}>{value}</p>
       {sub && <p className="mt-1 text-xs text-char-200">{sub}</p>}
@@ -116,7 +116,7 @@ export default async function AdminOverview() {
         </div>
       </section>
 
-      <section className="rounded-2xl border border-dashed border-bone-200 bg-white p-6 dark:border-char-500 dark:bg-char-500">
+      <section className="rounded-2xl border border-dashed border-bone-200 bg-bone-100 p-6 dark:border-char-500 dark:bg-char-500">
         <h3 className="font-display text-lg">Quick actions</h3>
         <ul className="mt-3 space-y-2 text-sm">
           <li>

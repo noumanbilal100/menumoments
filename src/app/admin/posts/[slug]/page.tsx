@@ -55,7 +55,7 @@ export default async function AdminPostDetail({
               {post.excerpt}
             </p>
           )}
-          <div className="rounded-2xl border border-bone-200 bg-white p-4 dark:border-char-500 dark:bg-char-500">
+          <div className="rounded-2xl border border-bone-200 bg-bone-100 p-4 dark:border-char-500 dark:bg-char-500">
             <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-char-200">
               HTML preview (first 1000 chars)
             </p>
@@ -164,7 +164,7 @@ export default async function AdminPostDetail({
 
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-2xl border border-bone-200 bg-white p-4 dark:border-char-500 dark:bg-char-500">
+    <div className="rounded-2xl border border-bone-200 bg-bone-100 p-4 dark:border-char-500 dark:bg-char-500">
       <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-char-200">
         {title}
       </p>
@@ -175,7 +175,7 @@ function Card({ title, children }: { title: string; children: React.ReactNode })
 
 function Facts({ rows }: { rows: Array<[string, string | undefined]> }) {
   return (
-    <div className="rounded-2xl border border-bone-200 bg-white p-4 dark:border-char-500 dark:bg-char-500">
+    <div className="rounded-2xl border border-bone-200 bg-bone-100 p-4 dark:border-char-500 dark:bg-char-500">
       <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-char-200">
         Facts
       </p>

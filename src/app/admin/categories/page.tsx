@@ -31,7 +31,7 @@ export default function AdminCategoriesPage() {
           <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-char-200">
             {SECTIONS[sectionKey].name}
           </h2>
-          <div className="overflow-x-auto rounded-2xl border border-bone-200 bg-white dark:border-char-500 dark:bg-char-500">
+          <div className="overflow-x-auto rounded-2xl border border-bone-200 bg-bone-100 dark:border-char-500 dark:bg-char-500">
             <table className="min-w-full text-sm">
               <thead className="bg-bone-100 text-left text-[10px] font-semibold uppercase tracking-[0.15em] text-char-200 dark:bg-char-400">
                 <tr>
@@ -93,7 +93,7 @@ export default function AdminCategoriesPage() {
         </section>
       ))}
 
-      <section className="rounded-2xl border border-dashed border-bone-200 bg-white p-6 dark:border-char-500 dark:bg-char-500">
+      <section className="rounded-2xl border border-dashed border-bone-200 bg-bone-100 p-6 dark:border-char-500 dark:bg-char-500">
         <h3 className="font-display text-lg">Turn off ads for a category</h3>
         <p className="mt-2 text-sm text-char-300 dark:text-bone-100">
           Edit <code className="rounded bg-bone-100 px-1 py-0.5 text-[12px] dark:bg-char-400">src/lib/ads.ts</code>{' '}

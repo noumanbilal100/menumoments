@@ -22,12 +22,15 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Warm oat neutrals ──────────────────────────────────────────
+        // Neutrals on white ──────────────────────────────────────────
+        // The page is white, so the scale runs the other way from the
+        // cream build: 50 is the page, 100 is the faint tint that lets
+        // cards and banded sections read as separate surfaces.
         bone: {
-          50: '#F5EFE0',   // page — warm oat cream
-          100: '#FFFFFF',  // elevated card
-          200: '#E3D8BE',  // hairline / border
-          300: '#C6B78F',  // stronger divider
+          50: '#FFFFFF',   // page — clean white
+          100: '#FAF8F3',  // card / banded surface — faint warm tint
+          200: '#E7E2D7',  // hairline / border
+          300: '#D0C9BA',  // stronger divider
         },
         // Warm charcoal for text + dark surfaces ─────────────────────
         char: {
@@ -80,10 +83,10 @@ const config: Config = {
 
         // Legacy semantic aliases ────────────────────────────────────
         cream: {
-          50: '#F5EFE0',
-          100: '#FFFFFF',
-          200: '#E3D8BE',
-          300: '#C6B78F',
+          50: '#FFFFFF',
+          100: '#FAF8F3',
+          200: '#E7E2D7',
+          300: '#D0C9BA',
         },
         clay: {
           50: '#EEF6F5',

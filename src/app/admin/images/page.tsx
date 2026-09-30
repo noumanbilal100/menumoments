@@ -29,14 +29,14 @@ export default function AdminImagesPage() {
       </div>
 
       <div className="grid gap-4 sm:grid-cols-3">
-        <div className="rounded-2xl border border-bone-200 bg-white p-5 dark:border-char-500 dark:bg-char-500">
+        <div className="rounded-2xl border border-bone-200 bg-bone-100 p-5 dark:border-char-500 dark:bg-char-500">
           <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-char-200">
             Total cached
           </p>
           <p className="mt-2 font-display text-3xl">{total.toLocaleString()}</p>
           <p className="mt-1 text-xs text-char-200">files under /public/img/wp/</p>
         </div>
-        <div className="rounded-2xl border border-bone-200 bg-white p-5 dark:border-char-500 dark:bg-char-500">
+        <div className="rounded-2xl border border-bone-200 bg-bone-100 p-5 dark:border-char-500 dark:bg-char-500">
           <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-char-200">
             Failed downloads
           </p>
@@ -51,7 +51,7 @@ export default function AdminImagesPage() {
             {failures.length === 0 ? 'all clean' : 'see below'}
           </p>
         </div>
-        <div className="rounded-2xl border border-bone-200 bg-white p-5 dark:border-char-500 dark:bg-char-500">
+        <div className="rounded-2xl border border-bone-200 bg-bone-100 p-5 dark:border-char-500 dark:bg-char-500">
           <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-char-200">
             Storage
           </p>
@@ -65,7 +65,7 @@ export default function AdminImagesPage() {
           <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-char-200">
             Failed images ({failures.length})
           </h2>
-          <div className="overflow-x-auto rounded-2xl border border-bone-200 bg-white dark:border-char-500 dark:bg-char-500">
+          <div className="overflow-x-auto rounded-2xl border border-bone-200 bg-bone-100 dark:border-char-500 dark:bg-char-500">
             <table className="min-w-full text-sm">
               <thead className="bg-bone-100 text-left text-[10px] font-semibold uppercase tracking-[0.15em] text-char-200 dark:bg-char-400">
                 <tr>
@@ -98,7 +98,7 @@ export default function AdminImagesPage() {
         </section>
       )}
 
-      <section className="rounded-2xl border border-dashed border-bone-200 bg-white p-6 dark:border-char-500 dark:bg-char-500">
+      <section className="rounded-2xl border border-dashed border-bone-200 bg-bone-100 p-6 dark:border-char-500 dark:bg-char-500">
         <h3 className="font-display text-lg">Re-run image download</h3>
         <p className="mt-2 text-sm text-char-300 dark:text-bone-100">
           Retry failed downloads or pull new WP images:
