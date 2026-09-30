@@ -11,3 +11,5 @@ out
 # May contain author emails / PII, so keep it out of the repo.
 *.WordPress.*.xml
 wp-export.xml
+
+.vercel
