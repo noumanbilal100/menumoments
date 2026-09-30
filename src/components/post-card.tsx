@@ -171,7 +171,7 @@ function Wide({ post, category }: { post: Post; category?: string }) {
 
 function Placeholder({ small = false }: { small?: boolean }) {
   return (
-    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-bone-100 via-ember-50 to-saffron-50">
+    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-bone-100 via-ember-50 to-ember-100">
       <svg
         width={small ? '28' : '64'}
         height={small ? '28' : '64'}

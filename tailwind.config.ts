@@ -28,9 +28,9 @@ const config: Config = {
         // cards and banded sections read as separate surfaces.
         bone: {
           50: '#FFFFFF',   // page — clean white
-          100: '#FAF8F3',  // card / banded surface — faint warm tint
-          200: '#E7E2D7',  // hairline / border
-          300: '#D0C9BA',  // stronger divider
+          100: '#F7F9F9',  // card / banded surface — faint teal-neutral
+          200: '#E3E9E9',  // hairline / border
+          300: '#C7D2D2',  // stronger divider
         },
         // Warm charcoal for text + dark surfaces ─────────────────────
         char: {
@@ -84,9 +84,9 @@ const config: Config = {
         // Legacy semantic aliases ────────────────────────────────────
         cream: {
           50: '#FFFFFF',
-          100: '#FAF8F3',
-          200: '#E7E2D7',
-          300: '#D0C9BA',
+          100: '#F7F9F9',
+          200: '#E3E9E9',
+          300: '#C7D2D2',
         },
         clay: {
           50: '#EEF6F5',

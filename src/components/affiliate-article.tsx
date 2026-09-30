@@ -206,7 +206,7 @@ export function AffiliateArticle({
       </section>
 
       {/* FTC DISCLOSURE (top) ---------------------------------------- */}
-      <div className="border-b border-bone-200 bg-saffron-50 dark:border-char-500 dark:bg-char-500">
+      <div className="border-b border-bone-200 bg-ember-50 dark:border-char-500 dark:bg-char-500">
         <div className="mx-auto flex max-w-wide items-start gap-3 px-6 py-4 text-xs text-char-300 dark:text-bone-100/80">
           <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-saffron-300 text-[10px] font-bold text-char-500">
             $

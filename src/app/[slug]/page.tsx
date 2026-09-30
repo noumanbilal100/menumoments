@@ -347,7 +347,7 @@ export default async function PostPage({
               <AdSlot slot={ADSENSE_SLOTS.inArticleBottom} format="auto" className="my-10" />
             )}
 
-            <section className="relative my-14 overflow-hidden rounded-2xl border border-bone-200 bg-gradient-to-br from-saffron-100 via-ember-50 to-berry-50 p-6 dark:border-char-500 dark:from-char-500 dark:via-char-400 dark:to-char-500 md:p-8">
+            <section className="relative my-14 overflow-hidden rounded-2xl border border-bone-200 bg-gradient-to-br from-ember-50 via-bone-100 to-ember-100 p-6 dark:border-char-500 dark:from-char-500 dark:via-char-400 dark:to-char-500 md:p-8">
               <p className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.25em] text-ember-500">
                 <Sparkle size={12} /> {news.eyebrow}
               </p>

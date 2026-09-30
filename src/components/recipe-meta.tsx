@@ -30,7 +30,7 @@ export function RecipeMetaBar({ recipe }: { recipe: RecipeMeta }) {
 
   return (
     <aside
-      className="not-prose my-10 overflow-hidden rounded-3xl border border-bone-200 bg-gradient-to-br from-saffron-50 via-white to-ember-50 shadow-card dark:border-char-500 dark:from-char-500 dark:via-char-400 dark:to-char-500"
+      className="not-prose my-10 overflow-hidden rounded-3xl border border-bone-200 bg-gradient-to-br from-ember-50 via-bone-50 to-bone-100 shadow-card dark:border-char-500 dark:from-char-500 dark:via-char-400 dark:to-char-500"
       aria-label="Recipe details"
     >
       <div className="flex items-center justify-between border-b border-bone-200 bg-bone-100/60 px-6 py-3 dark:border-char-500 dark:bg-char-500/60">

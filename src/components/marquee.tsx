@@ -27,7 +27,7 @@ export function Marquee() {
   );
 
   return (
-    <div className="relative overflow-hidden border-b border-ember-200/50 bg-gradient-to-r from-saffron-100 via-ember-50 to-berry-50 py-2 text-char-400 dark:from-char-500 dark:via-char-400 dark:to-char-500 dark:text-bone-100">
+    <div className="relative overflow-hidden border-b border-ember-200/50 bg-gradient-to-r from-ember-50 via-bone-100 to-ember-100 py-2 text-char-400 dark:from-char-500 dark:via-char-400 dark:to-char-500 dark:text-bone-100">
       <div className="marquee">
         <div className="animate-marquee flex">
           {row}

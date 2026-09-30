@@ -435,7 +435,7 @@ export default async function HomePage() {
       </section>
 
       {/* Newsletter -------------------------------------------------- */}
-      <section className="relative overflow-hidden border-t border-bone-200 bg-gradient-to-br from-saffron-100 via-ember-50 to-berry-50 dark:border-char-500 dark:from-char-400 dark:via-char-500 dark:to-char-500">
+      <section className="relative overflow-hidden border-t border-bone-200 bg-gradient-to-br from-ember-50 via-bone-100 to-ember-100 dark:border-char-500 dark:from-char-400 dark:via-char-500 dark:to-char-500">
         <div className="pointer-events-none absolute -top-16 -left-12 h-72 w-72 rounded-full bg-saffron-200/60 blur-3xl animate-blob" />
         <div className="pointer-events-none absolute -bottom-20 -right-10 h-80 w-80 rounded-full bg-ember-100/70 blur-3xl animate-blob [animation-delay:6s]" />
         <div className="relative mx-auto max-w-4xl px-6 py-24 text-center">

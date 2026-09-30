@@ -8,8 +8,8 @@
    Accent family (teal / butter / sage / mauve) is unchanged. */
 :root {
   --bg: #FFFFFF;              /* page — clean white */
-  --bg-elevated: #FAF8F3;     /* cards — faint warm tint */
-  --bg-paper: #F3F0E8;        /* banded/alternate sections */
+  --bg-elevated: #F7F9F9;     /* cards — faint teal-neutral tint */
+  --bg-paper: #EDF2F2;        /* banded/alternate sections */
   --fg: #3A342E;              /* body — warm charcoal */
   --fg-strong: #231F1B;       /* headings — near-black */
   --fg-muted: #6E655E;
@@ -17,16 +17,17 @@
   --accent: #2E7373;          /* DEEP TEAL — signature */
   --accent-strong: #1F5757;   /* deeper teal — hover */
   --accent-soft: #EEF6F5;
-  --border: #E7E2D7;          /* hairline — reads clean on white */
+  --border: #E3E9E9;          /* hairline — reads clean on white */
   --ring: #2E7373;
   --saffron: #D2B944;
   --moss: #78976D;
   --berry: #966B7E;
-  /* Whisper-quiet tints. Dialled down from the cream build — on white
-     the same opacity reads as a visible wash rather than a hint. */
-  --bg-warm-1: rgba(46, 115, 115, 0.030);   /* teal top-left */
-  --bg-warm-2: rgba(210, 185, 68, 0.026);   /* butter top-right */
-  --bg-warm-3: rgba(150, 107, 126, 0.024);  /* mauve bottom */
+  /* Page wash. Teal only — the butter and mauve tints that worked over
+     cream turn the white page yellowish, which is the one thing this
+     build is meant to avoid. Saffron and berry stay as accents. */
+  --bg-warm-1: rgba(46, 115, 115, 0.028);   /* teal top-left */
+  --bg-warm-2: rgba(46, 115, 115, 0.020);   /* teal top-right */
+  --bg-warm-3: rgba(46, 115, 115, 0.016);   /* teal bottom */
 }
 
 html {

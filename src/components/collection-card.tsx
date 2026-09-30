@@ -13,7 +13,7 @@ export function CollectionCard({
   return (
     <article className="group relative overflow-hidden rounded-2xl shadow-card transition-shadow duration-500 hover:shadow-cardHover">
       <Link href={`/collections/${collection.slug}`} className="zoom-parent block">
-        <div className="relative aspect-[5/4] w-full bg-gradient-to-br from-ember-200 to-saffron-100">
+        <div className="relative aspect-[5/4] w-full bg-gradient-to-br from-ember-200 to-ember-100">
           {cover && (
             <Image
               src={cover}
