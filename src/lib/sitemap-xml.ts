@@ -1,5 +1,5 @@
 import { localIndex } from './local-content';
-import { CATEGORIES } from '@/data/taxonomy';
+import { categoriesWithPosts } from './category-map';
 import { COLLECTIONS } from '@/data/collections';
 import { SITE_URL } from './env';
 
@@ -99,7 +99,7 @@ export function pageEntries(): SitemapEntry[] {
 
 export function categoryEntries(): SitemapEntry[] {
   const now = new Date().toISOString();
-  return CATEGORIES.map((c) => ({ loc: url(`/category/${c.slug}`), lastmod: now }));
+  return categoriesWithPosts().map((c) => ({ loc: url(`/category/${c.slug}`), lastmod: now }));
 }
 
 export const XML_HEADERS = {

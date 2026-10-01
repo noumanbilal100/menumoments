@@ -3,7 +3,8 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { Logo } from './logo';
-import { SECTIONS, SectionKey, categoriesInSection } from '@/data/taxonomy';
+import { SECTIONS, SectionKey } from '@/data/taxonomy';
+import { liveCategoriesInSection } from '@/lib/category-map';
 
 const NAV_SECTIONS: SectionKey[] = [
   'recipes',
@@ -106,7 +107,7 @@ export function SiteHeader() {
                   <span className="text-clay-500">+</span>
                 </summary>
                 <ul className="mt-3 grid grid-cols-2 gap-2 text-sm">
-                  {categoriesInSection(key).map((c) => (
+                  {liveCategoriesInSection(key).map((c) => (
                     <li key={c.slug}>
                       <Link
                         onClick={() => setMobileOpen(false)}
@@ -137,7 +138,7 @@ export function SiteHeader() {
 }
 
 function MegaMenu({ section, onNavigate }: { section: SectionKey; onNavigate: () => void }) {
-  const cats = categoriesInSection(section);
+  const cats = liveCategoriesInSection(section);
   return (
     <div className="absolute left-1/2 top-full z-50 -translate-x-1/2 pt-2">
       <div className="w-[680px] rounded-2xl border border-cream-200 bg-bone-100 p-6 shadow-cardHover dark:border-ink-500 dark:bg-ink-600">

@@ -5,7 +5,8 @@ import { TrendingList } from '@/components/trending-list';
 import { CollectionCard } from '@/components/collection-card';
 import { SectionHeading } from '@/components/section-heading';
 import { listRecentPosts, getPost } from '@/lib/content';
-import { SECTIONS, SectionKey, categoriesInSection } from '@/data/taxonomy';
+import { SECTIONS, SectionKey } from '@/data/taxonomy';
+import { liveCategoriesInSection } from '@/lib/category-map';
 import { COLLECTIONS } from '@/data/collections';
 
 export const revalidate = 3600;
@@ -68,7 +69,7 @@ export default async function BlogIndex() {
           All
         </Link>
         {(Object.keys(SECTIONS) as SectionKey[]).map((key) => {
-          const firstCat = categoriesInSection(key)[0];
+          const firstCat = liveCategoriesInSection(key)[0];
           return (
             <Link
               key={key}

@@ -12,9 +12,8 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import indexData from '@/content/index.json';
 import { deriveKindAndRecipe } from './recipe-derive';
+import { categoriesFor } from './category-map';
 import type { Post, PostSeo } from './content';
-import { getCategory } from '@/data/taxonomy';
-import { legacyCategoriesFor } from '@/data/legacy-posts';
 
 const CONTENT_DIR = path.join(process.cwd(), 'src', 'content', 'posts');
 
@@ -64,16 +63,7 @@ export async function readLocalPost(slug: string): Promise<Post | null> {
       seo?: PostSeo;
     };
 
-    // Map WP category slugs into our new taxonomy.
-    const mapped = new Set<string>();
-    for (const wpSlug of data.wpCategorySlugs ?? []) {
-      const cat = getCategory(wpSlug);
-      if (cat) mapped.add(cat.slug);
-    }
-    // Fall back to legacy hand-mapping for slugs that WP didn't tag well.
-    if (!mapped.size) for (const c of legacyCategoriesFor(data.slug)) mapped.add(c);
-
-    const categories = [...mapped];
+    const categories = categoriesFor(data.slug, data.title, data.wpCategorySlugs ?? []);
     const { kind, recipe } = deriveKindAndRecipe(data.slug, categories);
 
     return {
@@ -109,13 +99,7 @@ export async function readLocalPost(slug: string): Promise<Post | null> {
 
 /** Build a lightweight Post from the index entry (no body). */
 export function indexEntryToPost(e: LocalIndexEntry): Post {
-  const mapped = new Set<string>();
-  for (const wpSlug of e.wpCategorySlugs ?? []) {
-    const cat = getCategory(wpSlug);
-    if (cat) mapped.add(cat.slug);
-  }
-  if (!mapped.size) for (const c of legacyCategoriesFor(e.slug)) mapped.add(c);
-  const categories = [...mapped];
+  const categories = categoriesFor(e.slug, e.title, e.wpCategorySlugs ?? []);
   const { kind, recipe } = deriveKindAndRecipe(e.slug, categories);
   return {
     slug: e.slug,

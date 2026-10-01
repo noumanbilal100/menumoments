@@ -98,6 +98,8 @@ export function allCategorySlugs(): string[] {
   return CATEGORIES.map((c) => c.slug);
 }
 
+export { populatedCategorySlugs, categoriesWithPosts } from './category-map';
+
 /** Every real, migrated post slug. Used for static params + sitemap. */
 export function allPostSlugs(): string[] {
   return [...LOCAL_SLUGS];

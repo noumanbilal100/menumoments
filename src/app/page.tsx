@@ -19,7 +19,8 @@ import {
   QuoteMark,
 } from '@/components/doodles';
 import { listPostsInCategory, listRecentPosts, getPost, allPostSlugs } from '@/lib/content';
-import { CATEGORIES, SECTIONS, SectionKey, categoriesInSection } from '@/data/taxonomy';
+import { CATEGORIES, SECTIONS, SectionKey } from '@/data/taxonomy';
+import { liveCategoriesInSection } from '@/lib/category-map';
 import { COLLECTIONS } from '@/data/collections';
 import { SITE } from '@/lib/env';
 
@@ -52,7 +53,7 @@ export default async function HomePage() {
 
   const sectionCovers = await Promise.all(
     (Object.keys(SECTIONS) as SectionKey[]).map(async (key) => {
-      const cat = categoriesInSection(key)[0];
+      const cat = liveCategoriesInSection(key)[0];
       const posts = await listPostsInCategory(cat.slug, 1);
       return { key, cover: posts[0]?.heroImage?.src };
     }),
@@ -234,7 +235,7 @@ export default async function HomePage() {
           <div className="grid gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
             {(Object.keys(SECTIONS) as SectionKey[]).map((key, i) => {
               const s = SECTIONS[key];
-              const firstCat = categoriesInSection(key)[0];
+              const firstCat = liveCategoriesInSection(key)[0];
               const cover = sectionCoverMap.get(key);
               const count = CATEGORIES.filter((c) => c.section === key).length;
               return (

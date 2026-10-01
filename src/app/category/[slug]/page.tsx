@@ -8,11 +8,11 @@ import { SectionHeading } from '@/components/section-heading';
 import {
   CATEGORIES,
   SECTIONS,
-  categoriesInSection,
   getCategory,
   isLegacyCategorySlug,
 } from '@/data/taxonomy';
 import { COLLECTIONS } from '@/data/collections';
+import { liveCategoriesInSection } from '@/lib/category-map';
 import { listPostsInCategory, getPost } from '@/lib/content';
 import { SITE_URL } from '@/lib/env';
 
@@ -51,7 +51,7 @@ export default async function CategoryPage({
   const posts = await listPostsInCategory(cat.slug, 60);
   const [featured, second, ...rest] = posts;
   const trending = posts.slice(0, 6).filter((p) => p.slug !== featured?.slug).slice(0, 5);
-  const siblings = categoriesInSection(cat.section).filter((c) => c.slug !== cat.slug);
+  const siblings = liveCategoriesInSection(cat.section).filter((c) => c.slug !== cat.slug);
   const relatedCollections = COLLECTIONS.filter(
     (c) => c.categorySlug === cat.slug || c.postSlugs.some((s) => posts.find((p) => p.slug === s)),
   ).slice(0, 3);

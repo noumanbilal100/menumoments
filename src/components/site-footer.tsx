@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Logo } from './logo';
-import { SECTIONS, SectionKey, categoriesInSection } from '@/data/taxonomy';
+import { SECTIONS, SectionKey } from '@/data/taxonomy';
+import { liveCategoriesInSection } from '@/lib/category-map';
 import { SITE } from '@/lib/env';
 import { Squiggle, Whisk, CoffeeBean, Sparkle } from './doodles';
 
@@ -59,7 +60,7 @@ export function SiteFooter() {
                   {SECTIONS[s].name}
                 </p>
                 <ul className="space-y-2 text-sm">
-                  {categoriesInSection(s)
+                  {liveCategoriesInSection(s)
                     .slice(0, 6)
                     .map((c) => (
                       <li key={c.slug}>

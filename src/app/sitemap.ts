@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next';
-import { CATEGORIES } from '@/data/taxonomy';
+import { categoriesWithPosts } from '@/lib/category-map';
 import { COLLECTIONS } from '@/data/collections';
 import { allPostSlugs } from '@/lib/content';
 import { SITE_URL } from '@/lib/env';
@@ -33,7 +33,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: path === '' ? 1 : 0.8,
   }));
 
-  const categoryPaths = CATEGORIES.map((c) => ({
+  const categoryPaths = categoriesWithPosts().map((c) => ({
     url: withSlash(`/category/${c.slug}`),
     lastModified: now,
     changeFrequency: 'weekly' as const,
