@@ -9,6 +9,7 @@
 import indexData from '@/content/index.json';
 import { CATEGORIES, getCategory, type Category } from '@/data/taxonomy';
 import { legacyCategoriesFor } from '@/data/legacy-posts';
+import { isProductReview, PRODUCT_REVIEW_CATEGORY } from '@/data/product-reviews';
 import { deriveCategories } from './derive-categories';
 
 interface IndexLike {
@@ -33,6 +34,8 @@ export function categoriesFor(
   }
   if (!mapped.size) for (const c of legacyCategoriesFor(slug)) mapped.add(c);
   for (const c of deriveCategories(slug, title, [...mapped])) mapped.add(c);
+  // Hand-listed buying guides always file under product-reviews.
+  if (isProductReview(slug)) mapped.add(PRODUCT_REVIEW_CATEGORY);
   return [...mapped];
 }
 

@@ -1,14 +1,29 @@
+'use client';
+
 import Script from 'next/script';
+import { usePathname } from 'next/navigation';
 import { ADSENSE_AUTO_ADS, ADSENSE_CLIENT } from '@/lib/env';
+import { isProductReview } from '@/data/product-reviews';
 
 /**
- * Site-wide AdSense loader. Injected once from the root layout.
- * - Loads the AdSense JS library asynchronously.
- * - Enables Auto Ads when configured (Google auto-inserts placements).
- * - No-op when NEXT_PUBLIC_ADSENSE_CLIENT is not set.
+ * Site-wide AdSense loader, injected once from the root layout.
+ *
+ * It has to be route-aware. Auto Ads inject themselves wherever the script
+ * runs, so gating only the manual <AdSlot /> components would still leave
+ * Google placing ads on the buying guides. The script is therefore not
+ * rendered at all on those routes, or anywhere under /admin.
+ *
+ * No-op when NEXT_PUBLIC_ADSENSE_CLIENT is unset.
  */
 export function AdSenseLoader() {
+  const pathname = usePathname() ?? '';
+
   if (!ADSENSE_CLIENT) return null;
+
+  const slug = pathname.replace(/^\/+|\/+$/g, '');
+  if (isProductReview(slug)) return null;
+  if (pathname.startsWith('/admin')) return null;
+
   return (
     <>
       <Script
