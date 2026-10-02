@@ -14,7 +14,10 @@
     "migrate:clean": "node scripts/clean-content.mjs",
     "migrate:images": "node scripts/download-images.mjs",
     "migrate:audit": "node scripts/audit-affiliates.mjs",
-    "migrate:xml": "node scripts/merge-wp-export.mjs"
+    "migrate:xml": "node scripts/merge-wp-export.mjs",
+    "amazon:resolve": "node scripts/resolve-amazon-links.mjs",
+    "amazon:retag": "node scripts/retag-amazon-links.mjs",
+    "amazon:check": "node scripts/retag-amazon-links.mjs --dry-run"
   },
   "dependencies": {
     "clsx": "2.1.1",
