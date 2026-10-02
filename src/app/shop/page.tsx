@@ -49,7 +49,7 @@ function ProductCard({ product }: { product: Product }) {
             href={amazonUrl(product.asin)}
             target="_blank"
             rel="sponsored nofollow noopener"
-            className="inline-flex flex-1 items-center justify-center rounded-full bg-ember-500 px-4 py-2.5 text-sm font-medium text-white transition-all hover:bg-ember-600 hover:shadow-embered"
+            className="inline-flex flex-1 items-center justify-center rounded-full border border-amazon-border bg-amazon px-4 py-2.5 text-sm font-semibold text-amazon-ink shadow-sm transition-colors hover:bg-amazon-hover"
           >
             Check price on Amazon
           </a>

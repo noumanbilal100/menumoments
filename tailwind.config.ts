@@ -81,6 +81,16 @@ const config: Config = {
           500: '#6F4B5D',
         },
 
+        // Amazon's buy-button palette. Readers recognise this yellow as
+        // "this takes me to a checkout", which is exactly what the
+        // affiliate CTAs do — a teal button reads as site navigation.
+        amazon: {
+          DEFAULT: '#FFD814',
+          hover: '#F7CA00',
+          border: '#FCD200',
+          ink: '#0F1111',
+        },
+
         // Legacy semantic aliases ────────────────────────────────────
         cream: {
           50: '#FFFFFF',

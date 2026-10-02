@@ -56,7 +56,7 @@ export function ProductRecommendations({ slug }: { slug: string }) {
             href={amazonUrl(lead.asin)}
             target="_blank"
             rel="sponsored nofollow noopener"
-            className="mt-4 inline-flex items-center justify-center rounded-full bg-ember-500 px-5 py-2.5 text-sm font-medium text-white transition-all hover:bg-ember-600 hover:shadow-embered"
+            className="mt-4 inline-flex items-center justify-center rounded-full border border-amazon-border bg-amazon px-5 py-2.5 text-sm font-semibold text-amazon-ink shadow-sm transition-colors hover:bg-amazon-hover"
           >
             Check price on Amazon
           </a>
@@ -86,9 +86,9 @@ export function ProductRecommendations({ slug }: { slug: string }) {
                   href={amazonUrl(p.asin)}
                   target="_blank"
                   rel="sponsored nofollow noopener"
-                  className="mt-2 inline-block text-sm font-medium text-ember-500 hover:text-ember-600"
+                  className="mt-2 inline-flex items-center justify-center rounded-full border border-amazon-border bg-amazon px-3.5 py-1.5 text-xs font-semibold text-amazon-ink transition-colors hover:bg-amazon-hover"
                 >
-                  Check price →
+                  Check price
                 </a>
               </div>
             </div>
