@@ -20,6 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/blog',
     '/search',
     '/collections',
+    '/shop',
     '/about-us',
     '/contact',
     '/write-for-us',

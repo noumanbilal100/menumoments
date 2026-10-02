@@ -81,6 +81,7 @@ export function pageEntries(): SitemapEntry[] {
     '/blog',
     '/search',
     '/collections',
+    '/shop',
     '/about-us',
     '/contact',
     '/write-for-us',

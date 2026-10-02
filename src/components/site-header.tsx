@@ -51,6 +51,11 @@ export function SiteHeader() {
                 Collections
               </Link>
             </li>
+            <li>
+              <Link href="/shop" className="nav-link py-2 text-clay-500 hover:text-clay-600">
+                Shop
+              </Link>
+            </li>
           </ul>
         </nav>
 
@@ -122,6 +127,9 @@ export function SiteHeader() {
               </details>
             ))}
             <div className="mt-6 flex flex-col gap-2 text-sm">
+              <Link onClick={() => setMobileOpen(false)} href="/shop" className="rounded-md px-2 py-2 text-clay-500">
+                ★ Shop
+              </Link>
               <Link onClick={() => setMobileOpen(false)} href="/collections" className="rounded-md px-2 py-2 text-clay-500">
                 ★ Collections
               </Link>

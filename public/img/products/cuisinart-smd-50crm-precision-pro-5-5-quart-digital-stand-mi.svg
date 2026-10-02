@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300" role="img" aria-label="Cuisinart SMD-50CRM Precision Pro 5.5-Quart Digital Stand Mixer">
+  <rect width="400" height="300" fill="#F7F9F9"/>
+  <rect x="10" y="10" width="380" height="280" fill="none" stroke="#E3E9E9" stroke-width="1.5"/>
+  <circle cx="200" cy="72" r="24" fill="none" stroke="#2E7373" stroke-width="1.5"/>
+  <text x="200" y="80" text-anchor="middle" font-family="Georgia, serif" font-size="18" font-style="italic" fill="#2E7373">MM</text>
+  <text x="200" y="120" text-anchor="middle" font-family="Georgia, serif" font-size="21" fill="#231F1B">Cuisinart SMD-50CRM</text>
+    <text x="200" y="150" text-anchor="middle" font-family="Georgia, serif" font-size="21" fill="#231F1B">Precision Pro</text>
+    <text x="200" y="180" text-anchor="middle" font-family="Georgia, serif" font-size="21" fill="#231F1B">5.5-Quart Digital</text>
+  <text x="200" y="258" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" letter-spacing="2.5" fill="#6E655E">MENU MOMENTS</text>
+</svg>
