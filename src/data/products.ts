@@ -157,6 +157,47 @@ export const PRODUCTS: Product[] = [
     image: '/img/products/feelfunn-beverage-refrigerator-cooler-50-can.svg',
     guide: 'best-beverage-refrigerator',
   },
+  {
+    asin: 'B07FCZSC41',
+    name: 'Etekcity Digital Kitchen Scale',
+    category: 'Measuring & prep',
+    verdict: 'Top pick',
+    note: 'Grams straight off the dial — no stick-to-cup maths at all.',
+    image: '/img/products/etekcity-digital-kitchen-scale.svg',
+    guide: 'butter-conversion-how-many-sticks-in-1-cup-measure-butter-in-grams',
+  },
+  {
+    asin: 'B00M2J7PCI',
+    name: 'Pyrex Glass Measuring Cups, 3-Piece',
+    category: 'Measuring & prep',
+    note: 'The set that outlives everything else in the drawer.',
+    image: '/img/products/pyrex-glass-measuring-cups-3-piece.svg',
+    guide: 'butter-conversion-how-many-sticks-in-1-cup-measure-butter-in-grams',
+  },
+  {
+    asin: 'B09SG1M7R2',
+    name: 'TILUCK Stainless Measuring Cups',
+    category: 'Measuring & prep',
+    note: 'Nesting, stackable, and they do not bend.',
+    image: '/img/products/tiluck-stainless-measuring-cups.svg',
+    guide: 'butter-conversion-how-many-sticks-in-1-cup-measure-butter-in-grams',
+  },
+  {
+    asin: 'B0FLJMCN5H',
+    name: 'KITCHENDAO Airtight Butter Dish',
+    category: 'Measuring & prep',
+    note: 'One-handed lid, and it keeps a stick usably soft.',
+    image: '/img/products/kitchendao-airtight-butter-dish.svg',
+    guide: 'butter-conversion-how-many-sticks-in-1-cup-measure-butter-in-grams',
+  },
+  {
+    asin: 'B0CHGFG64S',
+    name: 'ChefAide Silicone Spatula Set',
+    category: 'Measuring & prep',
+    note: 'Gets the last of the butter out of the cup.',
+    image: '/img/products/chefaide-silicone-spatula-set.svg',
+    guide: 'butter-conversion-how-many-sticks-in-1-cup-measure-butter-in-grams',
+  },
 ];
 
 export const PRODUCT_CATEGORIES = [...new Set(PRODUCTS.map((p) => p.category))];

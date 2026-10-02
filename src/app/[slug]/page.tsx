@@ -18,6 +18,7 @@ import { Sparkle, Fork, Squiggle } from '@/components/doodles';
 import { AffiliateArticle } from '@/components/affiliate-article';
 import { isAffiliateArticle } from '@/lib/affiliate';
 import { AdSlot } from '@/components/ad-slot';
+import { ProductRecommendations } from '@/components/product-recommendations';
 import { shouldShowAds } from '@/lib/ads';
 import { ADSENSE_SLOTS, SITE_URL } from '@/lib/env';
 
@@ -314,6 +315,8 @@ export default async function PostPage({
             )}
 
             <div className="prose-article" dangerouslySetInnerHTML={{ __html: post.html }} />
+
+            <ProductRecommendations slug={post.slug} />
 
             {adsOn && ADSENSE_SLOTS.inArticleMid && (
               <AdSlot
