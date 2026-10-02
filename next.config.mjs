@@ -14,6 +14,10 @@ const nextConfig = {
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'menumoments.com' },
+      // Product shots. next/image fetches these server-side and serves them
+      // from our own origin, so visitors never request Amazon directly.
+      { protocol: 'https', hostname: 'm.media-amazon.com' },
+      { protocol: 'https', hostname: 'images-na.ssl-images-amazon.com' },
       { protocol: 'https', hostname: 'i0.wp.com' },
       { protocol: 'https', hostname: 'i1.wp.com' },
       { protocol: 'https', hostname: 'i2.wp.com' },

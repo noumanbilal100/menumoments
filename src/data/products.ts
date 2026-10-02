@@ -163,7 +163,7 @@ export const PRODUCTS: Product[] = [
     category: 'Measuring & prep',
     verdict: 'Top pick',
     note: 'Grams straight off the dial — no stick-to-cup maths at all.',
-    image: '/img/products/etekcity-digital-kitchen-scale.svg',
+    image: 'https://m.media-amazon.com/images/I/71h1DcDREBL._AC_SL1500_.jpg',
     guide: 'butter-conversion-how-many-sticks-in-1-cup-measure-butter-in-grams',
   },
   {
@@ -171,7 +171,7 @@ export const PRODUCTS: Product[] = [
     name: 'Pyrex Glass Measuring Cups, 3-Piece',
     category: 'Measuring & prep',
     note: 'The set that outlives everything else in the drawer.',
-    image: '/img/products/pyrex-glass-measuring-cups-3-piece.svg',
+    image: 'https://m.media-amazon.com/images/I/71ygLu2o0OL._AC_SL1500_.jpg',
     guide: 'butter-conversion-how-many-sticks-in-1-cup-measure-butter-in-grams',
   },
   {
@@ -179,7 +179,7 @@ export const PRODUCTS: Product[] = [
     name: 'TILUCK Stainless Measuring Cups',
     category: 'Measuring & prep',
     note: 'Nesting, stackable, and they do not bend.',
-    image: '/img/products/tiluck-stainless-measuring-cups.svg',
+    image: 'https://m.media-amazon.com/images/I/61SCxMDBPcL._AC_SL1500_.jpg',
     guide: 'butter-conversion-how-many-sticks-in-1-cup-measure-butter-in-grams',
   },
   {
@@ -187,7 +187,7 @@ export const PRODUCTS: Product[] = [
     name: 'KITCHENDAO Airtight Butter Dish',
     category: 'Measuring & prep',
     note: 'One-handed lid, and it keeps a stick usably soft.',
-    image: '/img/products/kitchendao-airtight-butter-dish.svg',
+    image: 'https://m.media-amazon.com/images/I/61IlOnxWh2L._AC_SL1500_.jpg',
     guide: 'butter-conversion-how-many-sticks-in-1-cup-measure-butter-in-grams',
   },
   {
@@ -195,7 +195,7 @@ export const PRODUCTS: Product[] = [
     name: 'ChefAide Silicone Spatula Set',
     category: 'Measuring & prep',
     note: 'Gets the last of the butter out of the cup.',
-    image: '/img/products/chefaide-silicone-spatula-set.svg',
+    image: 'https://m.media-amazon.com/images/I/51hm8-fJJkL._AC_SL1500_.jpg',
     guide: 'butter-conversion-how-many-sticks-in-1-cup-measure-butter-in-grams',
   },
 ];
