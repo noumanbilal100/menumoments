@@ -32,7 +32,7 @@ export default async function AdminPostDetail({
         <Link href="/admin/posts" className="text-xs text-ember-500 hover:underline">
           ← All posts
         </Link>
-        <h1 className="mt-2 font-display text-3xl">{post.title}</h1>
+        <h1 className="mt-2 text-2xl font-semibold tracking-tight">{post.title}</h1>
         <p className="mt-1 text-sm text-char-200">/{post.slug}</p>
       </div>
 
@@ -56,7 +56,7 @@ export default async function AdminPostDetail({
             </p>
           )}
           <div className="rounded-2xl border border-bone-200 bg-bone-100 p-4 dark:border-char-500 dark:bg-char-500">
-            <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-char-200">
+            <p className="mb-3 text-xs font-medium text-char-200">
               HTML preview (first 1000 chars)
             </p>
             <pre className="overflow-x-auto whitespace-pre-wrap break-words text-xs text-char-300 dark:text-bone-100">
@@ -165,7 +165,7 @@ export default async function AdminPostDetail({
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="rounded-2xl border border-bone-200 bg-bone-100 p-4 dark:border-char-500 dark:bg-char-500">
-      <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-char-200">
+      <p className="mb-2 text-xs font-medium text-char-200">
         {title}
       </p>
       {children}
@@ -176,7 +176,7 @@ function Card({ title, children }: { title: string; children: React.ReactNode })
 function Facts({ rows }: { rows: Array<[string, string | undefined]> }) {
   return (
     <div className="rounded-2xl border border-bone-200 bg-bone-100 p-4 dark:border-char-500 dark:bg-char-500">
-      <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-char-200">
+      <p className="mb-2 text-xs font-medium text-char-200">
         Facts
       </p>
       <dl className="grid grid-cols-2 gap-y-2 text-xs">

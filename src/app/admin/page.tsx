@@ -1,140 +1,184 @@
 import Link from 'next/link';
-import { adminSnapshot } from '@/lib/admin-stats';
+import { adminPostRows, adminSnapshot } from '@/lib/admin-stats';
+import { Badge, Icon, PageHeader, SectionTitle, StatCard, cardClass } from '@/components/admin/ui';
 
 export const dynamic = 'force-dynamic';
 
-function StatCard({
-  label,
-  value,
-  sub,
-  tone = 'default',
-}: {
-  label: string;
-  value: string | number;
-  sub?: string;
-  tone?: 'default' | 'good' | 'warn' | 'muted';
-}) {
-  const toneClass =
-    tone === 'good'
-      ? 'text-emerald-600 dark:text-emerald-400'
-      : tone === 'warn'
-        ? 'text-amber-600 dark:text-amber-400'
-        : tone === 'muted'
-          ? 'text-char-200'
-          : 'text-char-500 dark:text-bone-50';
-  return (
-    <div className="rounded-2xl border border-bone-200 bg-bone-100 p-5 dark:border-char-500 dark:bg-char-500">
-      <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-char-200">{label}</p>
-      <p className={`mt-2 font-display text-3xl ${toneClass}`}>{value}</p>
-      {sub && <p className="mt-1 text-xs text-char-200">{sub}</p>}
-    </div>
-  );
-}
-
 export default async function AdminOverview() {
   const s = await adminSnapshot();
+  const recent = adminPostRows()
+    .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
+    .slice(0, 8);
+
+  const total = Math.max(1, s.totalPosts);
+  const seoComplete = s.postsWithSeo === s.totalPosts;
+  const heroComplete = s.postsWithoutHero === 0;
+  const adsShare = s.informationalCount / total;
 
   return (
-    <div className="space-y-10">
-      <div>
-        <h1 className="font-display text-3xl">Overview</h1>
-        <p className="mt-2 text-sm text-char-200">
-          Snapshot of your migrated content and AdSense wiring.
-        </p>
+    <div className="space-y-8">
+      <PageHeader
+        title="Overview"
+        description={`${s.totalPosts} posts published between ${fmt(s.oldestPublishedAt)} and ${fmt(s.latestPublishedAt)}.`}
+        actions={
+          <Link
+            href="/admin/posts"
+            className="inline-flex items-center gap-2 rounded-lg bg-ember-500 px-4 py-2 text-sm font-medium text-white hover:bg-ember-600"
+          >
+            <Icon name="posts" />
+            Browse posts
+          </Link>
+        }
+      />
+
+      <section aria-label="Content">
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <StatCard
+            label="Total posts"
+            value={s.totalPosts}
+            sub={`${Math.round(s.totalReadingMinutes / 60)}h of reading time`}
+            icon={<Icon name="posts" />}
+          />
+          <StatCard
+            label="Categories"
+            value={s.totalCategories}
+            sub={`${s.totalSections} sections · ${s.totalPages} static pages`}
+            icon={<Icon name="categories" />}
+          />
+          <StatCard
+            label="SEO metadata"
+            value={`${Math.round((s.postsWithSeo / total) * 100)}%`}
+            tone={seoComplete ? 'good' : 'warn'}
+            progress={s.postsWithSeo / total}
+            sub={`${s.postsWithSeo} of ${s.totalPosts} posts have Yoast / Rank Math data`}
+            icon={<Icon name="seo" />}
+          />
+          <StatCard
+            label="Hero images"
+            value={`${Math.round((s.postsWithHero / total) * 100)}%`}
+            tone={heroComplete ? 'good' : 'warn'}
+            progress={s.postsWithHero / total}
+            sub={heroComplete ? 'Every post has a hero image' : `${s.postsWithoutHero} posts missing one`}
+            icon={<Icon name="images" />}
+          />
+        </div>
+      </section>
+
+      <div className="grid gap-4 lg:grid-cols-3">
+        <section className={`${cardClass} p-5 lg:col-span-2`} aria-label="Advertising">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <h2 className="text-sm font-semibold">Advertising</h2>
+              <p className="mt-1 text-xs text-char-200">
+                Ads show on informational articles and are skipped on affiliate buying guides.
+              </p>
+            </div>
+            {s.adsEnabled ? <Badge tone="good">AdSense connected</Badge> : <Badge tone="warn">AdSense not set</Badge>}
+          </div>
+
+          <div className="mt-5 flex h-2.5 overflow-hidden rounded-full bg-bone-200 dark:bg-char-400">
+            <div className="h-full bg-emerald-500" style={{ width: `${adsShare * 100}%` }} />
+          </div>
+          <dl className="mt-4 grid gap-4 sm:grid-cols-3">
+            <div>
+              <dt className="flex items-center gap-2 text-xs text-char-200">
+                <span className="h-2 w-2 rounded-full bg-emerald-500" /> Ads on
+              </dt>
+              <dd className="mt-1 text-xl font-semibold">{s.informationalCount}</dd>
+              <p className="text-xs text-char-200">informational articles</p>
+            </div>
+            <div>
+              <dt className="flex items-center gap-2 text-xs text-char-200">
+                <span className="h-2 w-2 rounded-full bg-char-100" /> Ads skipped
+              </dt>
+              <dd className="mt-1 text-xl font-semibold">{s.affiliateCount}</dd>
+              <p className="text-xs text-char-200">affiliate / buying guides</p>
+            </div>
+            <div>
+              <dt className="flex items-center gap-2 text-xs text-char-200">
+                <span className="h-2 w-2 rounded-full bg-amber-500" /> Blocked categories
+              </dt>
+              <dd className="mt-1 text-xl font-semibold">{s.noAdsCategoryCount}</dd>
+              <p className="text-xs text-char-200">on the deny-list</p>
+            </div>
+          </dl>
+          {s.adsEnabled && (
+            <p className="mt-4 border-t border-bone-200 pt-3 text-xs text-char-200 dark:border-char-400">
+              Publisher ID <span className="font-mono text-char-300 dark:text-bone-100">{s.adsClient}</span>
+            </p>
+          )}
+        </section>
+
+        <section className={`${cardClass} p-5`} aria-label="Shortcuts">
+          <h2 className="text-sm font-semibold">Shortcuts</h2>
+          <ul className="mt-3 space-y-1">
+            {[
+              { href: '/admin/posts', label: 'Search and filter posts', icon: 'posts' as const },
+              { href: '/admin/categories', label: 'Category counts and ad state', icon: 'categories' as const },
+              { href: '/admin/images', label: 'Image health check', icon: 'images' as const },
+              { href: '/shop', label: 'Open the shop page', icon: 'external' as const },
+            ].map((l) => (
+              <li key={l.href}>
+                <Link
+                  href={l.href}
+                  className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-char-300 hover:bg-bone-100 hover:text-ember-600 dark:text-bone-100 dark:hover:bg-char-400"
+                >
+                  <Icon name={l.icon} />
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
       </div>
 
-      <section>
-        <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-char-200">
-          Content
-        </h2>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <StatCard label="Total posts" value={s.totalPosts} />
-          <StatCard label="Categories" value={s.totalCategories} sub={`${s.totalSections} sections`} />
-          <StatCard label="Static pages" value={s.totalPages} sub="from WP export" />
-          <StatCard
-            label="Posts with SEO"
-            value={`${s.postsWithSeo} / ${s.totalPosts}`}
-            tone={s.postsWithSeo === s.totalPosts ? 'good' : 'warn'}
-            sub="Yoast / Rank Math meta"
-          />
-          <StatCard label="Reading time" value={`${Math.round(s.totalReadingMinutes / 60)}h`} sub={`${s.totalReadingMinutes} min total`} />
-          <StatCard
-            label="With hero image"
-            value={`${s.postsWithHero} / ${s.totalPosts}`}
-            tone={s.postsWithoutHero > 0 ? 'warn' : 'good'}
-            sub={s.postsWithoutHero > 0 ? `${s.postsWithoutHero} missing` : 'all set'}
-          />
-        </div>
-      </section>
-
-      <section>
-        <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-char-200">
-          Ads
-        </h2>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <StatCard
-            label="AdSense"
-            value={s.adsEnabled ? 'Connected' : 'Not set'}
-            tone={s.adsEnabled ? 'good' : 'warn'}
-            sub={s.adsEnabled ? s.adsClient : 'set NEXT_PUBLIC_ADSENSE_CLIENT'}
-          />
-          <StatCard
-            label="Ads on posts"
-            value={s.informationalCount}
-            tone="good"
-            sub="informational articles"
-          />
-          <StatCard
-            label="Ads skipped"
-            value={s.affiliateCount}
-            tone="muted"
-            sub="affiliate / buying guides"
-          />
-          <StatCard
-            label="Blocked categories"
-            value={s.noAdsCategoryCount}
-            sub="NO_ADS_CATEGORIES set"
-          />
-        </div>
-      </section>
-
-      <section>
-        <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-char-200">
-          Timeline
-        </h2>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <StatCard
-            label="Newest post"
-            value={fmt(s.latestPublishedAt)}
-            sub={s.latestPublishedAt ?? '—'}
-          />
-          <StatCard
-            label="Oldest post"
-            value={fmt(s.oldestPublishedAt)}
-            sub={s.oldestPublishedAt ?? '—'}
-          />
-        </div>
-      </section>
-
-      <section className="rounded-2xl border border-dashed border-bone-200 bg-bone-100 p-6 dark:border-char-500 dark:bg-char-500">
-        <h3 className="font-display text-lg">Quick actions</h3>
-        <ul className="mt-3 space-y-2 text-sm">
-          <li>
-            <Link href="/admin/posts" className="text-ember-500 hover:underline">
-              → Browse all {s.totalPosts} posts
+      <section aria-label="Recent posts">
+        <SectionTitle
+          aside={
+            <Link href="/admin/posts" className="text-xs font-medium text-ember-500 hover:underline">
+              View all
             </Link>
-          </li>
-          <li>
-            <Link href="/admin/categories" className="text-ember-500 hover:underline">
-              → See per-category counts and ads state
-            </Link>
-          </li>
-          <li>
-            <Link href="/admin/images" className="text-ember-500 hover:underline">
-              → Image health check
-            </Link>
-          </li>
-        </ul>
+          }
+        >
+          Recently published
+        </SectionTitle>
+        <div className={`${cardClass} overflow-x-auto`}>
+          <table className="min-w-full text-sm">
+            <thead className="border-b border-bone-200 text-left text-xs font-medium text-char-200 dark:border-char-400">
+              <tr>
+                <th className="px-4 py-3">Title</th>
+                <th className="px-4 py-3">Category</th>
+                <th className="px-4 py-3">Published</th>
+                <th className="px-4 py-3">Ads</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-bone-200 dark:divide-char-400">
+              {recent.map((p) => (
+                <tr key={p.slug} className="hover:bg-bone-100/70 dark:hover:bg-char-400/40">
+                  <td className="max-w-md px-4 py-3">
+                    <Link
+                      href={`/admin/posts/${p.slug}`}
+                      className="line-clamp-1 font-medium hover:text-ember-500"
+                    >
+                      {p.title}
+                    </Link>
+                  </td>
+                  <td className="px-4 py-3 text-xs text-char-300 dark:text-bone-100">
+                    {p.primaryCategory ?? '—'}
+                  </td>
+                  <td className="whitespace-nowrap px-4 py-3 text-xs text-char-200">{fmt(p.publishedAt)}</td>
+                  <td className="px-4 py-3">
+                    {p.showsAds ? (
+                      <Badge tone="good">Shows</Badge>
+                    ) : (
+                      <Badge>{p.isAffiliate ? 'Affiliate' : 'Off'}</Badge>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </section>
     </div>
   );

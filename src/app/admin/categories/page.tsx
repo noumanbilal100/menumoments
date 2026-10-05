@@ -16,7 +16,7 @@ export default function AdminCategoriesPage() {
   return (
     <div className="space-y-10">
       <div>
-        <h1 className="font-display text-3xl">Categories</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">Categories</h1>
         <p className="mt-2 text-sm text-char-200">
           Post counts per category. &ldquo;No ads&rdquo; column tracks the{' '}
           <code className="rounded bg-bone-100 px-1 py-0.5 text-[11px] dark:bg-char-400">
@@ -28,12 +28,12 @@ export default function AdminCategoriesPage() {
 
       {[...bySection.entries()].map(([sectionKey, catRows]) => (
         <section key={sectionKey}>
-          <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-char-200">
+          <h2 className="mb-3 text-sm font-semibold">
             {SECTIONS[sectionKey].name}
           </h2>
-          <div className="overflow-x-auto rounded-2xl border border-bone-200 bg-bone-100 dark:border-char-500 dark:bg-char-500">
+          <div className="overflow-x-auto rounded-xl border border-bone-200 bg-bone-50 shadow-[0_1px_2px_rgba(15,13,11,0.04)] dark:border-char-400 dark:bg-char-500">
             <table className="min-w-full text-sm">
-              <thead className="bg-bone-100 text-left text-[10px] font-semibold uppercase tracking-[0.15em] text-char-200 dark:bg-char-400">
+              <thead className="border-b border-bone-200 text-left text-xs font-medium text-char-200 dark:border-char-400">
                 <tr>
                   <th className="px-4 py-3">Category</th>
                   <th className="px-4 py-3 text-right">Posts</th>
@@ -94,7 +94,7 @@ export default function AdminCategoriesPage() {
       ))}
 
       <section className="rounded-2xl border border-dashed border-bone-200 bg-bone-100 p-6 dark:border-char-500 dark:bg-char-500">
-        <h3 className="font-display text-lg">Turn off ads for a category</h3>
+        <h3 className="text-sm font-semibold">Turn off ads for a category</h3>
         <p className="mt-2 text-sm text-char-300 dark:text-bone-100">
           Edit <code className="rounded bg-bone-100 px-1 py-0.5 text-[12px] dark:bg-char-400">src/lib/ads.ts</code>{' '}
           and add the slug to <code>NO_ADS_CATEGORIES</code>:

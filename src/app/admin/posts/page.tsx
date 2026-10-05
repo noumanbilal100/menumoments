@@ -43,7 +43,7 @@ export default async function AdminPostsPage({
     <div className="space-y-6">
       <div className="flex flex-wrap items-baseline justify-between gap-4">
         <div>
-          <h1 className="font-display text-3xl">All posts</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">All posts</h1>
           <p className="mt-1 text-sm text-char-200">
             Showing <strong>{filtered.length}</strong> of {all.length} posts
             {q && ` matching "${q}"`}
@@ -58,7 +58,7 @@ export default async function AdminPostsPage({
         className="grid gap-3 rounded-2xl border border-bone-200 bg-bone-100 p-4 dark:border-char-500 dark:bg-char-500 sm:grid-cols-4"
       >
         <div className="sm:col-span-2">
-          <label htmlFor="q" className="text-[10px] font-semibold uppercase tracking-[0.2em] text-char-200">
+          <label htmlFor="q" className="text-xs font-medium text-char-200">
             Search title / slug
           </label>
           <input
@@ -70,7 +70,7 @@ export default async function AdminPostsPage({
           />
         </div>
         <div>
-          <label htmlFor="cat" className="text-[10px] font-semibold uppercase tracking-[0.2em] text-char-200">
+          <label htmlFor="cat" className="text-xs font-medium text-char-200">
             Category
           </label>
           <select
@@ -88,7 +88,7 @@ export default async function AdminPostsPage({
           </select>
         </div>
         <div>
-          <label htmlFor="ads" className="text-[10px] font-semibold uppercase tracking-[0.2em] text-char-200">
+          <label htmlFor="ads" className="text-xs font-medium text-char-200">
             Ads state
           </label>
           <select
@@ -105,13 +105,13 @@ export default async function AdminPostsPage({
         <div className="sm:col-span-4 flex flex-wrap items-center gap-2">
           <button
             type="submit"
-            className="rounded-full bg-ember-500 px-5 py-2 text-sm font-medium text-white hover:bg-ember-600"
+            className="rounded-lg bg-ember-500 px-5 py-2 text-sm font-medium text-white hover:bg-ember-600"
           >
             Apply
           </button>
           <Link
             href="/admin/posts"
-            className="rounded-full border border-bone-200 px-4 py-2 text-sm text-char-300 hover:border-ember-500 hover:text-ember-500 dark:border-char-400"
+            className="rounded-lg border border-bone-200 px-4 py-2 text-sm text-char-300 hover:border-ember-500 hover:text-ember-500 dark:border-char-400"
           >
             Reset
           </Link>
@@ -119,9 +119,9 @@ export default async function AdminPostsPage({
       </form>
 
       {/* Table -------------------------------------------------------- */}
-      <div className="overflow-x-auto rounded-2xl border border-bone-200 bg-bone-100 dark:border-char-500 dark:bg-char-500">
+      <div className="overflow-x-auto rounded-xl border border-bone-200 bg-bone-50 shadow-[0_1px_2px_rgba(15,13,11,0.04)] dark:border-char-400 dark:bg-char-500">
         <table className="min-w-full text-sm">
-          <thead className="bg-bone-100 text-left text-[10px] font-semibold uppercase tracking-[0.15em] text-char-200 dark:bg-char-400">
+          <thead className="border-b border-bone-200 text-left text-xs font-medium text-char-200 dark:border-char-400">
             <tr>
               <th className="px-4 py-3">Title</th>
               <th className="px-4 py-3">Kind</th>
@@ -237,7 +237,7 @@ function PageLink({
   return (
     <Link
       href={`/admin/posts?${usp}`}
-      className="rounded-full border border-bone-200 px-4 py-2 text-xs hover:border-ember-500 hover:text-ember-500 dark:border-char-400"
+      className="rounded-lg border border-bone-200 px-4 py-2 text-xs hover:border-ember-500 hover:text-ember-500 dark:border-char-400"
     >
       {label}
     </Link>

@@ -6,6 +6,7 @@ import { SiteFooter } from '@/components/site-footer';
 import { Marquee } from '@/components/marquee';
 import { AdSenseLoader } from '@/components/adsense';
 import { ConsentBanner } from '@/components/consent-banner';
+import { SiteChrome } from '@/components/site-chrome';
 import './globals.css';
 
 const display = Fraunces({
@@ -53,14 +54,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to content
         </a>
-        <Marquee />
-        <SiteHeader />
-        <main id="main" className="animate-fade-in">
+        <SiteChrome
+          top={
+            <>
+              <Marquee />
+              <SiteHeader />
+            </>
+          }
+          bottom={
+            <>
+              <SiteFooter />
+              <AdSenseLoader />
+              <ConsentBanner />
+            </>
+          }
+        >
           {children}
-        </main>
-        <SiteFooter />
-        <AdSenseLoader />
-        <ConsentBanner />
+        </SiteChrome>
       </body>
     </html>
   );

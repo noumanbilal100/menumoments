@@ -18,7 +18,7 @@ export default function AdminImagesPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="font-display text-3xl">Images</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">Images</h1>
         <p className="mt-2 text-sm text-char-200">
           Snapshot of the local image cache built by{' '}
           <code className="rounded bg-bone-100 px-1 py-0.5 text-[11px] dark:bg-char-400">
@@ -30,14 +30,14 @@ export default function AdminImagesPage() {
 
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="rounded-2xl border border-bone-200 bg-bone-100 p-5 dark:border-char-500 dark:bg-char-500">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-char-200">
+          <p className="text-xs font-medium text-char-200">
             Total cached
           </p>
-          <p className="mt-2 font-display text-3xl">{total.toLocaleString()}</p>
+          <p className="mt-2 text-2xl font-semibold tracking-tight">{total.toLocaleString()}</p>
           <p className="mt-1 text-xs text-char-200">files under /public/img/wp/</p>
         </div>
         <div className="rounded-2xl border border-bone-200 bg-bone-100 p-5 dark:border-char-500 dark:bg-char-500">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-char-200">
+          <p className="text-xs font-medium text-char-200">
             Failed downloads
           </p>
           <p
@@ -52,22 +52,22 @@ export default function AdminImagesPage() {
           </p>
         </div>
         <div className="rounded-2xl border border-bone-200 bg-bone-100 p-5 dark:border-char-500 dark:bg-char-500">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-char-200">
+          <p className="text-xs font-medium text-char-200">
             Storage
           </p>
-          <p className="mt-2 font-display text-3xl">≈134 MB</p>
+          <p className="mt-2 text-2xl font-semibold tracking-tight">≈134 MB</p>
           <p className="mt-1 text-xs text-char-200">shipped with the deploy</p>
         </div>
       </div>
 
       {failures.length > 0 && (
         <section>
-          <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-char-200">
+          <h2 className="mb-3 text-sm font-semibold">
             Failed images ({failures.length})
           </h2>
-          <div className="overflow-x-auto rounded-2xl border border-bone-200 bg-bone-100 dark:border-char-500 dark:bg-char-500">
+          <div className="overflow-x-auto rounded-xl border border-bone-200 bg-bone-50 shadow-[0_1px_2px_rgba(15,13,11,0.04)] dark:border-char-400 dark:bg-char-500">
             <table className="min-w-full text-sm">
-              <thead className="bg-bone-100 text-left text-[10px] font-semibold uppercase tracking-[0.15em] text-char-200 dark:bg-char-400">
+              <thead className="border-b border-bone-200 text-left text-xs font-medium text-char-200 dark:border-char-400">
                 <tr>
                   <th className="px-4 py-3">URL</th>
                   <th className="px-4 py-3">Error</th>
@@ -99,7 +99,7 @@ export default function AdminImagesPage() {
       )}
 
       <section className="rounded-2xl border border-dashed border-bone-200 bg-bone-100 p-6 dark:border-char-500 dark:bg-char-500">
-        <h3 className="font-display text-lg">Re-run image download</h3>
+        <h3 className="text-sm font-semibold">Re-run image download</h3>
         <p className="mt-2 text-sm text-char-300 dark:text-bone-100">
           Retry failed downloads or pull new WP images:
         </p>
