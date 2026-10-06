@@ -81,7 +81,7 @@ export function pageEntries(): SitemapEntry[] {
     '/blog',
     '/search',
     '/collections',
-    '/shop',
+    '/best-kitchen-gear',
     '/about-us',
     '/contact',
     '/write-for-us',

@@ -30,6 +30,8 @@ const nextConfig = {
       { source: '/feed', destination: '/', permanent: true },
       { source: '/feed/:path*', destination: '/', permanent: true },
       { source: '/wp-admin/:path*', destination: '/', permanent: false },
+      // The shop moved to a descriptive URL
+      { source: '/shop', destination: '/best-kitchen-gear/', permanent: true },
       // Fix a malformed legacy URL that exists in the sitemap
       {
         source: '/https-menumoments-com-topgolf-food-and-drink-menu',

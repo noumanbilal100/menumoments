@@ -20,7 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/blog',
     '/search',
     '/collections',
-    '/shop',
+    '/best-kitchen-gear',
     '/about-us',
     '/contact',
     '/write-for-us',

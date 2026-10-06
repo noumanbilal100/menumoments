@@ -116,7 +116,7 @@ export default async function AdminOverview() {
               { href: '/admin/posts', label: 'Search and filter posts', icon: 'posts' as const },
               { href: '/admin/categories', label: 'Category counts and ad state', icon: 'categories' as const },
               { href: '/admin/images', label: 'Image health check', icon: 'images' as const },
-              { href: '/shop', label: 'Open the shop page', icon: 'external' as const },
+              { href: '/best-kitchen-gear/', label: 'Open the shop page', icon: 'external' as const },
             ].map((l) => (
               <li key={l.href}>
                 <Link

@@ -3,16 +3,26 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { PRODUCTS, PRODUCT_CATEGORIES, amazonUrl } from '@/data/products';
 import { ShopCatalog } from '@/components/shop-catalog';
-import { SITE_URL } from '@/lib/env';
+import { localIndex } from '@/lib/local-content';
+import { SITE, SITE_URL } from '@/lib/env';
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: 'Shop the kitchen gear we recommend',
-  description:
-    'Every appliance and tool Menu Moments recommends, in one place — browse by category, compare our picks, and buy on Amazon.',
-  alternates: { canonical: `${SITE_URL}/shop/` },
-};
+const PATH = '/best-kitchen-gear/';
+const PAGE_URL = `${SITE_URL}${PATH}`;
+
+export function generateMetadata(): Metadata {
+  const year = new Date().getFullYear();
+  const title = `Best Kitchen Gear & Appliances We Recommend (${year})`;
+  const description = `Our top kitchen picks for ${year}: air fryers, blenders, stand mixers, coffee makers, microwaves, beverage fridges and baking tools — each linked to a full review, with today's price on Amazon.`;
+  return {
+    title,
+    description,
+    alternates: { canonical: PAGE_URL },
+    openGraph: { type: 'website', url: PAGE_URL, title, description, siteName: SITE.name },
+    twitter: { card: 'summary_large_image', title, description },
+  };
+}
 
 const TRUST = [
   {
@@ -46,9 +56,47 @@ const STEPS = [
 export default function ShopPage() {
   const heroPicks = PRODUCTS.filter((p) => p.verdict === 'Top pick' || p.verdict === 'Best overall').slice(0, 4);
   const buyUrls = Object.fromEntries(PRODUCTS.map((p) => [p.asin, amazonUrl(p.asin)]));
+  const titles = new Map(localIndex().map((e) => [e.slug, e.title]));
+  const guides = PRODUCT_CATEGORIES.flatMap((category) =>
+    [...new Set(PRODUCTS.filter((p) => p.category === category).map((p) => p.guide))]
+      .filter((slug) => titles.has(slug))
+      .map((slug) => ({ category, slug, title: titles.get(slug)! })),
+  );
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        '@id': `${PAGE_URL}#page`,
+        url: PAGE_URL,
+        name: 'Best kitchen gear & appliances we recommend',
+        isPartOf: { '@type': 'WebSite', name: SITE.name, url: `${SITE_URL}/` },
+        mainEntity: {
+          '@type': 'ItemList',
+          numberOfItems: PRODUCTS.length,
+          itemListElement: PRODUCTS.map((p, i) => ({
+            '@type': 'ListItem',
+            position: i + 1,
+            name: p.name,
+            image: p.image,
+            url: `${SITE_URL}/${p.guide}/`,
+          })),
+        },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
+          { '@type': 'ListItem', position: 2, name: 'Best kitchen gear', item: PAGE_URL },
+        ],
+      },
+    ],
+  };
 
   return (
     <div className="bg-bone-50 dark:bg-char-600">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {/* Hero ---------------------------------------------------------- */}
       <section className="border-b border-bone-200 bg-gradient-to-b from-ember-50 to-bone-50 dark:border-char-500 dark:from-char-500 dark:to-char-600">
         <div className="mx-auto grid max-w-wide items-center gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.1fr_1fr] lg:py-16">
@@ -57,7 +105,7 @@ export default function ShopPage() {
               The Menu Moments shop
             </p>
             <h1 className="mt-4 max-w-xl font-display text-display-lg text-char-500 dark:text-bone-50">
-              Kitchen gear we recommend
+              Best kitchen gear &amp; appliances we recommend
             </h1>
             <p className="mt-5 max-w-lg text-lg leading-relaxed text-char-300 dark:text-bone-100">
               {PRODUCTS.length} appliances and tools from our reviews and guides, in one place. Compare
@@ -133,6 +181,34 @@ export default function ShopPage() {
       <section className="mx-auto max-w-wide px-4 pb-16 pt-8 sm:px-6">
         <ShopCatalog products={PRODUCTS} categories={PRODUCT_CATEGORIES} buyUrls={buyUrls} />
       </section>
+
+      {/* Buying guides ------------------------------------------------- */}
+      {guides.length > 0 && (
+        <section className="mx-auto max-w-wide px-4 pb-16 sm:px-6">
+          <h2 className="font-display text-display-md text-char-500 dark:text-bone-50">
+            Read the full buying guides
+          </h2>
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-char-200">
+            Every product above comes out of one of these guides, where we explain what to look for
+            and why each pick made the cut.
+          </p>
+          <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {guides.map((g) => (
+              <li key={g.slug}>
+                <Link
+                  href={`/${g.slug}/`}
+                  className="flex h-full flex-col rounded-2xl border border-bone-200 bg-white p-5 transition hover:border-ember-500 hover:shadow-card dark:border-char-400 dark:bg-char-500"
+                >
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ember-500">
+                    {g.category}
+                  </span>
+                  <span className="mt-2 font-medium leading-snug text-char-500 dark:text-bone-50">{g.title}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {/* How it works -------------------------------------------------- */}
       <section className="border-t border-bone-200 bg-bone-100 dark:border-char-500 dark:bg-char-500">

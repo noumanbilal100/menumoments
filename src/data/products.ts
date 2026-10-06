@@ -1,5 +1,5 @@
 /**
- * Products featured on /shop.
+ * Products featured on /best-kitchen-gear (the shop page).
  *
  * Each entry is an ASIN plus the copy around it. The affiliate URL is built
  * from the tag at render time, so switching Associates accounts never means
