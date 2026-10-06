@@ -19,6 +19,7 @@ import { AffiliateArticle } from '@/components/affiliate-article';
 import { isAffiliateArticle } from '@/lib/affiliate';
 import { AdSlot } from '@/components/ad-slot';
 import { ProductRecommendations } from '@/components/product-recommendations';
+import { blockForPost, splitBeforeHeading } from '@/data/post-products';
 import { shouldShowAds } from '@/lib/ads';
 import { ADSENSE_SLOTS, SITE_URL } from '@/lib/env';
 
@@ -145,6 +146,8 @@ export default async function PostPage({
   const news = newsletterCopy(post.kind);
   const kindText = kindLabel(post.kind);
   const adsOn = shouldShowAds(post);
+  const productAnchor = blockForPost(post.slug)?.beforeHeading;
+  const productSplit = productAnchor ? splitBeforeHeading(post.html, productAnchor) : null;
 
   const jsonLd: Record<string, unknown> = {
     '@context': 'https://schema.org',
@@ -314,9 +317,21 @@ export default async function PostPage({
               <AdSlot slot={ADSENSE_SLOTS.inArticleTop} format="auto" className="mt-0 mb-10" />
             )}
 
-            <div className="prose-article" dangerouslySetInnerHTML={{ __html: post.html }} />
-
-            <ProductRecommendations slug={post.slug} />
+            {productSplit ? (
+              <>
+                <div className="prose-article" dangerouslySetInnerHTML={{ __html: productSplit[0] }} />
+                <ProductRecommendations slug={post.slug} />
+                <div
+                  className="prose-article prose-continued"
+                  dangerouslySetInnerHTML={{ __html: productSplit[1] }}
+                />
+              </>
+            ) : (
+              <>
+                <div className="prose-article" dangerouslySetInnerHTML={{ __html: post.html }} />
+                <ProductRecommendations slug={post.slug} />
+              </>
+            )}
 
             {adsOn && ADSENSE_SLOTS.inArticleMid && (
               <AdSlot

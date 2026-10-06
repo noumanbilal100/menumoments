@@ -19,6 +19,10 @@ export interface Product {
   verdict?: string;
   /** One line on who it suits. */
   note?: string;
+  /** Two or three sentences of review copy, shown in in-article blocks. */
+  review?: string;
+  /** Three short spec chips, e.g. "1.2 cu ft". */
+  highlights?: string[];
   image: string;
   /** Slug of the full review this product is drawn from. */
   guide: string;
@@ -106,11 +110,14 @@ export const PRODUCTS: Product[] = [
   },
   {
     asin: 'B071WCB1T6',
-    name: 'Toshiba Microwave with Sensor Reheat',
+    name: 'Toshiba EM131A5C-BS 1.2 Cu. Ft. Countertop Microwave',
     category: 'Microwaves',
-    verdict: 'Top pick',
+    verdict: 'Best overall',
     note: 'Sensor cooking that actually stops at the right moment.',
-    image: '/img/products/toshiba-black-and-stainless-steel-microwave-oven-with-digita.svg',
+    review:
+      'A full-size 1.2 cu ft cavity with sensor reheat that adjusts the time to the food, so leftovers do not need guesswork. It is roomy enough for a dinner plate or a glass meal-prep container — exactly what you want once the food is out of the foam box.',
+    highlights: ['1.2 cu ft', '1,100 W', 'Sensor cooking'],
+    image: 'https://m.media-amazon.com/images/I/61moUe+FENL._AC_SL1500_.jpg',
     guide: 'best-microwaves-top-ovens-reviewed-for-every-kitchen',
   },
   {
@@ -121,6 +128,54 @@ export const PRODUCTS: Product[] = [
     note: 'Fits under a cabinet without giving up power.',
     image: '/img/products/farberware-stainless-steel-microwave-with-black-front-door-p.svg',
     guide: 'best-microwaves-top-ovens-reviewed-for-every-kitchen',
+  },
+  {
+    asin: 'B07HGH1KG6',
+    name: 'BLACK+DECKER EM720CB7 0.7 Cu. Ft. Microwave',
+    category: 'Microwaves',
+    verdict: 'Best budget',
+    note: 'Everything a reheat needs, for the least money.',
+    review:
+      'If all you ask of a microwave is to warm up takeout and last night’s dinner, this does it without the extras you would pay for elsewhere. The 0.7 cu ft cavity takes a standard plate or bowl, and the simple controls make it an easy first microwave.',
+    highlights: ['0.7 cu ft', '700 W', 'Simple controls'],
+    image: 'https://m.media-amazon.com/images/I/81gP22+jCVL._AC_SL1500_.jpg',
+    guide: 'can-you-microwave-styrofoam',
+  },
+  {
+    asin: 'B07GV36BLD',
+    name: "COMFEE' 0.7 Cu. Ft. Countertop Microwave",
+    category: 'Microwaves',
+    verdict: 'Best for small spaces',
+    note: 'Fits the dorm, the office, the studio.',
+    review:
+      'Small kitchens are where this one earns its place: a compact body that slides onto a narrow counter or a shelf, with a cavity that still fits a lunch container or a bowl of soup. Pair it with a glass container and it handles daily reheating without taking over the room.',
+    highlights: ['0.7 cu ft', 'Compact footprint', 'Countertop'],
+    image: 'https://m.media-amazon.com/images/I/71I1kb2hSlL._AC_SL1500_.jpg',
+    guide: 'can-you-microwave-styrofoam',
+  },
+  {
+    asin: 'B07TM72TFX',
+    name: 'Farberware 1.6 Cu. Ft. 1100W Countertop Microwave',
+    category: 'Microwaves',
+    verdict: 'Best large capacity',
+    note: 'Room for the big glass dish.',
+    review:
+      'At 1.6 cu ft this is the one for family-size portions: a wide cavity that takes a large casserole dish or a big bowl you have moved a whole takeout order into. The 1,100 watts keep bigger portions from taking forever to heat through.',
+    highlights: ['1.6 cu ft', '1,100 W', 'Family size'],
+    image: 'https://m.media-amazon.com/images/I/71HliewcilL._AC_SL1500_.jpg',
+    guide: 'can-you-microwave-styrofoam',
+  },
+  {
+    asin: 'B01DEWZUG4',
+    name: 'Panasonic NN-SN686S 1.2 Cu. Ft. 1200W Inverter Microwave',
+    category: 'Microwaves',
+    verdict: 'Best inverter',
+    note: 'Even heat instead of hot edges and a cold middle.',
+    review:
+      'A conventional microwave cycles full power on and off to fake a lower setting; an inverter delivers steady power instead. For reheating that means fewer rubbery edges and cold centres, which is the main complaint with leftovers and takeout. It is the pick if you reheat more than you cook.',
+    highlights: ['1.2 cu ft', '1,200 W', 'Inverter'],
+    image: 'https://m.media-amazon.com/images/I/51UhO1pK-5L._AC_SL1500_.jpg',
+    guide: 'can-you-microwave-styrofoam',
   },
   {
     asin: 'B01M0TREAM',
