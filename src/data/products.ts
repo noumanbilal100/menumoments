@@ -5,10 +5,10 @@
  * from the tag at render time, so switching Associates accounts never means
  * editing this file.
  *
- * `image` points at a generated placeholder. Amazon only permits product
- * photography obtained through the Product Advertising API, and that needs
- * three qualifying sales before access is granted — until then these stay as
- * placeholders or get swapped for original photography.
+ * `image` is the product's main photo on Amazon's CDN (m.media-amazon.com,
+ * allowed in next.config.mjs). The Associates agreement only permits images
+ * obtained through the Product Advertising API, so swap these for API images
+ * once that access opens.
  */
 
 export interface Product {
@@ -42,7 +42,7 @@ export const PRODUCTS: Product[] = [
     category: 'Air fryers',
     verdict: 'Top pick',
     note: 'The one we reach for most — fast, compact, easy to clean.',
-    image: '/img/products/top-pick-ninja-af101-air-fryer-review.svg',
+    image: 'https://m.media-amazon.com/images/I/71+8uTMDRFL._AC_SL1500_.jpg',
     guide: 'best-air-fryer-guide-instant-pot-air-fryer-reviews',
   },
   {
@@ -51,16 +51,16 @@ export const PRODUCTS: Product[] = [
     category: 'Air fryers',
     verdict: 'Best for families',
     note: 'Enough basket for four servings in one go.',
-    image: '/img/products/cosori-air-fryer-6qt-review-best-for-large-families.svg',
+    image: 'https://m.media-amazon.com/images/I/81R9sA3IyBL._AC_SL1500_.jpg',
     guide: 'best-air-fryer-guide-instant-pot-air-fryer-reviews',
   },
   {
     asin: 'B0BWSJVTCJ',
-    name: 'Vitamix Professional Series 750',
+    name: 'Vitamix Propel Series 750',
     category: 'Blenders',
     verdict: 'Top pick',
     note: 'Expensive, and still the one that outlasts everything else.',
-    image: '/img/products/our-top-pick-vitamix-professional-series-750-blender.svg',
+    image: 'https://m.media-amazon.com/images/I/71vZk6aXveL._AC_SL1500_.jpg',
     guide: 'best-blenders-for-smoothies',
   },
   {
@@ -69,7 +69,7 @@ export const PRODUCTS: Product[] = [
     category: 'Blenders',
     verdict: 'Best value',
     note: 'Handles daily smoothies for a fraction of the price.',
-    image: '/img/products/ninja-professional-plus-blender-with-auto-iq.svg',
+    image: 'https://m.media-amazon.com/images/I/71RbmccXCUL._AC_SL1500_.jpg',
     guide: 'best-blenders-for-smoothies',
   },
   {
@@ -78,7 +78,7 @@ export const PRODUCTS: Product[] = [
     category: 'Stand mixers',
     verdict: 'Top pick',
     note: 'The default for a reason — bread dough included.',
-    image: '/img/products/kitchenaid-artisan-series-5-quart-tilt-head-stand-mixer.svg',
+    image: 'https://m.media-amazon.com/images/I/71dwD1MdoSL._AC_SL1500_.jpg',
     guide: 'best-stand-mixer-for-bread-dough',
   },
   {
@@ -87,7 +87,7 @@ export const PRODUCTS: Product[] = [
     category: 'Stand mixers',
     verdict: 'Best for beginners',
     note: 'Smaller bowl, lower price, same build.',
-    image: '/img/products/kitchenaid-classic-series-4-5-quart-tilt-head-stand-mixer-k4.svg',
+    image: 'https://m.media-amazon.com/images/I/51jpWoprCvL._AC_SL1280_.jpg',
     guide: 'best-stand-mixer-for-beginners-top-kitchenaid-cuisinart-reviewed',
   },
   {
@@ -96,7 +96,7 @@ export const PRODUCTS: Product[] = [
     category: 'Coffee makers',
     verdict: 'Top pick',
     note: 'Brews at the right temperature, every time.',
-    image: '/img/products/technivorm-moccamaster-kbgv-select-juniper.svg',
+    image: 'https://m.media-amazon.com/images/I/51gZg9CToFL._AC_SL1000_.jpg',
     guide: 'best-coffee-makers',
   },
   {
@@ -105,7 +105,7 @@ export const PRODUCTS: Product[] = [
     category: 'Coffee makers',
     verdict: 'Best budget',
     note: 'A tenth of the price and perfectly good coffee.',
-    image: '/img/products/ninja-12-cup-programmable-coffee-maker-ce201-best-budget-alt.svg',
+    image: 'https://m.media-amazon.com/images/I/71PhMMe2PUL._AC_SL1500_.jpg',
     guide: 'best-coffee-makers',
   },
   {
@@ -122,11 +122,11 @@ export const PRODUCTS: Product[] = [
   },
   {
     asin: 'B01EIZSF6I',
-    name: 'Farberware Stainless Steel Microwave',
+    name: 'Farberware 1.1 Cu. Ft. 1000W Microwave',
     category: 'Microwaves',
     verdict: 'Best compact',
     note: 'Fits under a cabinet without giving up power.',
-    image: '/img/products/farberware-stainless-steel-microwave-with-black-front-door-p.svg',
+    image: 'https://m.media-amazon.com/images/I/81TZMVXxBxL._AC_SL1500_.jpg',
     guide: 'best-microwaves-top-ovens-reviewed-for-every-kitchen',
   },
   {
@@ -183,7 +183,7 @@ export const PRODUCTS: Product[] = [
     category: 'Bakeware',
     verdict: 'Top pick',
     note: 'Deep wells and a coating that releases cleanly.',
-    image: '/img/products/chicago-metallic-professional-6-cup-popover-pan-with-armor-g.svg',
+    image: 'https://m.media-amazon.com/images/I/5154Vebi-TL._AC_SL1500_.jpg',
     guide: 'best-popover-pans-bake-perfect-popovers-every-time',
   },
   {
@@ -191,7 +191,7 @@ export const PRODUCTS: Product[] = [
     name: 'Cuisinart AMB-6POP Popover Pan',
     category: 'Bakeware',
     note: 'The affordable pick if popovers are an occasional thing.',
-    image: '/img/products/cuisinart-amb-6pop-6-cup-popover-pan.svg',
+    image: 'https://m.media-amazon.com/images/I/518eXaKN7iL._AC_SL1024_.jpg',
     guide: 'best-popover-pans-bake-perfect-popovers-every-time',
   },
   {
@@ -200,7 +200,7 @@ export const PRODUCTS: Product[] = [
     category: 'Beverage fridges',
     verdict: 'Top pick',
     note: 'Holds a party without taking over the kitchen.',
-    image: '/img/products/homelabs-beverage-refrigerator-120-can.svg',
+    image: 'https://m.media-amazon.com/images/I/71G-itWi-HL._AC_SL1500_.jpg',
     guide: 'best-beverage-refrigerator',
   },
   {
@@ -209,7 +209,7 @@ export const PRODUCTS: Product[] = [
     category: 'Beverage fridges',
     verdict: 'Best small',
     note: 'For an office corner or a narrow gap.',
-    image: '/img/products/feelfunn-beverage-refrigerator-cooler-50-can.svg',
+    image: 'https://m.media-amazon.com/images/I/81mOfKq9SCL._AC_SL1500_.jpg',
     guide: 'best-beverage-refrigerator',
   },
   {
