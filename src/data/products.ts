@@ -116,7 +116,7 @@ export const PRODUCTS: Product[] = [
     note: 'Sensor cooking that actually stops at the right moment.',
     review:
       'A full-size 1.2 cu ft cavity with sensor reheat that adjusts the time to the food, so leftovers do not need guesswork. It is roomy enough for a dinner plate or a glass meal-prep container — exactly what you want once the food is out of the foam box.',
-    highlights: ['1.2 cu ft', '1,100 W', 'Sensor cooking'],
+    highlights: ['1.2 cu ft', '1,000 W', 'Sensor cooking'],
     image: 'https://m.media-amazon.com/images/I/61moUe+FENL._AC_SL1500_.jpg',
     guide: 'best-microwaves-top-ovens-reviewed-for-every-kitchen',
   },

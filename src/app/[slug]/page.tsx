@@ -12,7 +12,6 @@ import { PostActions, JumpToRecipe } from '@/components/post-actions';
 import { AuthorCard } from '@/components/author-card';
 import { TrendingList } from '@/components/trending-list';
 import { CollectionCard } from '@/components/collection-card';
-import { Reveal } from '@/components/reveal';
 import { ReadingProgress } from '@/components/reading-progress';
 import { Sparkle, Fork, Squiggle } from '@/components/doodles';
 import { AffiliateArticle } from '@/components/affiliate-article';
@@ -217,7 +216,7 @@ export default async function PostPage({
             {primaryCat && <span className="opacity-80">· {primaryCat.name}</span>}
           </div>
 
-          <Reveal>
+          <div>
             <h1 className="font-display text-display-lg text-char-500 dark:text-bone-50">
               {post.title}
             </h1>
@@ -227,7 +226,7 @@ export default async function PostPage({
                 {post.excerpt}
               </p>
             )}
-          </Reveal>
+          </div>
 
           {post.recipe?.diet && post.recipe.diet.length > 0 && (
             <div className="mt-6 flex flex-wrap gap-2">
@@ -294,7 +293,7 @@ export default async function PostPage({
       {/* Hero image -------------------------------------------------- */}
       {post.heroImage && (
         <div className="mx-auto max-w-5xl px-6 pt-8">
-          <Reveal>
+          <div>
             <div className="zoom-parent relative aspect-[16/9] overflow-hidden rounded-3xl bg-bone-100 shadow-cardHover">
               <Image
                 src={post.heroImage.src}
@@ -305,7 +304,7 @@ export default async function PostPage({
                 priority
               />
             </div>
-          </Reveal>
+          </div>
         </div>
       )}
 

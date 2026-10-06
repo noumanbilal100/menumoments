@@ -9,6 +9,7 @@
  */
 
 import { readFile } from 'node:fs/promises';
+import { cleanExcerpt, cleanPostHtml } from './clean-html';
 import path from 'node:path';
 import indexData from '@/content/index.json';
 import { deriveKindAndRecipe } from './recipe-derive';
@@ -69,8 +70,8 @@ export async function readLocalPost(slug: string): Promise<Post | null> {
     return {
       slug: data.slug,
       title: data.title,
-      excerpt: data.excerpt,
-      html: data.html,
+      excerpt: cleanExcerpt(data.excerpt),
+      html: cleanPostHtml(data.html, data.title),
       categories,
       heroImage: data.heroImage
         ? {
@@ -104,7 +105,7 @@ export function indexEntryToPost(e: LocalIndexEntry): Post {
   return {
     slug: e.slug,
     title: e.title,
-    excerpt: e.excerpt,
+    excerpt: cleanExcerpt(e.excerpt),
     html: '',
     categories,
     heroImage: e.heroImage

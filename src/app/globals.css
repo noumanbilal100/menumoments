@@ -333,6 +333,206 @@ body {
   border-left: 4px solid var(--accent);
 }
 
+/* Migrated wrappers ------------------------------------------------
+   Pasted content often nests paragraphs in plain <div>s, which takes
+   them out of the `> * + *` flow above. */
+.prose-article :where(div:not([class])) > * + * { margin-top: 1.25rem; }
+
+/* Tables: the editor left fixed pixel heights and widths that add up
+   to more than 100%. */
+.prose-article table[style] { width: 100% !important; height: auto !important; }
+.prose-article tr[style], .prose-article th[style], .prose-article td[style] {
+  height: auto !important;
+}
+.prose-article td img {
+  width: 72px;
+  height: 72px;
+  max-width: none;
+  margin: 0;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 0.5rem;
+}
+@media (max-width: 640px) {
+  .prose-article table { display: block; overflow-x: auto; }
+}
+
+/* A link that wraps a product photo is not an inline text link, so it
+   drops the "Amazon pill" treatment. */
+.prose-article a:has(> img),
+.prose-article a[data-affiliate]:has(> img) {
+  display: block;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
+}
+.prose-article a:has(> img)::before,
+.prose-article a:has(> img)::after,
+.prose-article a[data-affiliate]:has(> img)::before,
+.prose-article a[data-affiliate]:has(> img)::after { content: none; }
+.prose-article td a[data-affiliate]:has(> img) { display: inline-block; }
+
+/* <pre> in migrated posts holds pasted prose, not code. */
+.prose-article pre,
+.prose-article pre code {
+  font: inherit;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  background: none;
+  padding: 0;
+}
+
+/* Product boxes from the old WordPress plugin (mmm-tools) ---------- */
+.prose-article a.mmm-tools-bg-b1-btn,
+.prose-article a.mmm-tools-bg-b2-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4em;
+  padding: 0.7em 1.5em;
+  border-radius: 999px;
+  border: 1px solid #FCD200;
+  background: #FFD814 !important;
+  color: #0F1111;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 1px 2px rgba(15, 17, 17, 0.12);
+}
+.prose-article a.mmm-tools-bg-b1-btn:hover,
+.prose-article a.mmm-tools-bg-b2-btn:hover { background: #F7CA00 !important; color: #0F1111; }
+.prose-article a.mmm-tools-bg-b1-btn::before,
+.prose-article a.mmm-tools-bg-b2-btn::before { content: none; }
+.prose-article a.mmm-tools-bg-b1-btn span,
+.prose-article a.mmm-tools-bg-b2-btn span { color: #0F1111 !important; }
+
+.prose-article .mmm-tools-bg-b1-box-layout-four,
+.prose-article .mmm-tools-bg-b2-box-layout-two {
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  background: var(--bg-elevated);
+  padding: 1.5rem;
+  margin-top: 1rem;
+}
+.prose-article .mmm-tools-bg-b1-our-top-pick {
+  display: inline-block;
+  margin-bottom: 1rem;
+  padding: 0.35em 0.9em;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.prose-article .product-box-row { display: grid; gap: 1.5rem; align-items: center; }
+.prose-article .product-image-inner,
+.prose-article .mmm-tools-bg-b2-li-photo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  padding: 1rem;
+  border-radius: 1rem;
+  background: #fff;
+}
+.prose-article .product-image-inner img,
+.prose-article .mmm-tools-bg-b2-li-photo img {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  object-fit: contain;
+  border-radius: 0;
+}
+.prose-article .mmm-tools-bg-b1-text > * + *,
+.prose-article .mmm-tools-bg-b2-text > * + * { margin-top: 0.6rem; }
+.prose-article .mmm-tools-bg-b1-feature-text,
+.prose-article .mmm-tools-bg-b2-text span[style] {
+  font-size: 0.75rem !important;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-strong) !important;
+}
+.prose-article .product-box-footer,
+.prose-article .mmm-tools-bg-b2-lc-button { margin-top: 1.25rem; }
+
+/* "Additional recommendations" sit in nested <ol>s for numbering the
+   names already carry. */
+.prose-article ol:has(.mmm-tools-bg-b2-box-layout-two) {
+  list-style: none;
+  padding-left: 0;
+  max-width: none;
+}
+.prose-article ol:has(.mmm-tools-bg-b2-box-layout-two) > li { padding-left: 0; }
+.prose-article .mmm-tools-bg-b2-box-layout-two { display: grid; gap: 1.25rem; }
+.prose-article .mmm-tools-bg-b2-li-ratebadge { margin-top: 0.75rem; text-align: center; }
+.prose-article .mmm-tools-bg-b2-rate {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.4rem 1rem;
+  border-radius: 0.75rem;
+  background: var(--accent);
+  color: #fff;
+  line-height: 1.2;
+}
+.prose-article .mmm-tools-bg-b2-rate .aff-score:first-child { font-size: 1.1rem; font-weight: 700; }
+.prose-article .mmm-tools-bg-b2-rate .aff-score + .aff-score {
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+@media (min-width: 640px) {
+  .prose-article .product-box-row { grid-template-columns: 220px minmax(0, 1fr); }
+  .prose-article .mmm-tools-bg-b2-box-layout-two {
+    grid-template-columns: 180px minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+/* Pros / cons */
+.prose-article .mmm-tools-pros-cons-box-3-pc-row {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+.prose-article .mmm-tools-pros-cons-box-3-pc-row > p { display: none; }
+.prose-article .mmm-tools-pros-cons-box-3-item-pros,
+.prose-article .mmm-tools-pros-cons-box-3-item-cons {
+  padding: 1.1rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: var(--bg);
+  font-size: 0.95rem;
+}
+.prose-article .mmm-tools-pros-cons-box-3-item-pros { border-top: 4px solid #2F9E5B; }
+.prose-article .mmm-tools-pros-cons-box-3-item-cons { border-top: 4px solid #C8475A; }
+.prose-article .mmm-tools-pros-cons-box-3-pros-name,
+.prose-article .mmm-tools-pros-cons-box-3-cons-name {
+  margin-bottom: 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+.prose-article .mmm-tools-pros-cons-box-3-pros-name { color: #2F9E5B; }
+.prose-article .mmm-tools-pros-cons-box-3-cons-name { color: #C8475A; }
+.prose-article .mmm-tools-pros-cons-box-3-item-pros li::before,
+.prose-article .mmm-tools-pros-cons-box-3-item-cons li::before {
+  top: 0;
+  width: auto;
+  height: auto;
+  background: none;
+  font-weight: 700;
+}
+.prose-article .mmm-tools-pros-cons-box-3-item-pros li::before { content: '✓'; color: #2F9E5B; }
+.prose-article .mmm-tools-pros-cons-box-3-item-cons li::before { content: '✕'; color: #C8475A; }
+@media (min-width: 640px) {
+  .prose-article .mmm-tools-pros-cons-box-3-pc-row { grid-template-columns: 1fr 1fr; }
+}
+
 /* Navigation underline ------------------------------------------- */
 .nav-link { position: relative; }
 .nav-link::after {

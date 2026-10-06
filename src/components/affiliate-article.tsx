@@ -8,7 +8,6 @@ import { AuthorCard } from '@/components/author-card';
 import { AffiliateTOC } from '@/components/affiliate-toc';
 import { AffiliateStickyCTA } from '@/components/affiliate-sticky-cta';
 import { ReadingProgress } from '@/components/reading-progress';
-import { Reveal } from '@/components/reveal';
 import { Sparkle, Fork, Squiggle, DrawArrow } from '@/components/doodles';
 import { PostCard } from '@/components/post-card';
 import { SectionHeading } from '@/components/section-heading';
@@ -85,7 +84,7 @@ export function AffiliateArticle({
             </ol>
           </nav>
 
-          <Reveal>
+          <div>
             <div className="mb-4 flex flex-wrap items-center gap-3">
               <span className="inline-flex items-center gap-1.5 rounded-full bg-ember-500 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-white shadow-embered">
                 <Sparkle size={11} />
@@ -158,15 +157,14 @@ export function AffiliateArticle({
               )}
               <PostActions slug={post.slug} title={post.title} />
             </div>
-          </Reveal>
+          </div>
         </div>
       </header>
 
       {/* HERO IMAGE ---------------------------------------------------- */}
       {post.heroImage && (
         <div className="mx-auto max-w-5xl px-6 pt-8">
-          <Reveal>
-            <div className="zoom-parent relative aspect-[16/9] overflow-hidden rounded-3xl bg-bone-100 shadow-cardHover">
+          <div className="zoom-parent relative aspect-[16/9] overflow-hidden rounded-3xl bg-bone-100 shadow-cardHover">
               <Image
                 src={post.heroImage.src}
                 alt={post.heroImage.alt}
@@ -178,8 +176,7 @@ export function AffiliateArticle({
               <span className="absolute left-6 top-6 flex items-center gap-1.5 rounded-full bg-bone-100/95 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-ember-500">
                 <Sparkle size={10} /> Buying guide
               </span>
-            </div>
-          </Reveal>
+          </div>
         </div>
       )}
 
