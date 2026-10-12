@@ -13,7 +13,8 @@ export default async function AdminOverview() {
   const total = Math.max(1, s.totalPosts);
   const seoComplete = s.postsWithSeo === s.totalPosts;
   const heroComplete = s.postsWithoutHero === 0;
-  const adsShare = s.informationalCount / total;
+  const adsShare = s.adsOnCount / total;
+  const attention = s.postsWithoutHeroList.length + s.postsWithoutSeo.length + s.productPhotoGaps.length;
 
   return (
     <div className="space-y-8">
@@ -70,7 +71,7 @@ export default async function AdminOverview() {
             <div>
               <h2 className="text-sm font-semibold">Advertising</h2>
               <p className="mt-1 text-xs text-char-200">
-                Ads show on informational articles and are skipped on affiliate buying guides.
+                AdSense runs on every post except the buying guides on the no-ads list.
               </p>
             </div>
             {s.adsEnabled ? <Badge tone="good">AdSense connected</Badge> : <Badge tone="warn">AdSense not set</Badge>}
@@ -84,15 +85,15 @@ export default async function AdminOverview() {
               <dt className="flex items-center gap-2 text-xs text-char-200">
                 <span className="h-2 w-2 rounded-full bg-emerald-500" /> Ads on
               </dt>
-              <dd className="mt-1 text-xl font-semibold">{s.informationalCount}</dd>
-              <p className="text-xs text-char-200">informational articles</p>
+              <dd className="mt-1 text-xl font-semibold">{s.adsOnCount}</dd>
+              <p className="text-xs text-char-200">posts showing ads</p>
             </div>
             <div>
               <dt className="flex items-center gap-2 text-xs text-char-200">
-                <span className="h-2 w-2 rounded-full bg-char-100" /> Ads skipped
+                <span className="h-2 w-2 rounded-full bg-char-100" /> Ads off
               </dt>
-              <dd className="mt-1 text-xl font-semibold">{s.affiliateCount}</dd>
-              <p className="text-xs text-char-200">affiliate / buying guides</p>
+              <dd className="mt-1 text-xl font-semibold">{s.adsOffCount}</dd>
+              <p className="text-xs text-char-200">buying guides earning by affiliate links</p>
             </div>
             <div>
               <dt className="flex items-center gap-2 text-xs text-char-200">
@@ -132,6 +133,49 @@ export default async function AdminOverview() {
         </section>
       </div>
 
+      <section aria-label="Needs attention">
+        <SectionTitle
+          aside={attention === 0 ? <Badge tone="good">All clear</Badge> : <Badge tone="warn">{attention} to fix</Badge>}
+        >
+          Needs attention
+        </SectionTitle>
+        <div className="grid gap-4 lg:grid-cols-3">
+          <AttentionList
+            title="Broken product links"
+            hint="The link opens a dead or different Amazon listing, so the product keeps a placeholder photo."
+            empty="Every product link has its photo."
+            items={s.productPhotoGaps.map((g) => ({
+              key: `${g.slug}-${g.asin || g.product}`,
+              href: `/admin/posts/${g.slug}`,
+              primary: g.product,
+              secondary: `${g.asin || 'no ASIN'} · ${g.title}`,
+            }))}
+          />
+          <AttentionList
+            title="Missing hero image"
+            hint="Shown without a lead photo on the site and in social shares."
+            empty="Every post has a hero image."
+            items={s.postsWithoutHeroList.map((p) => ({
+              key: p.slug,
+              href: `/admin/posts/${p.slug}`,
+              primary: p.title,
+              secondary: `/${p.slug}`,
+            }))}
+          />
+          <AttentionList
+            title="Missing SEO metadata"
+            hint="No Yoast / Rank Math title or description, so search results fall back to the post title and excerpt."
+            empty="Every post has SEO metadata."
+            items={s.postsWithoutSeo.map((p) => ({
+              key: p.slug,
+              href: `/admin/posts/${p.slug}`,
+              primary: p.title,
+              secondary: `/${p.slug}`,
+            }))}
+          />
+        </div>
+      </section>
+
       <section aria-label="Recent posts">
         <SectionTitle
           aside={
@@ -147,8 +191,8 @@ export default async function AdminOverview() {
             <thead className="border-b border-bone-200 text-left text-xs font-medium text-char-200 dark:border-char-400">
               <tr>
                 <th className="px-4 py-3">Title</th>
-                <th className="px-4 py-3">Category</th>
-                <th className="px-4 py-3">Published</th>
+                <th className="hidden px-4 py-3 sm:table-cell">Category</th>
+                <th className="hidden px-4 py-3 sm:table-cell">Published</th>
                 <th className="px-4 py-3">Ads</th>
               </tr>
             </thead>
@@ -158,20 +202,22 @@ export default async function AdminOverview() {
                   <td className="max-w-md px-4 py-3">
                     <Link
                       href={`/admin/posts/${p.slug}`}
-                      className="line-clamp-1 font-medium hover:text-ember-500"
+                      className="line-clamp-2 font-medium hover:text-ember-500 sm:line-clamp-1"
                     >
                       {p.title}
                     </Link>
                   </td>
-                  <td className="px-4 py-3 text-xs text-char-300 dark:text-bone-100">
+                  <td className="hidden px-4 py-3 text-xs text-char-300 dark:text-bone-100 sm:table-cell">
                     {p.primaryCategory ?? '—'}
                   </td>
-                  <td className="whitespace-nowrap px-4 py-3 text-xs text-char-200">{fmt(p.publishedAt)}</td>
+                  <td className="hidden whitespace-nowrap px-4 py-3 text-xs text-char-200 sm:table-cell">
+                    {fmt(p.publishedAt)}
+                  </td>
                   <td className="px-4 py-3">
                     {p.showsAds ? (
                       <Badge tone="good">Shows</Badge>
                     ) : (
-                      <Badge>{p.isAffiliate ? 'Affiliate' : 'Off'}</Badge>
+                      <Badge>Off</Badge>
                     )}
                   </td>
                 </tr>
@@ -180,6 +226,42 @@ export default async function AdminOverview() {
           </table>
         </div>
       </section>
+    </div>
+  );
+}
+
+function AttentionList({
+  title,
+  hint,
+  empty,
+  items,
+}: {
+  title: string;
+  hint: string;
+  empty: string;
+  items: { key: string; href: string; primary: string; secondary: string }[];
+}) {
+  return (
+    <div className={`${cardClass} flex min-w-0 flex-col p-5`}>
+      <div className="flex items-center justify-between gap-2">
+        <h3 className="text-sm font-semibold">{title}</h3>
+        <Badge tone={items.length ? 'warn' : 'good'}>{items.length}</Badge>
+      </div>
+      <p className="mt-1 text-xs leading-relaxed text-char-200">{hint}</p>
+      {items.length === 0 ? (
+        <p className="mt-4 text-sm text-emerald-600 dark:text-emerald-400">{empty}</p>
+      ) : (
+        <ul className="mt-3 max-h-72 divide-y divide-bone-200 overflow-y-auto dark:divide-char-400">
+          {items.map((i) => (
+            <li key={i.key}>
+              <Link href={i.href} className="block py-2.5 hover:text-ember-500">
+                <span className="line-clamp-2 text-sm font-medium">{i.primary}</span>
+                <span className="mt-0.5 block truncate text-xs text-char-200">{i.secondary}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

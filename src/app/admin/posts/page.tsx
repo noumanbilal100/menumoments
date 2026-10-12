@@ -173,7 +173,7 @@ export default async function AdminPostsPage({
                     </span>
                   ) : (
                     <span className="rounded-full bg-bone-100 px-2 py-0.5 text-[10px] font-medium text-char-300 dark:bg-char-400 dark:text-bone-100">
-                      {p.isAffiliate ? 'Affiliate' : 'Off'}
+                      Off
                     </span>
                   )}
                 </td>
@@ -186,7 +186,7 @@ export default async function AdminPostsPage({
                   </Link>
                   {' · '}
                   <Link
-                    href={`/${p.slug}`}
+                    href={`/${p.slug}/`}
                     target="_blank"
                     className="text-xs text-ember-500 hover:underline"
                   >

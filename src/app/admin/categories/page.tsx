@@ -37,8 +37,8 @@ export default function AdminCategoriesPage() {
                 <tr>
                   <th className="px-4 py-3">Category</th>
                   <th className="px-4 py-3 text-right">Posts</th>
-                  <th className="px-4 py-3 text-right">Informational</th>
-                  <th className="px-4 py-3 text-right">Affiliate</th>
+                  <th className="px-4 py-3 text-right">Ads on</th>
+                  <th className="px-4 py-3 text-right">Ads off</th>
                   <th className="px-4 py-3">Ads state</th>
                   <th className="px-4 py-3"></th>
                 </tr>
@@ -55,17 +55,17 @@ export default function AdminCategoriesPage() {
                     </td>
                     <td className="px-4 py-3 text-right font-mono">{c.postCount}</td>
                     <td className="px-4 py-3 text-right font-mono text-emerald-600">
-                      {c.informationalCount || '—'}
+                      {c.adsOnCount || '—'}
                     </td>
                     <td className="px-4 py-3 text-right font-mono text-char-200">
-                      {c.affiliateCount || '—'}
+                      {c.adsOffCount || '—'}
                     </td>
                     <td className="px-4 py-3">
                       {c.adsDisabled ? (
                         <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-medium text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">
                           No ads (deny-list)
                         </span>
-                      ) : c.informationalCount > 0 ? (
+                      ) : c.adsOnCount > 0 ? (
                         <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-medium text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">
                           Ads on
                         </span>

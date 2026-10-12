@@ -9,7 +9,7 @@ interface Failure {
 
 // Hardcoded from the last migration run — avoids importing the 570KB map file.
 // Update by re-running `npm run migrate:images` and reading the summary line.
-const CACHED_IMAGE_COUNT = 3684;
+const CACHED_IMAGE_COUNT = 3626;
 
 export default function AdminImagesPage() {
   const failures = imageFailures as Failure[];
@@ -41,7 +41,7 @@ export default function AdminImagesPage() {
             Failed downloads
           </p>
           <p
-            className={`mt-2 font-display text-3xl ${
+            className={`mt-2 text-3xl font-semibold tracking-tight ${
               failures.length === 0 ? 'text-emerald-600' : 'text-amber-600'
             }`}
           >
@@ -55,7 +55,7 @@ export default function AdminImagesPage() {
           <p className="text-xs font-medium text-char-200">
             Storage
           </p>
-          <p className="mt-2 text-2xl font-semibold tracking-tight">≈134 MB</p>
+          <p className="mt-2 text-2xl font-semibold tracking-tight">≈123 MB</p>
           <p className="mt-1 text-xs text-char-200">shipped with the deploy</p>
         </div>
       </div>
