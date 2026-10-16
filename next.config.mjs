@@ -28,6 +28,13 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      // One canonical host for search engines.
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.menumoments.com' }],
+        destination: 'https://menumoments.com/:path*',
+        permanent: true,
+      },
       // Legacy WP feed and admin paths — send to home
       { source: '/feed', destination: '/', permanent: true },
       { source: '/feed/:path*', destination: '/', permanent: true },
