@@ -2,13 +2,21 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { AdminNav } from '@/components/admin/admin-nav';
 import { Icon } from '@/components/admin/ui';
+import { storeMode } from '@/lib/cms/store';
 
 export const metadata: Metadata = {
   title: 'Admin — Menu Moments',
   robots: { index: false, follow: false },
 };
 
+const SAVE_STATUS = {
+  github: { text: 'Saving to GitHub · live about a minute after each save', dot: 'bg-emerald-500' },
+  filesystem: { text: 'Saving to local files', dot: 'bg-sky-500' },
+  unconfigured: { text: 'Saving is not set up — add GITHUB_TOKEN on the host', dot: 'bg-amber-500' },
+} as const;
+
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  const save = SAVE_STATUS[storeMode()];
   return (
     <div className="min-h-screen bg-bone-100 text-char-500 dark:bg-char-600 dark:text-bone-50">
       <aside className="fixed inset-y-0 left-0 hidden w-60 flex-col border-r border-bone-200 bg-bone-50 px-4 py-5 dark:border-char-400 dark:bg-char-500 lg:flex">
@@ -49,6 +57,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               <span className="text-sm font-semibold">Admin</span>
             </Link>
             <span className="hidden text-sm text-char-200 lg:inline">menumoments.com</span>
+            <span className="ml-auto hidden items-center gap-2 text-xs text-char-200 sm:flex lg:ml-auto">
+              <span className={`h-2 w-2 rounded-full ${save.dot}`} />
+              {save.text}
+            </span>
             <Link
               href="/"
               target="_blank"

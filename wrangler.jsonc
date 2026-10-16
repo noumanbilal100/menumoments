@@ -20,6 +20,10 @@
     { "pattern": "menumoments.com", "custom_domain": true },
     { "pattern": "www.menumoments.com", "custom_domain": true }
   ],
+  "vars": {
+    "GITHUB_REPO": "noumanbilal100/menumoments",
+    "GITHUB_BRANCH": "main"
+  },
   "observability": {
     "enabled": true
   }

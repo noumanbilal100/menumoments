@@ -18,6 +18,9 @@ import { AffiliateArticle } from '@/components/affiliate-article';
 import { isAffiliateArticle } from '@/lib/affiliate';
 import { AdSlot } from '@/components/ad-slot';
 import { ProductRecommendations } from '@/components/product-recommendations';
+import { PageShell } from '@/components/page-shell';
+import { cleanPostHtml } from '@/lib/clean-html';
+import { getSitePage, listSitePages } from '@/lib/site-pages';
 import { blockForPost, splitBeforeHeading } from '@/data/post-products';
 import { shouldShowAds } from '@/lib/ads';
 import { ADSENSE_SLOTS, SITE_URL } from '@/lib/env';
@@ -26,7 +29,8 @@ export const revalidate = 3600;
 export const dynamicParams = true;
 
 export async function generateStaticParams() {
-  return allPostSlugs().map((slug) => ({ slug }));
+  const pages = await listSitePages();
+  return [...allPostSlugs(), ...pages.map((p) => p.slug)].map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -36,7 +40,16 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const post = await getPost(slug);
-  if (!post) return {};
+  if (!post) {
+    const page = await getSitePage(slug);
+    if (!page) return {};
+    return {
+      title: page.seo?.seoTitle || page.title,
+      description: page.seo?.metaDescription || page.lede,
+      keywords: page.seo?.focusKeyword ? [page.seo.focusKeyword] : undefined,
+      alternates: { canonical: `${SITE_URL}/${slug}/` },
+    };
+  }
   const seo = post.seo ?? {};
   const title = decodeEntities(seo.seoTitle) ?? post.title;
   const description = decodeEntities(seo.metaDescription) ?? post.excerpt;
@@ -121,7 +134,15 @@ export default async function PostPage({
   if (asCategory) redirect(`/category/${asCategory.slug}`);
 
   const post = await getPost(slug);
-  if (!post) notFound();
+  if (!post) {
+    const page = await getSitePage(slug);
+    if (!page) notFound();
+    return (
+      <PageShell title={page.title} lede={page.lede}>
+        <div dangerouslySetInnerHTML={{ __html: cleanPostHtml(page.html, page.title) }} />
+      </PageShell>
+    );
+  }
 
   const primaryCat = post.categories[0] ? getCategory(post.categories[0]) : undefined;
   const secondaryCats = post.categories

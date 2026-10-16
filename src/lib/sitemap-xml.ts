@@ -2,6 +2,7 @@ import { localIndex } from './local-content';
 import { categoriesWithPosts } from './category-map';
 import { COLLECTIONS } from '@/data/collections';
 import { SITE_URL } from './env';
+import { listSitePages } from './site-pages';
 
 /**
  * Yoast-compatible sitemap set.
@@ -74,7 +75,7 @@ export function postSitemapCount(): number {
 }
 
 /** Static pages + collection landing pages. */
-export function pageEntries(): SitemapEntry[] {
+export async function pageEntries(): Promise<SitemapEntry[]> {
   const now = new Date().toISOString();
   const statics = [
     '',
@@ -95,7 +96,12 @@ export function pageEntries(): SitemapEntry[] {
     lastmod: now,
   }));
 
-  return [...statics, ...collections];
+  const sitePages = (await listSitePages()).map((p) => ({
+    loc: url(`/${p.slug}`),
+    lastmod: iso(p.updatedAt ?? p.publishedAt),
+  }));
+
+  return [...statics, ...sitePages, ...collections];
 }
 
 export function categoryEntries(): SitemapEntry[] {

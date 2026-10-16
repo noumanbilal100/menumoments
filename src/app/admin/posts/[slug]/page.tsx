@@ -1,7 +1,10 @@
 import { Fragment } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
+import { DeleteButton } from '@/components/admin/delete-button';
+import { loadPost } from '@/lib/cms/content';
+import { deletePostAction } from '../../actions';
 import { getPost } from '@/lib/content';
 import { isAffiliateArticle } from '@/lib/affiliate';
 import { shouldShowAds, NO_ADS_CATEGORIES } from '@/lib/ads';
@@ -16,7 +19,11 @@ export default async function AdminPostDetail({
 }) {
   const { slug } = await params;
   const post = await getPost(slug);
-  if (!post) notFound();
+  if (!post) {
+    // Drafts and posts saved since the last deploy are only in the editor.
+    if (await loadPost(slug)) redirect(`/admin/posts/${slug}/edit/`);
+    notFound();
+  }
 
   const affiliate = isAffiliateArticle(post);
   const adsOn = shouldShowAds(post);
@@ -32,8 +39,21 @@ export default async function AdminPostDetail({
         <Link href="/admin/posts" className="text-xs text-ember-500 hover:underline">
           ← All posts
         </Link>
-        <h1 className="mt-2 text-2xl font-semibold tracking-tight">{post.title}</h1>
-        <p className="mt-1 text-sm text-char-200">/{post.slug}</p>
+        <div className="mt-2 flex flex-wrap items-start justify-between gap-4">
+          <div className="min-w-0">
+            <h1 className="text-2xl font-semibold tracking-tight">{post.title}</h1>
+            <p className="mt-1 text-sm text-char-200">/{post.slug}</p>
+          </div>
+          <div className="flex items-start gap-2">
+            <Link
+              href={`/admin/posts/${post.slug}/edit/`}
+              className="rounded-lg bg-ember-500 px-4 py-2 text-sm font-medium text-white hover:bg-ember-600"
+            >
+              Edit post
+            </Link>
+            <DeleteButton action={deletePostAction} slug={post.slug} name={post.title} />
+          </div>
+        </div>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-3">

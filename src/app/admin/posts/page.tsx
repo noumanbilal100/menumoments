@@ -1,10 +1,13 @@
 import Link from 'next/link';
 import { adminPostRows } from '@/lib/admin-stats';
 import { CATEGORIES } from '@/data/taxonomy';
+import { listDrafts } from '@/lib/cms/content';
+import { Badge, Icon, cardClass } from '@/components/admin/ui';
 
 export const dynamic = 'force-dynamic';
 
 interface SearchParams {
+  deleted?: string;
   q?: string;
   cat?: string;
   ads?: 'all' | 'on' | 'off';
@@ -27,6 +30,7 @@ export default async function AdminPostsPage({
   const page = Math.max(1, Number(sp.page ?? 1));
 
   const all = adminPostRows();
+  const drafts = await listDrafts();
   let filtered = all;
 
   if (q) filtered = filtered.filter((p) => p.title.toLowerCase().includes(q) || p.slug.includes(q));
@@ -41,16 +45,53 @@ export default async function AdminPostsPage({
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-baseline justify-between gap-4">
+      <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">All posts</h1>
           <p className="mt-1 text-sm text-char-200">
-            Showing <strong>{filtered.length}</strong> of {all.length} posts
+            Showing <strong>{filtered.length}</strong> of {all.length} published posts
             {q && ` matching "${q}"`}
             {cat && ` in ${cat}`}
           </p>
         </div>
+        <Link
+          href="/admin/posts/new/"
+          className="inline-flex items-center gap-2 rounded-lg bg-ember-500 px-4 py-2 text-sm font-medium text-white hover:bg-ember-600"
+        >
+          <Icon name="posts" />
+          New post
+        </Link>
       </div>
+
+      {sp.deleted && (
+        <p role="status" className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800 dark:border-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-200">
+          /{sp.deleted}/ deleted. Listings update once the site has rebuilt.
+        </p>
+      )}
+
+      {drafts.length > 0 && (
+        <section className={`${cardClass} p-5`}>
+          <div className="flex items-center gap-2">
+            <h2 className="text-sm font-semibold">Drafts</h2>
+            <Badge tone="warn">{drafts.length}</Badge>
+          </div>
+          <ul className="mt-2 divide-y divide-bone-200 dark:divide-char-400">
+            {drafts.map((d) => (
+              <li key={d.slug} className="flex items-center justify-between gap-4 py-2.5">
+                <div className="min-w-0">
+                  <Link href={`/admin/posts/${d.slug}/edit/`} className="block truncate text-sm font-medium hover:text-ember-500">
+                    {d.title}
+                  </Link>
+                  <p className="truncate text-xs text-char-200">/{d.slug}/ · last saved {(d.updatedAt ?? d.publishedAt).slice(0, 10)}</p>
+                </div>
+                <Link href={`/admin/posts/${d.slug}/edit/`} className="shrink-0 text-xs text-ember-500 hover:underline">
+                  Continue editing
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {/* Filters ------------------------------------------------------ */}
       <form
@@ -179,10 +220,17 @@ export default async function AdminPostsPage({
                 </td>
                 <td className="whitespace-nowrap px-4 py-3 text-right">
                   <Link
+                    href={`/admin/posts/${p.slug}/edit/`}
+                    className="text-xs font-semibold text-ember-500 hover:underline"
+                  >
+                    Edit
+                  </Link>
+                  {' · '}
+                  <Link
                     href={`/admin/posts/${p.slug}`}
                     className="text-xs text-ember-500 hover:underline"
                   >
-                    View
+                    Details
                   </Link>
                   {' · '}
                   <Link

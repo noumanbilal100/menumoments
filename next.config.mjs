@@ -6,6 +6,8 @@ const nextConfig = {
   // Preserves SEO — every URL Google already indexed keeps working.
   trailingSlash: true,
   experimental: {
+    // Admin saves carry compressed images alongside the post.
+    serverActions: { bodySizeLimit: '4.5mb' },
     // Cap workers so builds don't run the machine out of RAM. Adjust up
     // (e.g. 8) on a beefier CI box.
     cpus: 2,

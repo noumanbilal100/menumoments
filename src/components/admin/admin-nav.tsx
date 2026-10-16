@@ -7,6 +7,7 @@ import { Icon, type IconName } from './ui';
 const NAV: { href: string; label: string; icon: IconName }[] = [
   { href: '/admin', label: 'Overview', icon: 'overview' },
   { href: '/admin/posts', label: 'Posts', icon: 'posts' },
+  { href: '/admin/pages', label: 'Pages', icon: 'pages' },
   { href: '/admin/categories', label: 'Categories', icon: 'categories' },
   { href: '/admin/images', label: 'Images', icon: 'images' },
 ];

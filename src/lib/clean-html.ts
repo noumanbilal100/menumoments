@@ -39,11 +39,21 @@ export function cleanExcerpt(excerpt: string): string {
   return excerpt.replace(/\s*(?:…|&hellip;|\.\.\.)?\s*Read more\s*$/i, '…').trim();
 }
 
+/**
+ * Removes markup that came along with pasted content and should never be
+ * stored: foreign utility classes and empty spacer paragraphs.
+ */
+export function stripPastedMarkup(html: string): string {
+  return html
+    .replace(/\sclass=(["'])([\s\S]*?)\1/gi, (_m, q: string, value: string) => {
+      const kept = value.split(/\s+/).filter((c) => CONTENT_CLASS.test(c));
+      return kept.length ? ` class=${q}${kept.join(' ')}${q}` : '';
+    })
+    .replace(/<p>(?:\s|&nbsp;|<br\s*\/?>)*<\/p>/gi, '');
+}
+
 export function cleanPostHtml(html: string, title?: string): string {
-  let out = html.replace(/\sclass=(["'])([\s\S]*?)\1/gi, (_m, q: string, value: string) => {
-    const kept = value.split(/\s+/).filter((c) => CONTENT_CLASS.test(c));
-    return kept.length ? ` class=${q}${kept.join(' ')}${q}` : '';
-  });
+  let out = stripPastedMarkup(html);
 
   // The page template already renders the title as the only <h1>. A body
   // <h1> that repeats it is dropped; any other one becomes a section heading.
@@ -51,9 +61,6 @@ export function cleanPostHtml(html: string, title?: string): string {
   out = out.replace(/<h1\b([^>]*)>([\s\S]*?)<\/h1>/gi, (_m, attrs: string, inner: string) =>
     titleText && plainText(inner) === titleText ? '' : `<h2${attrs}>${inner}</h2>`,
   );
-
-  // Empty spacer paragraphs from the WordPress editor.
-  out = out.replace(/<p>(?:\s|&nbsp;|<br\s*\/?>)*<\/p>/gi, '');
 
   if (!out.includes('/img/products/')) return out;
 

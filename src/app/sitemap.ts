@@ -3,6 +3,7 @@ import { categoriesWithPosts } from '@/lib/category-map';
 import { COLLECTIONS } from '@/data/collections';
 import { allPostSlugs } from '@/lib/content';
 import { SITE_URL } from '@/lib/env';
+import { listSitePages } from '@/lib/site-pages';
 
 /** Append a trailing slash to every URL so the sitemap matches the site's
  *  actual canonical URLs (trailingSlash: true in next.config.mjs). */
@@ -12,7 +13,7 @@ function withSlash(path: string): string {
   return `${SITE_URL}${clean}`;
 }
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
   const staticPaths = [
@@ -55,5 +56,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticPaths, ...categoryPaths, ...collectionPaths, ...postPaths];
+  const sitePagePaths = (await listSitePages()).map((p) => ({
+    url: withSlash(`/${p.slug}`),
+    lastModified: new Date(p.updatedAt ?? p.publishedAt),
+    changeFrequency: 'monthly' as const,
+    priority: 0.6,
+  }));
+
+  return [...staticPaths, ...sitePagePaths, ...categoryPaths, ...collectionPaths, ...postPaths];
 }

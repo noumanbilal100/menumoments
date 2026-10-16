@@ -53,9 +53,21 @@ for (const name of fs.readdirSync(postsDir).filter((n) => n.endsWith('.json'))) 
   meta.push({ slug: post.slug, hasSeo: Boolean(post.seo), productPhotoGaps: gaps });
 }
 
+const sitePagesDir = path.join(root, 'src', 'content', 'site-pages');
+const sitePages = fs.existsSync(sitePagesDir)
+  ? fs
+      .readdirSync(sitePagesDir)
+      .filter((n) => n.endsWith('.json'))
+      .map((n) => JSON.parse(fs.readFileSync(path.join(sitePagesDir, n), 'utf8')))
+      .filter((p) => p.status === 'published')
+  : [];
+const sitePagesOut = `${JSON.stringify(sitePages, null, 2)}\n`;
+fs.writeFileSync(path.join(generatedDir, 'site-pages.json'), sitePagesOut);
+fs.writeFileSync(path.join(mirrorDir, '.generated', 'site-pages.json'), sitePagesOut);
+
 const pageCount = fs.existsSync(pagesDir) ? fs.readdirSync(pagesDir).filter((n) => n.endsWith('.json')).length : 0;
 const out = `${JSON.stringify({ pageCount, posts: meta }, null, 2)}\n`;
 fs.writeFileSync(path.join(generatedDir, 'post-meta.json'), out);
 fs.writeFileSync(path.join(mirrorDir, '.generated', 'post-meta.json'), out);
 
-console.log(`export-content: mirrored ${meta.length} posts, ${meta.reduce((n, p) => n + p.productPhotoGaps.length, 0)} photo gaps, ${pageCount} legacy pages`);
+console.log(`export-content: mirrored ${meta.length} posts, ${sitePages.length} site pages, ${meta.reduce((n, p) => n + p.productPhotoGaps.length, 0)} photo gaps, ${pageCount} legacy pages`);
