@@ -8,15 +8,12 @@
  * dependency — which is what makes the migrated site self-hosting.
  */
 
-import { readFile } from 'node:fs/promises';
 import { cleanExcerpt, cleanPostHtml } from './clean-html';
-import path from 'node:path';
+import { readContentFile } from './content-files';
 import indexData from '@/content/index.json';
 import { deriveKindAndRecipe } from './recipe-derive';
 import { categoriesFor } from './category-map';
 import type { Post, PostSeo } from './content';
-
-const CONTENT_DIR = path.join(process.cwd(), 'src', 'content', 'posts');
 
 export interface LocalIndexEntry {
   slug: string;
@@ -49,7 +46,8 @@ export function hasLocalPost(slug: string): boolean {
 export async function readLocalPost(slug: string): Promise<Post | null> {
   if (!hasLocalPost(slug)) return null;
   try {
-    const raw = await readFile(path.join(CONTENT_DIR, `${slug}.json`), 'utf8');
+    const raw = await readContentFile(`posts/${slug}.json`);
+    if (!raw) return null;
     const data = JSON.parse(raw) as {
       slug: string;
       title: string;

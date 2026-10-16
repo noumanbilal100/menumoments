@@ -4,9 +4,15 @@
   "private": true,
   "description": "Menu Moments — food, recipes, kitchen guides",
   "scripts": {
+    "predev": "node scripts/export-content.mjs",
     "dev": "next dev",
+    "prebuild": "node scripts/export-content.mjs",
     "build": "next build",
     "start": "next start",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "migrate": "node scripts/migrate-wp.mjs && node scripts/clean-content.mjs && node scripts/download-images.mjs && node scripts/audit-affiliates.mjs",
@@ -20,6 +26,7 @@
     "amazon:check": "node scripts/retag-amazon-links.mjs --dry-run"
   },
   "dependencies": {
+    "@opennextjs/cloudflare": "^1.20.12",
     "clsx": "2.1.1",
     "fast-xml-parser": "^5.11.2",
     "next": "^16.4.2",
@@ -35,6 +42,11 @@
     "eslint-config-next": "^16.4.2",
     "postcss": "8.4.49",
     "tailwindcss": "3.4.16",
-    "typescript": "5.7.2"
+    "typescript": "5.7.2",
+    "wrangler": "^4.151.1"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true,
+    "workerd@1.20261012.1": true
   }
 }

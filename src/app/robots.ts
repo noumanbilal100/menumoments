@@ -3,7 +3,7 @@ import { SITE_URL } from '@/lib/env';
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: [{ userAgent: '*', allow: '/', disallow: ['/api/', '/admin/'] }],
+    rules: [{ userAgent: '*', allow: '/', disallow: ['/api/', '/admin/', '/_content/'] }],
     // sitemap_index.xml first — it's the URL Search Console already has
     // from the WordPress/Yoast setup.
     sitemap: [`${SITE_URL}/sitemap_index.xml`, `${SITE_URL}/sitemap.xml`],

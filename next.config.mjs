@@ -12,10 +12,12 @@ const nextConfig = {
     workerThreads: false,
   },
   images: {
+    // Served as-is: on Cloudflare Workers, Next's optimizer would need the
+    // paid Cloudflare Images service. Local images are already compressed
+    // WebP; product shots load straight from Amazon's CDN.
+    unoptimized: true,
     remotePatterns: [
       { protocol: 'https', hostname: 'menumoments.com' },
-      // Product shots. next/image fetches these server-side and serves them
-      // from our own origin, so visitors never request Amazon directly.
       { protocol: 'https', hostname: 'm.media-amazon.com' },
       { protocol: 'https', hostname: 'images-na.ssl-images-amazon.com' },
       { protocol: 'https', hostname: 'i0.wp.com' },

@@ -13,3 +13,14 @@ out
 wp-export.xml
 
 .vercel
+
+# Local secrets: .env*.local is loaded in development only.
+.env*.local
+.dev.vars*
+
+# Cloudflare build output and generated content mirror
+.open-next
+.wrangler
+public/_content
+src/content/.generated
+

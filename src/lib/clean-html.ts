@@ -17,7 +17,7 @@ const PLACEHOLDER_SRC = /(<img\b[^>]*\bsrc=)(["'])\/img\/products\/[^"']+\2/i;
 
 function photoUrl(asin: string): string | null {
   const src = PRODUCT_IMAGES[asin];
-  return src ? `/_next/image/?url=${encodeURIComponent(src)}&amp;w=640&amp;q=75` : null;
+  return src ?? null;
 }
 
 function swapPlaceholder(fragment: string, asin: string | undefined): string {

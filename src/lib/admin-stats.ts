@@ -1,7 +1,5 @@
-import { readFile, readdir } from 'node:fs/promises';
-import path from 'node:path';
 import { localIndex, indexEntryToPost } from './local-content';
-import { cleanPostHtml } from './clean-html';
+import { readContentFile } from './content-files';
 import { isAffiliateArticle } from './affiliate';
 import { NO_ADS_CATEGORIES, shouldShowAds } from './ads';
 import { CATEGORIES, SECTIONS } from '@/data/taxonomy';
@@ -79,20 +77,21 @@ export async function adminSnapshot(): Promise<AdminSnapshot> {
   };
 }
 
-const POSTS_DIR = path.join(process.cwd(), 'src', 'content', 'posts');
+interface PostMeta {
+  pageCount: number;
+  posts: { slug: string; hasSeo: boolean; productPhotoGaps: { product: string; asin: string }[] }[];
+}
+
+/** Built by scripts/export-content.mjs before every dev and build run. */
+async function postMeta(): Promise<PostMeta> {
+  const raw = await readContentFile('.generated/post-meta.json');
+  return raw ? (JSON.parse(raw) as PostMeta) : { pageCount: 0, posts: [] };
+}
 
 async function scanPostFiles(): Promise<{ withSeo: number; withoutSeo: string[] }> {
-  try {
-    const files = (await readdir(POSTS_DIR)).filter((f) => f.endsWith('.json'));
-    const withoutSeo: string[] = [];
-    for (const f of files) {
-      const raw = await readFile(path.join(POSTS_DIR, f), 'utf8');
-      if (!raw.includes('"seo"')) withoutSeo.push(f.replace(/\.json$/, ''));
-    }
-    return { withSeo: files.length - withoutSeo.length, withoutSeo };
-  } catch {
-    return { withSeo: 0, withoutSeo: [] };
-  }
+  const { posts } = await postMeta();
+  const withoutSeo = posts.filter((p) => !p.hasSeo).map((p) => p.slug);
+  return { withSeo: posts.length - withoutSeo.length, withoutSeo };
 }
 
 /**
@@ -101,37 +100,14 @@ async function scanPostFiles(): Promise<{ withSeo: number; withoutSeo: string[] 
  * left out of src/data/product-images.ts.
  */
 async function findProductPhotoGaps(titleOf: Map<string, string>): Promise<ProductPhotoGap[]> {
-  const gaps: ProductPhotoGap[] = [];
-  try {
-    for (const f of (await readdir(POSTS_DIR)).filter((n) => n.endsWith('.json'))) {
-      const raw = await readFile(path.join(POSTS_DIR, f), 'utf8');
-      if (!raw.includes('/img/products/')) continue;
-      const slug = f.replace(/\.json$/, '');
-      const html = cleanPostHtml((JSON.parse(raw) as { html: string }).html);
-      const seen = new Set<string>();
-      const re = /<a\b[^>]*\bhref=["']([^"']+)["'][^>]*>\s*<img\b[^>]*\bsrc=["']\/img\/products\/[^"']+["'][^>]*>/gi;
-      for (const m of html.matchAll(re)) {
-        const asin = m[1].match(/\/(?:dp|gp\/product)\/([A-Z0-9]{10})/i)?.[1] ?? '';
-        const product = (m[0].match(/\balt=["']([^"']*)["']/i)?.[1] ?? '').replace(/^\d+\.\s*/, '');
-        const key = asin || product;
-        if (seen.has(key)) continue;
-        seen.add(key);
-        gaps.push({ slug, title: titleOf.get(slug) ?? slug, product: product || 'Unnamed product', asin });
-      }
-    }
-  } catch {
-    // Content directory unavailable — report nothing rather than fail the page.
-  }
-  return gaps;
+  const { posts } = await postMeta();
+  return posts.flatMap((p) =>
+    p.productPhotoGaps.map((g) => ({ slug: p.slug, title: titleOf.get(p.slug) ?? p.slug, ...g })),
+  );
 }
 
 async function countPages(): Promise<number> {
-  const dir = path.join(process.cwd(), 'src', 'content', 'pages');
-  try {
-    return (await readdir(dir)).filter((f) => f.endsWith('.json')).length;
-  } catch {
-    return 0;
-  }
+  return (await postMeta()).pageCount;
 }
 
 export interface AdminPostRow {
