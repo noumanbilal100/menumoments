@@ -167,7 +167,10 @@ export function AffiliateArticle({
       {/* HERO IMAGE ---------------------------------------------------- */}
       {post.heroImage && (
         <div className="mx-auto max-w-5xl px-6 pt-8">
-          <div className="zoom-parent relative aspect-[16/9] overflow-hidden rounded-3xl bg-bone-100 shadow-cardHover">
+          <div
+            className="zoom-parent relative overflow-hidden rounded-3xl bg-bone-100 shadow-cardHover"
+            style={{ aspectRatio: heroAspect(post.heroImage) }}
+          >
               <Image
                 src={post.heroImage.src}
                 alt={post.heroImage.alt}
@@ -176,9 +179,6 @@ export function AffiliateArticle({
                 className="object-cover"
                 priority
               />
-              <span className="absolute left-6 top-6 flex items-center gap-1.5 rounded-full bg-bone-100/95 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-ember-500">
-                <Sparkle size={10} /> Buying guide
-              </span>
           </div>
         </div>
       )}
@@ -343,6 +343,15 @@ function QuickStat({
 }
 
 /** Rough product-count heuristic based on how many H2/H3 the article has. */
+/**
+ * Featured images designed as landscape graphics (often with text near the
+ * edges) keep their own shape; anything squarer is cropped to 16:9.
+ */
+function heroAspect(img: { width?: number; height?: number }): string {
+  const ratio = img.width && img.height ? img.width / img.height : 0;
+  return ratio >= 1.3 && ratio <= 2 ? `${img.width} / ${img.height}` : '16 / 9';
+}
+
 function extractProductCount(headingsCount: number): number {
   if (headingsCount === 0) return 5;
   if (headingsCount < 3) return 3;
