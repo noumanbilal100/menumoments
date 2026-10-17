@@ -21,6 +21,7 @@ export const PRODUCT_REVIEW_SLUGS = new Set<string>([
   'best-coffee-makers',
   'best-air-fryer-guide-instant-pot-air-fryer-reviews',
   'best-stand-mixer-for-beginners-top-kitchenaid-cuisinart-reviewed',
+  'best-sushi-making-kits',
   'stand-mixer-for-cakes-what-to-look-for-best-stand-mixer-buying-guide',
   'stand-mixer-buying-guide-how-to-choose-the-best-stand-mixer-for-baking-cooking',
   'stand-mixer-vs-hand-mixer-which-one-is-right-for-your-baking-needs',

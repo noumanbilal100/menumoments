@@ -30,7 +30,9 @@ export function AffiliateArticle({
   const { html, headings, firstAffiliateAnchorId } = enhanceAffiliateHtml(post.html);
 
   const primaryCat = post.categories[0] ? getCategory(post.categories[0]) : undefined;
-  const productsTested = extractProductCount(headings.length);
+  // Guides built with product review cards report their real pick count.
+  const reviewCards = (html.match(/class="mm-review"/g) ?? []).length;
+  const productsTested = reviewCards || extractProductCount(headings.length);
   const updatedIso = post.updatedAt ?? post.publishedAt;
 
   const jsonLd = {

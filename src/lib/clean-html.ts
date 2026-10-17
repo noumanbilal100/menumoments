@@ -8,9 +8,10 @@ import { PRODUCT_IMAGES } from '@/data/product-images';
  * This site is built with Tailwind too, so those classes take effect inside
  * articles and break the layout — a stray `flex` wrapper turns every section
  * after a table into a narrow column. Only classes that belong to the content
- * itself (WordPress blocks and the old product-box plugin) are kept.
+ * itself (WordPress blocks, the old product-box plugin and the site's own
+ * `mm-` article components) are kept.
  */
-const CONTENT_CLASS = /^(wp-|wp_|align|size-|attachment|mmm-tools-|product-|cta-|has-|is-|aff-)/;
+const CONTENT_CLASS = /^(wp-|wp_|align|size-|attachment|mmm-tools-|mm-|product-|cta-|has-|is-|aff-)/;
 
 const ASIN_RE = /amazon\.[a-z.]+\/(?:[^"']*\/)?(?:dp|gp\/product)\/([A-Z0-9]{10})/i;
 const PLACEHOLDER_SRC = /(<img\b[^>]*\bsrc=)(["'])\/img\/products\/[^"']+\2/i;
