@@ -49,15 +49,23 @@ function githubTarget(): { repo: string; branch: string; token: string } {
   return { repo, branch, token };
 }
 
+// GitHub rejects requests without a User-Agent, and Workers' fetch sends none.
+function ghHeaders(token: string, accept = 'application/vnd.github+json'): Record<string, string> {
+  return {
+    Authorization: `Bearer ${token}`,
+    Accept: accept,
+    'User-Agent': 'menumoments-admin',
+    'X-GitHub-Api-Version': '2022-11-28',
+  };
+}
+
 async function gh<T>(urlPath: string, init: RequestInit & { raw?: boolean } = {}): Promise<T> {
   const { repo, token } = githubTarget();
   const res = await fetch(`https://api.github.com/repos/${repo}${urlPath}`, {
     ...init,
     cache: 'no-store',
     headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: init.raw ? 'application/vnd.github.raw+json' : 'application/vnd.github+json',
-      'X-GitHub-Api-Version': '2022-11-28',
+      ...ghHeaders(token, init.raw ? 'application/vnd.github.raw+json' : undefined),
       ...(init.body ? { 'Content-Type': 'application/json' } : {}),
     },
   });
@@ -81,7 +89,7 @@ async function githubList(dir: string): Promise<string[]> {
     `https://api.github.com/repos/${repo}/contents/${encodeURI(dir)}?ref=${encodeURIComponent(branch)}`,
     {
       cache: 'no-store',
-      headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' },
+      headers: ghHeaders(token),
     },
   );
   if (res.status === 404) return [];
