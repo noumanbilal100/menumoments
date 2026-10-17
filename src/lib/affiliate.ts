@@ -150,13 +150,19 @@ export function formatUpdated(iso?: string): string {
 }
 
 /** "3 months ago" style relative label for editorial "updated" tag. */
-export function relativeUpdated(iso?: string): string {
-  if (!iso) return '';
-  const then = new Date(iso).getTime();
-  if (Number.isNaN(then)) return '';
-  const days = Math.max(1, Math.floor((Date.now() - then) / 86_400_000));
-  if (days < 7) return `${days} day${days === 1 ? '' : 's'} ago`;
-  if (days < 30) return `${Math.round(days / 7)} week${days < 14 ? '' : 's'} ago`;
-  if (days < 365) return `${Math.round(days / 30)} month${days < 60 ? '' : 's'} ago`;
-  return `${Math.round(days / 365)} year${days < 730 ? '' : 's'} ago`;
+/**
+ * "Oct 2026" style label. Pages are prerendered and served unchanged until
+ * the next build, so an absolute date stays true where "3 days ago" would not.
+ */
+export function updatedParts(iso?: string): { monthDay: string; year: string; monthYear: string } | null {
+  if (!iso) return null;
+  // Stored stamps carry no zone; read them as UTC so the build machine's
+  // timezone cannot shift the day.
+  const d = new Date(/(?:z|[+-]\d\d:?\d\d)$/i.test(iso) ? iso : `${iso}Z`);
+  if (Number.isNaN(d.getTime())) return null;
+  return {
+    monthDay: d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' }),
+    year: String(d.getUTCFullYear()),
+    monthYear: d.toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' }),
+  };
 }

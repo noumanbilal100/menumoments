@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Post } from '@/lib/content';
-import { enhanceAffiliateHtml, formatUpdated, relativeUpdated } from '@/lib/affiliate';
+import { enhanceAffiliateHtml, formatUpdated, updatedParts } from '@/lib/affiliate';
 import { getCategory } from '@/data/taxonomy';
 import { PostActions } from '@/components/post-actions';
 import { AuthorCard } from '@/components/author-card';
@@ -34,6 +34,7 @@ export function AffiliateArticle({
   const reviewCards = (html.match(/class="mm-review"/g) ?? []).length;
   const productsTested = reviewCards || extractProductCount(headings.length);
   const updatedIso = post.updatedAt ?? post.publishedAt;
+  const updated = updatedParts(updatedIso);
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -93,7 +94,7 @@ export function AffiliateArticle({
                 Buying guide · {primaryCat?.name ?? 'Reviews'}
               </span>
               <span className="inline-flex items-center gap-1.5 rounded-full border border-bone-200 bg-bone-100 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-char-300 dark:border-char-400 dark:bg-char-400 dark:text-bone-100">
-                Updated {relativeUpdated(updatedIso)}
+                Updated {updated?.monthYear}
               </span>
               <span className="inline-flex items-center gap-1.5 rounded-full border border-moss-200 bg-moss-50 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-moss-500">
                 <span className="h-1.5 w-1.5 rounded-full bg-moss-400" /> Editorially independent
@@ -193,8 +194,8 @@ export function AffiliateArticle({
           />
           <QuickStat
             k="Updated"
-            v={relativeUpdated(updatedIso).replace(' ago', '')}
-            note="ago"
+            v={updated?.monthDay ?? ''}
+            note={updated?.year ?? ''}
           />
           <QuickStat
             k="Reading"
