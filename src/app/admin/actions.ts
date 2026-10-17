@@ -27,7 +27,7 @@ async function assertAdmin(): Promise<void> {
 
 function savedMessage(what: string): string {
   return storeMode() === 'github'
-    ? `${what} saved. The live site picks it up after its rebuild, in about a minute.`
+    ? `${what} saved. The live site picks it up after Cloudflare rebuilds it, usually within a few minutes.`
     : `${what} saved.`;
 }
 

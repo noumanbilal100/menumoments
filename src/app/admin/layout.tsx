@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 const SAVE_STATUS = {
-  github: { text: 'Saving to GitHub · live about a minute after each save', dot: 'bg-emerald-500' },
+  github: { text: 'Saving to GitHub · live a few minutes after each save', dot: 'bg-emerald-500' },
   filesystem: { text: 'Saving to local files', dot: 'bg-sky-500' },
   unconfigured: { text: 'Saving is not set up — add GITHUB_TOKEN on the host', dot: 'bg-amber-500' },
 } as const;
