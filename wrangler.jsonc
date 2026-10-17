@@ -20,6 +20,8 @@
     { "pattern": "menumoments.com", "custom_domain": true },
     { "pattern": "www.menumoments.com", "custom_domain": true }
   ],
+  // Keep variables added in the dashboard (e.g. GITHUB_TOKEN) across deploys.
+  "keep_vars": true,
   "vars": {
     "GITHUB_REPO": "noumanbilal100/menumoments",
     "GITHUB_BRANCH": "main"
