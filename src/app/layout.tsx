@@ -41,6 +41,7 @@ export const metadata: Metadata = {
     description: SITE.description,
   },
   alternates: { canonical: SITE_URL },
+  verification: { google: 'jU81E-AAancEqk9T4n3MggiN33tgfHHOQHeTbuTRdWc' },
   other: ADSENSE_CLIENT ? { 'google-adsense-account': ADSENSE_CLIENT } : undefined,
 };
 
