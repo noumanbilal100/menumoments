@@ -23,6 +23,7 @@ import { cleanPostHtml } from '@/lib/clean-html';
 import { getSitePage, listSitePages } from '@/lib/site-pages';
 import { blockForPost, splitBeforeHeading } from '@/data/post-products';
 import { shouldShowAds } from '@/lib/ads';
+import { jsonLdScript, postJsonLd } from '@/lib/structured-data';
 import { ADSENSE_SLOTS, SITE_URL } from '@/lib/env';
 
 export const revalidate = 3600;
@@ -169,36 +170,12 @@ export default async function PostPage({
   const productAnchor = blockForPost(post.slug)?.beforeHeading;
   const productSplit = productAnchor ? splitBeforeHeading(post.html, productAnchor) : null;
 
-  const jsonLd: Record<string, unknown> = {
-    '@context': 'https://schema.org',
-    '@type': post.kind === 'recipe' ? 'Recipe' : 'Article',
-    headline: post.title,
-    name: post.title,
-    description: post.excerpt,
-    datePublished: post.publishedAt,
-    dateModified: post.updatedAt ?? post.publishedAt,
-    author: { '@type': 'Person', name: post.author.name },
-    image: post.heroImage?.src,
-    mainEntityOfPage: `${SITE_URL}/${post.slug}`,
-    articleSection: primaryCat?.name,
-  };
-  if (post.kind === 'recipe' && post.recipe) {
-    jsonLd.prepTime = post.recipe.prepMinutes ? `PT${post.recipe.prepMinutes}M` : undefined;
-    jsonLd.cookTime = post.recipe.cookMinutes ? `PT${post.recipe.cookMinutes}M` : undefined;
-    jsonLd.totalTime =
-      post.recipe.prepMinutes || post.recipe.cookMinutes
-        ? `PT${(post.recipe.prepMinutes ?? 0) + (post.recipe.cookMinutes ?? 0)}M`
-        : undefined;
-    jsonLd.recipeYield = post.recipe.servings ? `${post.recipe.servings} servings` : undefined;
-    if (post.recipe.diet?.length) jsonLd.suitableForDiet = post.recipe.diet.join(', ');
-  }
-
   return (
     <article>
       <ReadingProgress />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(postJsonLd(post)) }}
       />
 
       {/* Article header ---------------------------------------------- */}

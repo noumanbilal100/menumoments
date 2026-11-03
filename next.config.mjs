@@ -46,7 +46,7 @@ const nextConfig = {
       // Fix a malformed legacy URL that exists in the sitemap
       {
         source: '/https-menumoments-com-topgolf-food-and-drink-menu',
-        destination: '/topgolf-food-and-drink-menu',
+        destination: '/topgolf-food-and-drink-menu/',
         permanent: true,
       },
     ];

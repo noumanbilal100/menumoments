@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Post } from '@/lib/content';
+import { jsonLdScript, postJsonLd } from '@/lib/structured-data';
 import { enhanceAffiliateHtml, formatUpdated, updatedParts } from '@/lib/affiliate';
 import { getCategory } from '@/data/taxonomy';
 import { PostActions } from '@/components/post-actions';
@@ -11,7 +12,6 @@ import { ReadingProgress } from '@/components/reading-progress';
 import { Sparkle, Fork, Squiggle, DrawArrow } from '@/components/doodles';
 import { PostCard } from '@/components/post-card';
 import { SectionHeading } from '@/components/section-heading';
-import { SITE_URL } from '@/lib/env';
 
 /**
  * The "professional affiliate article" layout — Wirecutter/Strategist vibe.
@@ -36,28 +36,11 @@ export function AffiliateArticle({
   const updatedIso = post.updatedAt ?? post.publishedAt;
   const updated = updatedParts(updatedIso);
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Review',
-    itemReviewed: {
-      '@type': primaryCat?.slug.includes('appliance') ? 'Product' : 'Thing',
-      name: post.title,
-    },
-    headline: post.title,
-    reviewBody: post.excerpt,
-    datePublished: post.publishedAt,
-    dateModified: updatedIso,
-    author: { '@type': 'Person', name: post.author.name },
-    publisher: { '@type': 'Organization', name: 'Menu Moments' },
-    image: post.heroImage?.src,
-    mainEntityOfPage: `${SITE_URL}/${post.slug}`,
-  };
-
   return (
     <article>
       <ReadingProgress />
       <AffiliateStickyCTA anchorId={firstAffiliateAnchorId} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(postJsonLd(post)) }} />
 
       {/* HERO ---------------------------------------------------------- */}
       <header className="relative overflow-hidden border-b border-bone-200 dark:border-char-500">
