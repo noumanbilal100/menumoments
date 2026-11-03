@@ -16,12 +16,8 @@ export const NO_ADS_CATEGORIES = new Set<string>([
 /**
  * True if AdSense is configured and this post should show ads.
  *
- * Deliberately does NOT use isAffiliateArticle(). That helper keys off the
- * derived post `kind`, where every slug containing "menu" counts as a
- * review and anything containing "best" or "guide" counts as a roundup —
- * which between them suppressed ads on 109 of 258 posts, including the
- * restaurant menus and how-to guides that are the site's main inventory.
- * Suppression is driven by the hand-kept list instead.
+ * Deliberately does NOT use isAffiliateArticle(). That helper picks a post's
+ * layout; suppressing ads is a separate call, driven by the hand-kept list.
  */
 export function shouldShowAds(post: Pick<Post, 'slug' | 'categories'>): boolean {
   if (!ADSENSE_CLIENT) return false;

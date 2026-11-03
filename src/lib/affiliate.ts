@@ -11,12 +11,12 @@ import type { Post } from './content';
  */
 
 /**
- * True if the post uses the buying-guide layout: everything filed under Buying
- * guides, plus reviews. Categories are chosen by hand now, so an informational
- * post that merely mentions a product no longer switches layout.
+ * True if the post uses the buying-guide layout: Buying guides and product
+ * reviews. Restaurant menus count as reviews too, but they sell nothing, so
+ * they stay on the article layout.
  */
 export function isAffiliateArticle(post: Post): boolean {
-  return post.kind === 'review' || post.categories.includes('affiliate-product-guides');
+  return post.categories.some((c) => c === 'affiliate-product-guides' || c === 'product-reviews');
 }
 
 export interface HeadingRef {
@@ -30,6 +30,11 @@ export interface EnhancedArticle {
   headings: HeadingRef[];
   affiliateCount: number;
   firstAffiliateAnchorId: string | null;
+}
+
+/** Any page with affiliate links needs a disclosure, whatever its layout. */
+export function hasAffiliateLinks(html: string): boolean {
+  return AFFILIATE_RE.test(html);
 }
 
 function slugify(text: string): string {

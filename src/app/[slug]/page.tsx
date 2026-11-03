@@ -15,7 +15,7 @@ import { CollectionCard } from '@/components/collection-card';
 import { ReadingProgress } from '@/components/reading-progress';
 import { Sparkle, Fork, Squiggle } from '@/components/doodles';
 import { AffiliateArticle } from '@/components/affiliate-article';
-import { isAffiliateArticle } from '@/lib/affiliate';
+import { hasAffiliateLinks, isAffiliateArticle } from '@/lib/affiliate';
 import { AdSlot } from '@/components/ad-slot';
 import { ProductRecommendations } from '@/components/product-recommendations';
 import { PageShell } from '@/components/page-shell';
@@ -317,6 +317,16 @@ export default async function PostPage({
       <div className="mx-auto max-w-wide px-6 py-14">
         <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_300px]">
           <div className="min-w-0">
+            {hasAffiliateLinks(post.html) && (
+              <p className="mb-8 rounded-xl border border-bone-200 bg-ember-50 px-4 py-3 text-xs text-char-300 dark:border-char-500 dark:bg-char-500 dark:text-bone-100/80">
+                <strong className="font-semibold text-char-500 dark:text-bone-50">Disclosure:</strong>{' '}
+                Menu Moments earns a commission on qualifying purchases through some of the links
+                below.{' '}
+                <Link href="/disclaimer" className="underline underline-offset-2 hover:text-ember-500">
+                  Read the full policy →
+                </Link>
+              </p>
+            )}
             {adsOn && ADSENSE_SLOTS.inArticleTop && (
               <AdSlot slot={ADSENSE_SLOTS.inArticleTop} format="auto" className="mt-0 mb-10" />
             )}
