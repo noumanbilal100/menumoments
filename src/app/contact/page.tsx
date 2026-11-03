@@ -25,7 +25,7 @@ export default function ContactPage() {
           path: '/contact/',
         })}
       />
-      <div className="not-prose grid gap-6 md:grid-cols-2">
+      <div className="not-prose max-w-md">
         <a
           href={`mailto:${SITE.email}`}
           className="block rounded-2xl border border-cream-200 bg-cream-50 p-6 transition hover:border-clay-500 dark:border-ink-500 dark:bg-ink-500"
@@ -36,20 +36,6 @@ export default function ContactPage() {
           <p className="mt-2 font-display text-xl">{SITE.email}</p>
           <p className="mt-2 text-sm text-ink-300">
             Editorial questions, reader mail, and everything else.
-          </p>
-        </a>
-        <a
-          href={`mailto:partnerships@${SITE.email.split('@')[1]}`}
-          className="block rounded-2xl border border-cream-200 bg-cream-50 p-6 transition hover:border-clay-500 dark:border-ink-500 dark:bg-ink-500"
-        >
-          <p className="text-xs font-semibold uppercase tracking-widest text-clay-500">
-            Partnerships
-          </p>
-          <p className="mt-2 font-display text-xl">
-            partnerships@{SITE.email.split('@')[1]}
-          </p>
-          <p className="mt-2 text-sm text-ink-300">
-            Sponsorships, sponsored posts, affiliate programs.
           </p>
         </a>
       </div>
