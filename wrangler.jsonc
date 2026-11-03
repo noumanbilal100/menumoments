@@ -26,6 +26,10 @@
     "GITHUB_REPO": "noumanbilal100/menumoments",
     "GITHUB_BRANCH": "main"
   },
+  // Contact form notifications. Sending to a verified inbox is free on every plan.
+  "send_email": [
+    { "name": "CONTACT_EMAIL", "destination_address": "menumomentsoutreach@gmail.com" }
+  ],
   "observability": {
     "enabled": true
   }

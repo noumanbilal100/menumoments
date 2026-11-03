@@ -4,6 +4,7 @@ import { JsonLd } from '@/components/json-ld';
 import { PageShell } from '@/components/page-shell';
 import { webPageJsonLd } from '@/lib/structured-data';
 import { SITE } from '@/lib/env';
+import { ContactForm } from './contact-form';
 
 export const metadata: Metadata = pageMeta({
   title: `Contact ${SITE.name}`,
@@ -45,62 +46,7 @@ export default function ContactPage() {
         Prefer a form? Use the one below. We aim to reply within two business days.
       </p>
 
-      <form
-        action="mailto:hello@menumoments.com"
-        method="post"
-        encType="text/plain"
-        className="not-prose mt-6 grid gap-4"
-      >
-        <div>
-          <label htmlFor="name" className="mb-1 block text-sm font-medium">Your name</label>
-          <input
-            id="name"
-            name="name"
-            required
-            className="w-full rounded-xl border border-ink-500/15 bg-bone-100 px-4 py-3 text-sm outline-none focus:border-clay-500 dark:border-cream-50/15 dark:bg-ink-500"
-          />
-        </div>
-        <div>
-          <label htmlFor="email" className="mb-1 block text-sm font-medium">Email</label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            required
-            className="w-full rounded-xl border border-ink-500/15 bg-bone-100 px-4 py-3 text-sm outline-none focus:border-clay-500 dark:border-cream-50/15 dark:bg-ink-500"
-          />
-        </div>
-        <div>
-          <label htmlFor="topic" className="mb-1 block text-sm font-medium">Topic</label>
-          <select
-            id="topic"
-            name="topic"
-            className="w-full rounded-xl border border-ink-500/15 bg-bone-100 px-4 py-3 text-sm outline-none focus:border-clay-500 dark:border-cream-50/15 dark:bg-ink-500"
-          >
-            <option>General question</option>
-            <option>Correction / update</option>
-            <option>Contribute a post</option>
-            <option>Product sample / review</option>
-            <option>Advertising</option>
-          </select>
-        </div>
-        <div>
-          <label htmlFor="message" className="mb-1 block text-sm font-medium">Message</label>
-          <textarea
-            id="message"
-            name="message"
-            required
-            rows={6}
-            className="w-full rounded-xl border border-ink-500/15 bg-bone-100 px-4 py-3 text-sm outline-none focus:border-clay-500 dark:border-cream-50/15 dark:bg-ink-500"
-          />
-        </div>
-        <button
-          type="submit"
-          className="justify-self-start rounded-full bg-clay-500 px-6 py-3 text-sm font-medium text-white hover:bg-clay-600"
-        >
-          Send message
-        </button>
-      </form>
+      <ContactForm />
     </PageShell>
   );
 }
