@@ -44,7 +44,7 @@ export default function WriteForUsPage() {
 
       <h2>Rates & rights</h2>
       <p>
-        Rates start at <strong>$150 for standard posts</strong> and $300+ for original recipes with
+        Rates start at <strong>$120 for standard posts</strong> and $250+ for original recipes with
         photography. We buy first-web rights and hold exclusivity for 60 days. After that, you're
         free to republish with a credit link back.
       </p>
@@ -54,7 +54,7 @@ export default function WriteForUsPage() {
         <li>Read a few recent pieces on the site so your pitch matches our tone.</li>
         <li>Email a 2&ndash;3 sentence pitch plus 1&ndash;2 clips or links to prior work.</li>
         <li>
-          Send to <a href={`mailto:pitches@${SITE.email.split('@')[1]}`}>pitches@{SITE.email.split('@')[1]}</a> with the subject line
+          Send to <a href={`mailto:${SITE.email}`}>{SITE.email}</a> with the subject line
           "PITCH: [your headline]".
         </li>
       </ol>
