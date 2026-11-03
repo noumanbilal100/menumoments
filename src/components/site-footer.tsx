@@ -20,9 +20,7 @@ export function SiteFooter() {
       <div className="relative mx-auto max-w-wide px-6 py-20">
         <div className="grid gap-12 lg:grid-cols-[1.4fr_2.6fr]">
           <div>
-            <div className="[&_span]:text-bone-50">
-              <Logo />
-            </div>
+            <Logo variant="footer" />
             <p className="mt-6 max-w-sm text-sm leading-relaxed text-bone-100/80">
               {SITE.description}
             </p>

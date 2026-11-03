@@ -46,7 +46,7 @@ const PUBLISHER = {
   '@id': ORGANIZATION_ID,
   name: SITE.name,
   url: `${SITE_URL}/`,
-  logo: { '@type': 'ImageObject', url: `${SITE_URL}/logo.png`, width: 512, height: 512 },
+  logo: { '@type': 'ImageObject', url: `${SITE_URL}/menumoments-logo.png`, width: 2088, height: 616 },
 };
 
 /** Who publishes the site. Goes on the homepage, which Google reads this from. */
