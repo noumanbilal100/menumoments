@@ -193,7 +193,7 @@ function ProductCard({ product: p, buyUrl }: { product: Product; buyUrl: string 
       >
         <Image
           src={p.image}
-          alt=""
+          alt={p.name}
           fill
           sizes="(min-width: 1280px) 300px, (min-width: 768px) 30vw, 45vw"
           className="object-contain p-5 transition-transform duration-500 group-hover:scale-105 sm:p-7"

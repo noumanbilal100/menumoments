@@ -1,12 +1,14 @@
 import type { Metadata } from 'next';
+import { pageMeta } from '@/lib/seo';
 import Link from 'next/link';
 import { PageShell } from '@/components/page-shell';
 import { SITE } from '@/lib/env';
 
-export const metadata: Metadata = {
-  title: 'Write for us',
-  description: 'Pitch a recipe, review or kitchen guide to Menu Moments.',
-};
+export const metadata: Metadata = pageMeta({
+  title: 'Write for Us',
+  description: 'Pitch a recipe, review or kitchen guide to Menu Moments. See what we publish and how to send your idea.',
+  path: '/write-for-us/',
+});
 
 export default function WriteForUsPage() {
   return (

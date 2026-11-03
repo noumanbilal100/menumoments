@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { pageMeta } from '@/lib/seo';
 import Link from 'next/link';
 import Image from 'next/image';
 import { PRODUCTS, PRODUCT_CATEGORIES, amazonUrl } from '@/data/products';
@@ -15,13 +16,7 @@ export function generateMetadata(): Metadata {
   const year = new Date().getFullYear();
   const title = `Best Kitchen Gear & Appliances We Recommend (${year})`;
   const description = `Our top kitchen picks for ${year}: air fryers, blenders, stand mixers, coffee makers, microwaves, beverage fridges and baking tools — each linked to a full review, with today's price on Amazon.`;
-  return {
-    title,
-    description,
-    alternates: { canonical: PAGE_URL },
-    openGraph: { type: 'website', url: PAGE_URL, title, description, siteName: SITE.name },
-    twitter: { card: 'summary_large_image', title, description },
-  };
+  return pageMeta({ title, description, path: PATH });
 }
 
 const TRUST = [

@@ -1,11 +1,13 @@
 import type { Metadata } from 'next';
+import { pageMeta } from '@/lib/seo';
 import { PageShell } from '@/components/page-shell';
 import { SITE } from '@/lib/env';
 
-export const metadata: Metadata = {
-  title: 'Privacy policy',
-  description: `How ${SITE.name} handles your data.`,
-};
+export const metadata: Metadata = pageMeta({
+  title: 'Privacy Policy',
+  description: `How ${SITE.name} handles your data, cookies and advertising.`,
+  path: '/privacy-policy/',
+});
 
 export default function PrivacyPolicyPage() {
   return (
@@ -31,7 +33,7 @@ export default function PrivacyPolicyPage() {
       <h2>Third-party services</h2>
       <ul>
         <li>Newsletter delivery via a third-party provider (your email is stored with them).</li>
-        <li>Amazon Associates and other affiliate networks &mdash; see our <a href="/disclaimer">disclaimer</a>.</li>
+        <li>Amazon Associates and other affiliate networks &mdash; see our <a href="/disclaimer/">disclaimer</a>.</li>
         <li>Analytics for aggregate usage patterns only, never personal profiling.</li>
       </ul>
 

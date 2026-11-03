@@ -6,7 +6,9 @@ import { COLLECTIONS, getCollection } from '@/data/collections';
 import { getPost } from '@/lib/content';
 import { PostCard } from '@/components/post-card';
 import { getCategory } from '@/data/taxonomy';
-import { SITE_URL } from '@/lib/env';
+import { pageMeta } from '@/lib/seo';
+import { breadcrumbJsonLd, collectionJsonLd } from '@/lib/structured-data';
+import { JsonLd } from '@/components/json-ld';
 
 export const revalidate = 3600;
 
@@ -22,16 +24,17 @@ export async function generateMetadata({
   const { slug } = await params;
   const col = getCollection(slug);
   if (!col) return {};
-  return {
+  let image = col.hero;
+  for (const s of col.postSlugs) {
+    if (image) break;
+    image = (await getPost(s))?.heroImage?.src;
+  }
+  return pageMeta({
     title: col.title,
-    description: col.subtitle,
-    alternates: { canonical: `${SITE_URL}/collections/${col.slug}` },
-    openGraph: {
-      title: col.title,
-      description: col.subtitle,
-      type: 'article',
-    },
-  };
+    description: col.intro,
+    path: `/collections/${col.slug}/`,
+    image,
+  });
 }
 
 export default async function CollectionPage({
@@ -52,13 +55,28 @@ export default async function CollectionPage({
 
   return (
     <div>
+      <JsonLd
+        data={collectionJsonLd({
+          name: col.title,
+          description: col.subtitle,
+          path: `/collections/${col.slug}/`,
+          posts,
+        })}
+      />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: 'Home', path: '/' },
+          { name: 'Collections', path: '/collections/' },
+          { name: col.title, path: `/collections/${col.slug}/` },
+        ])}
+      />
       {/* Hero -------------------------------------------------------- */}
       <header className="relative overflow-hidden border-b border-cream-200 bg-ink-500 text-cream-50 dark:border-ink-500">
         {hero && (
           <div className="absolute inset-0">
             <Image
               src={hero}
-              alt=""
+              alt={col.title}
               fill
               priority
               sizes="100vw"
@@ -170,7 +188,7 @@ async function PreviewCollection({ slug, title, count }: { slug: string; title: 
         {cover && (
           <Image
             src={cover}
-            alt=""
+            alt={title}
             fill
             sizes="(min-width: 1024px) 33vw, 50vw"
             className="object-cover transition-transform duration-700 group-hover:scale-105"

@@ -27,7 +27,7 @@ function isoMinutes(minutes: number): string {
   return `PT${minutes}M`;
 }
 
-function imageFor(post: Post): string | undefined {
+export function imageFor(post: Post): string | undefined {
   if (post.heroImage?.src) return absolute(post.heroImage.src);
   const inBody = post.html.match(/<img\b[^>]*\bsrc=["']([^"']+)["']/i)?.[1];
   return inBody ? absolute(decodeEntities(inBody)) : undefined;
@@ -38,6 +38,102 @@ function authorOf(post: Post): Record<string, string> {
   return post.author.name === SITE.name
     ? { '@type': 'Organization', name: SITE.name, url: `${SITE_URL}/` }
     : { '@type': 'Person', name: post.author.name };
+}
+
+const ORGANIZATION_ID = `${SITE_URL}/#organization`;
+const PUBLISHER = {
+  '@type': 'Organization',
+  '@id': ORGANIZATION_ID,
+  name: SITE.name,
+  url: `${SITE_URL}/`,
+  logo: { '@type': 'ImageObject', url: `${SITE_URL}/logo.png`, width: 512, height: 512 },
+};
+
+/** Who publishes the site. Goes on the homepage, which Google reads this from. */
+export function siteJsonLd(): Record<string, unknown> {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      { ...PUBLISHER, description: SITE.description, email: SITE.email },
+      {
+        '@type': 'WebSite',
+        '@id': `${SITE_URL}/#website`,
+        url: `${SITE_URL}/`,
+        name: SITE.name,
+        description: SITE.description,
+        inLanguage: 'en-US',
+        publisher: { '@id': ORGANIZATION_ID },
+      },
+    ],
+  };
+}
+
+export function breadcrumbJsonLd(items: { name: string; path: string }[]): Record<string, unknown> {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: decodeEntities(item.name),
+      item: `${SITE_URL}${item.path}`,
+    })),
+  };
+}
+
+export function postBreadcrumbJsonLd(post: Post): Record<string, unknown> {
+  const category = post.categories[0] ? getCategory(post.categories[0]) : undefined;
+  return breadcrumbJsonLd([
+    { name: 'Home', path: '/' },
+    ...(category ? [{ name: category.name, path: `/category/${category.slug}/` }] : []),
+    { name: post.title, path: `/${post.slug}/` },
+  ]);
+}
+
+/** A page whose job is to list other pages: a category, collection or the archive. */
+export function collectionJsonLd(page: {
+  name: string;
+  description: string;
+  path: string;
+  posts?: Pick<Post, 'slug' | 'title'>[];
+}): Record<string, unknown> {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    '@id': `${SITE_URL}${page.path}`,
+    url: `${SITE_URL}${page.path}`,
+    name: decodeEntities(page.name),
+    description: decodeEntities(page.description),
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+    mainEntity: page.posts?.length
+      ? {
+          '@type': 'ItemList',
+          numberOfItems: page.posts.length,
+          itemListElement: page.posts.slice(0, 30).map((p, i) => ({
+            '@type': 'ListItem',
+            position: i + 1,
+            url: `${SITE_URL}/${p.slug}/`,
+            name: decodeEntities(p.title),
+          })),
+        }
+      : undefined,
+  };
+}
+
+export function webPageJsonLd(
+  type: 'AboutPage' | 'ContactPage',
+  page: { name: string; description: string; path: string },
+): Record<string, unknown> {
+  return {
+    '@context': 'https://schema.org',
+    '@type': type,
+    '@id': `${SITE_URL}${page.path}`,
+    url: `${SITE_URL}${page.path}`,
+    name: page.name,
+    description: page.description,
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+    publisher: { '@id': ORGANIZATION_ID },
+  };
 }
 
 export function postJsonLd(post: Post): Record<string, unknown> {
@@ -64,7 +160,7 @@ export function postJsonLd(post: Post): Record<string, unknown> {
       '@type': 'Article',
       headline: name,
       articleSection: section,
-      publisher: { '@type': 'Organization', name: SITE.name, url: `${SITE_URL}/` },
+      publisher: PUBLISHER,
     };
   }
 

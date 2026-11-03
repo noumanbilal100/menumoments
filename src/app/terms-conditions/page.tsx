@@ -1,11 +1,13 @@
 import type { Metadata } from 'next';
+import { pageMeta } from '@/lib/seo';
 import { PageShell } from '@/components/page-shell';
 import { SITE } from '@/lib/env';
 
-export const metadata: Metadata = {
-  title: 'Terms & conditions',
-  description: `The terms for using ${SITE.name}.`,
-};
+export const metadata: Metadata = pageMeta({
+  title: 'Terms & Conditions',
+  description: `The terms and conditions for using the ${SITE.name} website.`,
+  path: '/terms-conditions/',
+});
 
 export default function TermsPage() {
   return (
@@ -32,13 +34,13 @@ export default function TermsPage() {
       <h2>Recipes</h2>
       <p>
         Recipes are provided for informational purposes. Ingredient substitutions, allergen
-        management and food safety are your responsibility. See the <a href="/disclaimer">disclaimer</a> for more.
+        management and food safety are your responsibility. See the <a href="/disclaimer/">disclaimer</a> for more.
       </p>
 
       <h2>Affiliate links</h2>
       <p>
         Some links earn us a commission at no cost to you. This does not influence our editorial
-        opinion &mdash; see our <a href="/disclaimer">disclaimer</a>.
+        opinion &mdash; see our <a href="/disclaimer/">disclaimer</a>.
       </p>
 
       <h2>Liability</h2>

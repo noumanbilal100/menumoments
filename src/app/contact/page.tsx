@@ -1,11 +1,15 @@
 import type { Metadata } from 'next';
+import { pageMeta } from '@/lib/seo';
+import { JsonLd } from '@/components/json-ld';
 import { PageShell } from '@/components/page-shell';
+import { webPageJsonLd } from '@/lib/structured-data';
 import { SITE } from '@/lib/env';
 
-export const metadata: Metadata = {
-  title: 'Contact',
-  description: `Get in touch with the ${SITE.name} team.`,
-};
+export const metadata: Metadata = pageMeta({
+  title: `Contact ${SITE.name}`,
+  description: `Story ideas, corrections or partnership requests? Get in touch with the ${SITE.name} team.`,
+  path: '/contact/',
+});
 
 export default function ContactPage() {
   return (
@@ -14,6 +18,13 @@ export default function ContactPage() {
       title="Say hello."
       lede="Story ideas, product samples, corrections, partnership requests — we read everything."
     >
+      <JsonLd
+        data={webPageJsonLd('ContactPage', {
+          name: `Contact ${SITE.name}`,
+          description: `Get in touch with the ${SITE.name} team.`,
+          path: '/contact/',
+        })}
+      />
       <div className="not-prose grid gap-6 md:grid-cols-2">
         <a
           href={`mailto:${SITE.email}`}

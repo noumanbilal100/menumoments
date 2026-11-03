@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { notFound, redirect } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import { PostCard } from '@/components/post-card';
 import { TrendingList } from '@/components/trending-list';
 import { CollectionCard } from '@/components/collection-card';
@@ -10,13 +10,36 @@ import {
   SECTIONS,
   getCategory,
   isLegacyCategorySlug,
+  type Category,
+  type SectionKey,
 } from '@/data/taxonomy';
 import { COLLECTIONS } from '@/data/collections';
-import { liveCategoriesInSection } from '@/lib/category-map';
+import { isIndexableCategory, liveCategoriesInSection } from '@/lib/category-map';
 import { listPostsInCategory, getPost } from '@/lib/content';
-import { SITE_URL } from '@/lib/env';
+import { SITE } from '@/lib/env';
+import { pageMeta } from '@/lib/seo';
+import { breadcrumbJsonLd, collectionJsonLd } from '@/lib/structured-data';
+import { JsonLd } from '@/components/json-ld';
 
 export const revalidate = 3600;
+
+/** Cards are heavy, so a big category lists the rest as plain links. */
+const CARD_LIMIT = 60;
+
+const SECTION_TITLE: Record<SectionKey, string> = {
+  recipes: 'Recipes & Ideas',
+  lifestyle: 'Recipes & Ideas',
+  'kitchen-tips': 'Practical Guides & How-Tos',
+  gear: 'Guides & Buying Advice',
+  planning: 'Guides & Ideas',
+  reviews: 'Guides & Honest Takes',
+};
+
+function categoryTitle(cat: Category): string {
+  if (cat.slug === 'recipes') return 'All Recipes: Dinners, Desserts & More';
+  if (/recipes/i.test(cat.name)) return `${cat.name} & Meal Ideas`;
+  return `${cat.name}: ${SECTION_TITLE[cat.section]}`;
+}
 
 export async function generateStaticParams() {
   return CATEGORIES.map((c) => ({ slug: c.slug }));
@@ -30,11 +53,14 @@ export async function generateMetadata({
   const { slug } = await params;
   const cat = getCategory(slug);
   if (!cat) return {};
-  return {
-    title: cat.name,
-    description: cat.description,
-    alternates: { canonical: `${SITE_URL}/category/${cat.slug}` },
-  };
+  const [latest] = await listPostsInCategory(cat.slug, 1);
+  return pageMeta({
+    title: categoryTitle(cat),
+    description: `${cat.description} Browse our latest ${cat.name.toLowerCase()} on ${SITE.name}.`,
+    path: `/category/${cat.slug}/`,
+    image: latest?.heroImage?.src,
+    noindex: !isIndexableCategory(cat.slug),
+  });
 }
 
 export default async function CategoryPage({
@@ -46,9 +72,11 @@ export default async function CategoryPage({
 
   const cat = getCategory(slug);
   if (!cat) notFound();
-  if (isLegacyCategorySlug(slug)) redirect(`/category/${cat.slug}`);
+  if (isLegacyCategorySlug(slug)) permanentRedirect(`/category/${cat.slug}/`);
 
-  const posts = await listPostsInCategory(cat.slug, 60);
+  const everyPost = await listPostsInCategory(cat.slug, Infinity);
+  const posts = everyPost.slice(0, CARD_LIMIT);
+  const morePosts = everyPost.slice(CARD_LIMIT);
   const [featured, second, ...rest] = posts;
   const trending = posts.slice(0, 6).filter((p) => p.slug !== featured?.slug).slice(0, 5);
   const siblings = liveCategoriesInSection(cat.section).filter((c) => c.slug !== cat.slug);
@@ -69,6 +97,20 @@ export default async function CategoryPage({
 
   return (
     <div>
+      <JsonLd
+        data={collectionJsonLd({
+          name: cat.name,
+          description: cat.description,
+          path: `/category/${cat.slug}/`,
+          posts: everyPost,
+        })}
+      />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: 'Home', path: '/' },
+          { name: cat.name, path: `/category/${cat.slug}/` },
+        ])}
+      />
       {/* Category header -------------------------------------------- */}
       <header className="border-b border-cream-200 bg-cream-50 dark:border-ink-500 dark:bg-ink-600">
         <div className="mx-auto max-w-wide px-6 pt-16 pb-12 lg:pt-24">
@@ -87,7 +129,7 @@ export default async function CategoryPage({
           </nav>
 
           <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-clay-500">
-            {SECTIONS[cat.section].name} · {posts.length} {posts.length === 1 ? 'post' : 'posts'}
+            {SECTIONS[cat.section].name} · {everyPost.length} {everyPost.length === 1 ? 'post' : 'posts'}
           </p>
           <h1 className="font-display text-display-xl text-ink-500 dark:text-cream-50">
             {cat.name}
@@ -154,6 +196,22 @@ export default async function CategoryPage({
                       <PostCard key={p.slug} post={p} />
                     ))}
                 </div>
+                {morePosts.length > 0 && (
+                  <div className="mt-16">
+                    <h2 className="font-display text-2xl text-ink-500 dark:text-cream-50">
+                      More {cat.name.toLowerCase()}
+                    </h2>
+                    <ul className="mt-5 grid gap-x-8 gap-y-2 text-sm sm:grid-cols-2">
+                      {morePosts.map((p) => (
+                        <li key={p.slug}>
+                          <Link href={`/${p.slug}`} className="text-ink-500 hover:text-clay-500 dark:text-cream-50">
+                            {p.title}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
               <aside className="hidden lg:block">
                 <div className="sticky top-24 space-y-10">

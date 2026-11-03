@@ -4,17 +4,21 @@ import { PostCard } from '@/components/post-card';
 import { TrendingList } from '@/components/trending-list';
 import { CollectionCard } from '@/components/collection-card';
 import { SectionHeading } from '@/components/section-heading';
-import { listRecentPosts, getPost } from '@/lib/content';
-import { SECTIONS, SectionKey } from '@/data/taxonomy';
+import { allListedPosts, listRecentPosts, getPost } from '@/lib/content';
+import { CATEGORIES, SECTIONS, SectionKey } from '@/data/taxonomy';
 import { liveCategoriesInSection } from '@/lib/category-map';
 import { COLLECTIONS } from '@/data/collections';
+import { pageMeta } from '@/lib/seo';
+import { collectionJsonLd } from '@/lib/structured-data';
+import { JsonLd } from '@/components/json-ld';
+
+const TITLE = 'All Recipes, Kitchen Guides & Food Reviews';
+const DESCRIPTION =
+  'Browse every recipe, kitchen guide, gear review and restaurant menu on Menu Moments, from the newest posts to the full archive.';
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: 'All posts',
-  description: 'Every recipe, guide and review from Menu Moments.',
-};
+export const metadata: Metadata = pageMeta({ title: TITLE, description: DESCRIPTION, path: '/blog/' });
 
 export default async function BlogIndex() {
   const posts = await listRecentPosts(60);
@@ -33,8 +37,16 @@ export default async function BlogIndex() {
   );
   const coverMap = new Map(collectionCovers.map((c) => [c.slug, c.cover]));
 
+  // Plain links to every post, so nothing is more than a couple of clicks from the homepage.
+  const everyPost = allListedPosts();
+  const archive = CATEGORIES.map((category) => ({
+    category,
+    posts: everyPost.filter((p) => p.categories[0] === category.slug),
+  })).filter((group) => group.posts.length > 0);
+
   return (
     <div className="mx-auto max-w-wide px-6 pt-14 pb-24">
+      <JsonLd data={collectionJsonLd({ name: TITLE, description: DESCRIPTION, path: '/blog/', posts })} />
       <header className="mb-14 flex flex-wrap items-end justify-between gap-6">
         <div className="max-w-2xl">
           <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-clay-500">
@@ -145,6 +157,31 @@ export default async function BlogIndex() {
           </div>
         </aside>
       </div>
+
+      <section id="archive" className="mt-24 border-t border-cream-200 pt-14 dark:border-ink-500">
+        <h2 className="font-display text-display-md text-ink-500 dark:text-cream-50">The full archive</h2>
+        <p className="mt-3 max-w-xl text-ink-300">All {everyPost.length} posts, grouped by category.</p>
+        <div className="mt-10 gap-10 md:columns-2 lg:columns-3">
+          {archive.map(({ category, posts: inCategory }) => (
+            <div key={category.slug} className="mb-10 break-inside-avoid">
+              <h3 className="font-display text-xl text-ink-500 dark:text-cream-50">
+                <Link href={`/category/${category.slug}`} className="hover:text-clay-500">
+                  {category.name}
+                </Link>
+              </h3>
+              <ul className="mt-3 space-y-2 text-sm">
+                {inCategory.map((p) => (
+                  <li key={p.slug}>
+                    <Link href={`/${p.slug}`} className="text-ink-300 hover:text-clay-500">
+                      {p.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Post } from '@/lib/content';
-import { jsonLdScript, postJsonLd } from '@/lib/structured-data';
+import { postBreadcrumbJsonLd, postJsonLd } from '@/lib/structured-data';
+import { JsonLd } from '@/components/json-ld';
 import { enhanceAffiliateHtml, formatUpdated, updatedParts } from '@/lib/affiliate';
 import { getCategory } from '@/data/taxonomy';
 import { PostActions } from '@/components/post-actions';
@@ -40,7 +41,8 @@ export function AffiliateArticle({
     <article>
       <ReadingProgress />
       <AffiliateStickyCTA anchorId={firstAffiliateAnchorId} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(postJsonLd(post)) }} />
+      <JsonLd data={postJsonLd(post)} />
+      <JsonLd data={postBreadcrumbJsonLd(post)} />
 
       {/* HERO ---------------------------------------------------------- */}
       <header className="relative overflow-hidden border-b border-bone-200 dark:border-char-500">
@@ -287,11 +289,11 @@ export function AffiliateArticle({
           <div className="mx-auto max-w-wide px-6">
             <SectionHeading
               eyebrow="Keep comparing"
-              title={`More ${primaryCat?.name ?? 'buying guides'}`}
+              title="You might also like"
               href={primaryCat ? `/category/${primaryCat.slug}` : '/blog'}
             />
             <div className="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-              {related.slice(0, 3).map((r) => (
+              {related.map((r) => (
                 <PostCard key={r.slug} post={r} />
               ))}
             </div>

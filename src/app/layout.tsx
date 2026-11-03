@@ -7,6 +7,7 @@ import { Marquee } from '@/components/marquee';
 import { AdSenseLoader } from '@/components/adsense';
 import { ConsentBanner } from '@/components/consent-banner';
 import { SiteChrome } from '@/components/site-chrome';
+import { DEFAULT_SOCIAL_IMAGE, HOME_TITLE, TITLE_TEMPLATE } from '@/lib/seo';
 import './globals.css';
 
 const display = Fraunces({
@@ -24,23 +25,31 @@ const sans = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE.name} — ${SITE.tagline}`,
-    template: `%s — ${SITE.name}`,
+    default: HOME_TITLE,
+    template: TITLE_TEMPLATE,
   },
   description: SITE.description,
+  // Each page sets its own canonical. One set here would point them all at the homepage.
+  robots: {
+    index: true,
+    follow: true,
+    'max-snippet': -1,
+    'max-image-preview': 'large',
+    'max-video-preview': -1,
+  },
   openGraph: {
     type: 'website',
     siteName: SITE.name,
     title: SITE.name,
     description: SITE.description,
-    url: SITE_URL,
+    images: [DEFAULT_SOCIAL_IMAGE],
   },
   twitter: {
     card: 'summary_large_image',
     title: SITE.name,
     description: SITE.description,
+    images: [DEFAULT_SOCIAL_IMAGE],
   },
-  alternates: { canonical: SITE_URL },
   verification: { google: 'jU81E-AAancEqk9T4n3MggiN33tgfHHOQHeTbuTRdWc' },
   other: ADSENSE_CLIENT ? { 'google-adsense-account': ADSENSE_CLIENT } : undefined,
 };
@@ -48,6 +57,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${display.variable} ${sans.variable}`}>
+      <head>
+        <link rel="alternate" type="application/rss+xml" title={SITE.name} href="/feed.xml" />
+        {/* Reveal hides blocks until its script runs; without JS they must still show. */}
+        <noscript>
+          <style dangerouslySetInnerHTML={{ __html: '[data-reveal]{opacity:1;transform:none}' }} />
+        </noscript>
+      </head>
       <body className="min-h-screen font-sans">
         <a
           href="#main"

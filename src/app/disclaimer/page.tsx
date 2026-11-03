@@ -1,11 +1,13 @@
 import type { Metadata } from 'next';
+import { pageMeta } from '@/lib/seo';
 import { PageShell } from '@/components/page-shell';
 import { SITE } from '@/lib/env';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: 'Disclaimer',
-  description: `${SITE.name} — affiliate, editorial and nutrition disclaimer.`,
-};
+  description: `${SITE.name}'s affiliate, editorial and nutrition disclaimer.`,
+  path: '/disclaimer/',
+});
 
 export default function DisclaimerPage() {
   return (

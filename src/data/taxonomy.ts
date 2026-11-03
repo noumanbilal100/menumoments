@@ -130,7 +130,7 @@ export const CATEGORIES: Category[] = [
   { slug: 'food-and-kitchen-comparisons', name: 'Food & kitchen comparisons', section: 'reviews', description: 'Head-to-heads and versus posts.' },
   { slug: 'best-kitchen-products', name: 'Best kitchen products', section: 'reviews', description: 'Category winners across price ranges.' },
   { slug: 'amazon-kitchen-finds', name: 'Amazon kitchen finds', section: 'reviews', description: 'Under-the-radar buys worth the tab.' },
-  { slug: 'affiliate-product-guides', name: 'Affiliate product guides', section: 'reviews', description: 'Long-form buyers guides.', legacySlugs: ['dog-food-guide'] },
+  { slug: 'affiliate-product-guides', name: 'Buying guides', section: 'reviews', description: 'Long-form buyers guides.', legacySlugs: ['dog-food-guide'] },
 ];
 
 const bySlug = new Map(CATEGORIES.map((c) => [c.slug, c]));

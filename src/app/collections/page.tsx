@@ -1,14 +1,16 @@
 import type { Metadata } from 'next';
+import { pageMeta } from '@/lib/seo';
 import { COLLECTIONS } from '@/data/collections';
 import { CollectionCard } from '@/components/collection-card';
 import { getPost } from '@/lib/content';
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  title: 'Collections',
+export const metadata: Metadata = pageMeta({
+  title: 'Recipe & Kitchen Collections',
   description: 'Curated roundups from the Menu Moments editors — weeknight dinners, cozy baking, kitchen upgrades and more.',
-};
+  path: '/collections/',
+});
 
 export default async function CollectionsIndex() {
   const covers = await Promise.all(

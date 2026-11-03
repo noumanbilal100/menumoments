@@ -54,6 +54,27 @@ export function populatedCategorySlugs(): Set<string> {
   return live;
 }
 
+let countCache: Map<string, number> | null = null;
+
+function categoryPostCount(slug: string): number {
+  if (!countCache) {
+    countCache = new Map();
+    for (const entry of indexData as unknown as IndexLike[]) {
+      for (const c of categoriesFor(entry.slug, entry.title, entry.wpCategorySlugs ?? [])) {
+        countCache.set(c, (countCache.get(c) ?? 0) + 1);
+      }
+    }
+  }
+  return countCache.get(slug) ?? 0;
+}
+
+/** Below this a listing is too thin to be worth a place in search results. */
+const MIN_POSTS_TO_INDEX = 3;
+
+export function isIndexableCategory(slug: string): boolean {
+  return categoryPostCount(slug) >= MIN_POSTS_TO_INDEX;
+}
+
 /** Categories that have content, in taxonomy order. */
 export function categoriesWithPosts(): Category[] {
   const live = populatedCategorySlugs();

@@ -1,13 +1,16 @@
 import type { Metadata } from 'next';
+import { pageMeta } from '@/lib/seo';
 import { listRecentPosts } from '@/lib/content';
 import { SearchClient } from './search-client';
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: 'Search',
   description: 'Search recipes, guides and reviews on Menu Moments.',
-};
+  path: '/search/',
+  noindex: true,
+});
 
 export default async function SearchPage() {
   const posts = await listRecentPosts(200);

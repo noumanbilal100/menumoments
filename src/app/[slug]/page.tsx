@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
-import { notFound, redirect } from 'next/navigation';
-import { getPost, listPostsInCategory, listRecentPosts, allPostSlugs } from '@/lib/content';
+import { notFound, permanentRedirect } from 'next/navigation';
+import { getPost, listRecentPosts, allPostSlugs, relatedPosts } from '@/lib/content';
 import { getCategory } from '@/data/taxonomy';
 import { COLLECTIONS } from '@/data/collections';
 import { PostCard } from '@/components/post-card';
@@ -23,8 +23,10 @@ import { cleanPostHtml } from '@/lib/clean-html';
 import { getSitePage, listSitePages } from '@/lib/site-pages';
 import { blockForPost, splitBeforeHeading } from '@/data/post-products';
 import { shouldShowAds } from '@/lib/ads';
-import { jsonLdScript, postJsonLd } from '@/lib/structured-data';
-import { ADSENSE_SLOTS, SITE_URL } from '@/lib/env';
+import { imageFor, postBreadcrumbJsonLd, postJsonLd } from '@/lib/structured-data';
+import { JsonLd } from '@/components/json-ld';
+import { pageMeta } from '@/lib/seo';
+import { ADSENSE_SLOTS } from '@/lib/env';
 
 export const revalidate = 3600;
 export const dynamicParams = true;
@@ -45,31 +47,33 @@ export async function generateMetadata({
     const page = await getSitePage(slug);
     if (!page) return {};
     return {
-      title: page.seo?.seoTitle || page.title,
-      description: page.seo?.metaDescription || page.lede,
+      ...pageMeta({
+        title: page.seo?.seoTitle || page.title,
+        description: page.seo?.metaDescription || page.lede || page.title,
+        path: `/${slug}/`,
+      }),
       keywords: page.seo?.focusKeyword ? [page.seo.focusKeyword] : undefined,
-      alternates: { canonical: `${SITE_URL}/${slug}/` },
     };
   }
   const seo = post.seo ?? {};
-  const title = decodeEntities(seo.seoTitle) ?? post.title;
-  const description = decodeEntities(seo.metaDescription) ?? post.excerpt;
-  const ogTitle = decodeEntities(seo.ogTitle) ?? title;
-  const ogDescription = decodeEntities(seo.ogDescription) ?? description;
+  const category = post.categories[0] ? getCategory(post.categories[0]) : undefined;
   return {
-    title,
-    description,
+    ...pageMeta({
+      title: decodeEntities(seo.seoTitle) ?? post.title,
+      description: decodeEntities(seo.metaDescription) ?? post.excerpt,
+      path: `/${slug}/`,
+      canonical: seo.canonical,
+      image: imageFor(post),
+      socialTitle: decodeEntities(seo.ogTitle),
+      socialDescription: decodeEntities(seo.ogDescription),
+      article: {
+        publishedTime: post.publishedAt,
+        modifiedTime: post.updatedAt,
+        authors: [post.author.name],
+        section: category?.name,
+      },
+    }),
     keywords: seo.focusKeyword ? [seo.focusKeyword] : undefined,
-    alternates: { canonical: seo.canonical || `${SITE_URL}/${slug}/` },
-    openGraph: {
-      title: ogTitle,
-      description: ogDescription,
-      type: 'article',
-      publishedTime: post.publishedAt,
-      modifiedTime: post.updatedAt,
-      authors: [post.author.name],
-      images: post.heroImage ? [{ url: post.heroImage.src }] : undefined,
-    },
   };
 }
 
@@ -132,7 +136,7 @@ export default async function PostPage({
   const { slug } = await params;
 
   const asCategory = getCategory(slug);
-  if (asCategory) redirect(`/category/${asCategory.slug}`);
+  if (asCategory) permanentRedirect(`/category/${asCategory.slug}/`);
 
   const post = await getPost(slug);
   if (!post) {
@@ -151,11 +155,8 @@ export default async function PostPage({
     .map((s) => getCategory(s))
     .filter((c): c is NonNullable<typeof c> => Boolean(c));
 
-  const [related, trending] = await Promise.all([
-    primaryCat ? listPostsInCategory(primaryCat.slug, 6) : Promise.resolve([]),
-    listRecentPosts(6),
-  ]);
-  const relatedFiltered = related.filter((r) => r.slug !== post.slug).slice(0, 3);
+  const trending = await listRecentPosts(6);
+  const relatedFiltered = relatedPosts(post);
   const trendingFiltered = trending.filter((t) => t.slug !== post.slug).slice(0, 5);
 
   // Buying guides / reviews get a dedicated Wirecutter-style layout.
@@ -173,10 +174,8 @@ export default async function PostPage({
   return (
     <article>
       <ReadingProgress />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: jsonLdScript(postJsonLd(post)) }}
-      />
+      <JsonLd data={postJsonLd(post)} />
+      <JsonLd data={postBreadcrumbJsonLd(post)} />
 
       {/* Article header ---------------------------------------------- */}
       <header className="relative overflow-hidden border-b border-bone-200 dark:border-char-500">
@@ -260,6 +259,14 @@ export default async function PostPage({
             <time dateTime={post.publishedAt} className="text-xs">
               {formatDate(post.publishedAt)}
             </time>
+            {post.updatedAt && post.updatedAt.slice(0, 10) !== post.publishedAt.slice(0, 10) && (
+              <>
+                <div className="hidden h-8 w-px bg-bone-200 dark:bg-char-400 md:block" />
+                <span className="text-xs">
+                  Updated <time dateTime={post.updatedAt}>{formatDate(post.updatedAt)}</time>
+                </span>
+              </>
+            )}
             <div className="hidden h-8 w-px bg-bone-200 dark:bg-char-400 md:block" />
             <span className="text-xs">{post.readingMinutes} min read</span>
             {secondaryCats.length > 0 && (
@@ -409,7 +416,7 @@ export default async function PostPage({
                     More {primaryCat?.name?.toLowerCase() ?? 'from the blog'}
                   </p>
                   <div className="space-y-6">
-                    {relatedFiltered.map((r) => (
+                    {relatedFiltered.slice(0, 3).map((r) => (
                       <PostCard key={r.slug} post={r} variant="compact" />
                     ))}
                   </div>
@@ -420,17 +427,17 @@ export default async function PostPage({
         </div>
       </div>
 
-      {/* Related grid (mobile only — desktop has sidebar) ---------- */}
-      {relatedFiltered.length > 0 && (
-        <section className="border-t border-bone-200 bg-bone-100/60 py-16 dark:border-char-500 dark:bg-char-500/50 lg:hidden">
+      {/* Related grid: the three the sidebar doesn't show ----------- */}
+      {relatedFiltered.length > 3 && (
+        <section className="border-t border-bone-200 bg-bone-100/60 py-16 dark:border-char-500 dark:bg-char-500/50">
           <div className="mx-auto max-w-wide px-6">
             <SectionHeading
               eyebrow="Keep reading"
-              title={`More from ${primaryCat?.name ?? 'the blog'}`}
+              title="You might also like"
               href={primaryCat ? `/category/${primaryCat.slug}` : '/blog'}
             />
-            <div className="grid gap-x-8 gap-y-12 sm:grid-cols-2">
-              {relatedFiltered.map((r) => (
+            <div className="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+              {relatedFiltered.slice(3).map((r) => (
                 <PostCard key={r.slug} post={r} />
               ))}
             </div>

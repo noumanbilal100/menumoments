@@ -16,6 +16,17 @@ const CONTENT_CLASS = /^(wp-|wp_|align|size-|attachment|mmm-tools-|mm-|product-|
 const ASIN_RE = /amazon\.[a-z.]+\/(?:[^"']*\/)?(?:dp|gp\/product)\/([A-Z0-9]{10})/i;
 const PLACEHOLDER_SRC = /(<img\b[^>]*\bsrc=)(["'])\/img\/products\/[^"']+\2/i;
 
+const AFFILIATE_LINK = /^https?:\/\/(?:[\w-]+\.)*(?:amazon\.[a-z.]+|amzn\.to)\//i;
+
+/** Google requires paid links to be marked, or it can treat them as link spam. */
+function markAffiliateLinks(html: string): string {
+  return html.replace(/<a\b[^>]*>/gi, (tag) => {
+    const href = tag.match(/\bhref=["']([^"']+)/i)?.[1];
+    if (!href || !AFFILIATE_LINK.test(href)) return tag;
+    return tag.replace(/\srel=(["'])[\s\S]*?\1/i, '').replace(/>$/, ' rel="sponsored nofollow noopener">');
+  });
+}
+
 function photoUrl(asin: string): string | null {
   const src = PRODUCT_IMAGES[asin];
   return src ?? null;
@@ -42,7 +53,8 @@ export function cleanExcerpt(excerpt: string): string {
 
 /**
  * Removes markup that came along with pasted content and should never be
- * stored: foreign utility classes and empty spacer paragraphs.
+ * stored: foreign utility classes, empty spacer paragraphs and the tracking
+ * tag AI chat tools add to the links they cite.
  */
 export function stripPastedMarkup(html: string): string {
   return html
@@ -50,11 +62,14 @@ export function stripPastedMarkup(html: string): string {
       const kept = value.split(/\s+/).filter((c) => CONTENT_CLASS.test(c));
       return kept.length ? ` class=${q}${kept.join(' ')}${q}` : '';
     })
-    .replace(/<p>(?:\s|&nbsp;|<br\s*\/?>)*<\/p>/gi, '');
+    .replace(/<p>(?:\s|&nbsp;|<br\s*\/?>)*<\/p>/gi, '')
+    .replace(/\?utm_source=(?:chatgpt\.com|openai)(["'])/gi, '$1')
+    .replace(/\?utm_source=(?:chatgpt\.com|openai)&(?:amp;)?/gi, '?')
+    .replace(/&(?:amp;)?utm_source=(?:chatgpt\.com|openai)/gi, '');
 }
 
 export function cleanPostHtml(html: string, title?: string): string {
-  let out = stripPastedMarkup(html);
+  let out = markAffiliateLinks(stripPastedMarkup(html));
 
   // The page template already renders the title as the only <h1>. A body
   // <h1> that repeats it is dropped; any other one becomes a section heading.

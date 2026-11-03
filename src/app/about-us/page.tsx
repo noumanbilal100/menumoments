@@ -1,12 +1,16 @@
 import type { Metadata } from 'next';
+import { pageMeta } from '@/lib/seo';
 import Link from 'next/link';
+import { JsonLd } from '@/components/json-ld';
 import { PageShell } from '@/components/page-shell';
+import { webPageJsonLd } from '@/lib/structured-data';
 import { SITE } from '@/lib/env';
 
-export const metadata: Metadata = {
-  title: 'About',
+export const metadata: Metadata = pageMeta({
+  title: `About ${SITE.name}`,
   description: `Meet the people behind ${SITE.name} — a food and kitchen magazine for real home cooks.`,
-};
+  path: '/about-us/',
+});
 
 export default function AboutPage() {
   return (
@@ -15,6 +19,13 @@ export default function AboutPage() {
       title={`Made for people who like to cook — and eat.`}
       lede={`${SITE.name} is a food, gear and lifestyle magazine for home cooks. We publish recipes we've actually eaten, guides to the tools we actually own, and honest takes on the food we love (and the food we don't).`}
     >
+      <JsonLd
+        data={webPageJsonLd('AboutPage', {
+          name: `About ${SITE.name}`,
+          description: SITE.description,
+          path: '/about-us/',
+        })}
+      />
       <h2>What we cover</h2>
       <p>
         We spend our time in five places: at the stove, in the pantry, in the appliance aisle, at

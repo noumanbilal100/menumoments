@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { PostCard } from '@/components/post-card';
@@ -23,8 +24,13 @@ import { CATEGORIES, SECTIONS, SectionKey } from '@/data/taxonomy';
 import { liveCategoriesInSection } from '@/lib/category-map';
 import { COLLECTIONS } from '@/data/collections';
 import { SITE } from '@/lib/env';
+import { HOME_TITLE, pageMeta } from '@/lib/seo';
+import { siteJsonLd } from '@/lib/structured-data';
+import { JsonLd } from '@/components/json-ld';
 
 export const revalidate = 3600;
+
+export const metadata: Metadata = pageMeta({ title: HOME_TITLE, description: SITE.description, path: '/' });
 
 export default async function HomePage() {
   const [recent, dinners, gear, reviews, breakfast, desserts] = await Promise.all([
@@ -62,6 +68,7 @@ export default async function HomePage() {
 
   return (
     <div>
+      <JsonLd data={siteJsonLd()} />
       {/* Masthead ---------------------------------------------------- */}
       <section className="relative overflow-hidden border-b border-bone-200/60 dark:border-char-500">
         {/* Warm floating blobs — bring sunlit warmth into the hero */}
@@ -79,104 +86,96 @@ export default async function HomePage() {
         </div>
 
         <div className="mx-auto max-w-wide px-6 pt-12 pb-16 lg:pt-16 lg:pb-24">
-          <Reveal>
-            <div className="mb-10 grid gap-6 md:grid-cols-[1.4fr_1fr] md:items-end">
-              <div>
-                <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-ember-200 bg-bone-100/70 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-ember-500 dark:bg-char-400">
-                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-ember-500" />
-                  {seasonLabel()} · Issue {issueNumber()}
-                </p>
-                <h1 className="font-display text-display-xl text-char-500 dark:text-bone-50">
-                  Cook with confidence.
-                  <span className="relative inline-block">
-                    <span className="italic text-gradient-warm">Eat with pleasure.</span>
-                    <Squiggle className="absolute -bottom-2 left-0 hidden text-ember-300 md:block" />
-                  </span>
-                </h1>
-              </div>
-              <p className="max-w-md text-lg leading-relaxed text-char-200 md:justify-self-end">
-                {SITE.description}
+          <div className="mb-10 grid gap-6 md:grid-cols-[1.4fr_1fr] md:items-end">
+            <div>
+              <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-ember-200 bg-bone-100/70 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-ember-500 dark:bg-char-400">
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-ember-500" />
+                {seasonLabel()} · Issue {issueNumber()}
               </p>
+              <h1 className="font-display text-display-xl text-char-500 dark:text-bone-50">
+                Cook with confidence.
+                <span className="relative inline-block">
+                  <span className="italic text-gradient-warm">Eat with pleasure.</span>
+                  <Squiggle className="absolute -bottom-2 left-0 hidden text-ember-300 md:block" />
+                </span>
+              </h1>
             </div>
-          </Reveal>
+            <p className="max-w-md text-lg leading-relaxed text-char-200 md:justify-self-end">
+              {SITE.description}
+            </p>
+          </div>
 
           {/* Dual hero */}
           <div className="grid gap-8 lg:grid-cols-[1.6fr_1fr]">
             {feature && (
-              <Reveal delay={100}>
-                <Link
-                  href={`/${feature.slug}`}
-                  className="zoom-parent group relative block overflow-hidden rounded-3xl bg-char-500 text-bone-50 shadow-card"
-                >
-                  <div className="relative aspect-[16/10] w-full lg:aspect-[16/11]">
-                    {feature.heroImage ? (
-                      <Image
-                        src={feature.heroImage.src}
-                        alt={feature.heroImage.alt}
-                        fill
-                        priority
-                        sizes="(min-width: 1024px) 60vw, 100vw"
-                        className="object-cover"
-                      />
-                    ) : (
-                      <div className="h-full w-full bg-gradient-to-br from-ember-300 to-ember-600" />
-                    )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-char-600 via-char-600/40 to-transparent" />
-                    <div className="absolute right-6 top-6 flex items-center gap-1.5 rounded-full bg-ember-500 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-white">
-                      <Sparkle size={12} /> This week's cover
-                    </div>
+              <Link
+                href={`/${feature.slug}`}
+                className="zoom-parent group relative block overflow-hidden rounded-3xl bg-char-500 text-bone-50 shadow-card"
+              >
+                <div className="relative aspect-[16/10] w-full lg:aspect-[16/11]">
+                  {feature.heroImage ? (
+                    <Image
+                      src={feature.heroImage.src}
+                      alt={feature.heroImage.alt}
+                      fill
+                      priority
+                      sizes="(min-width: 1024px) 60vw, 100vw"
+                      className="object-cover"
+                    />
+                  ) : (
+                    <div className="h-full w-full bg-gradient-to-br from-ember-300 to-ember-600" />
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-char-600 via-char-600/40 to-transparent" />
+                  <div className="absolute right-6 top-6 flex items-center gap-1.5 rounded-full bg-ember-500 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-white">
+                    <Sparkle size={12} /> This week's cover
                   </div>
-                  <div className="absolute inset-x-0 bottom-0 p-8 lg:p-10">
-                    <h2 className="max-w-2xl font-display text-3xl leading-[1.05] md:text-4xl lg:text-5xl">
-                      {feature.title}
-                    </h2>
-                    {feature.excerpt && (
-                      <p className="mt-4 max-w-xl text-sm text-bone-100/80 md:text-base">
-                        {feature.excerpt}
-                      </p>
-                    )}
-                    <span className="mt-6 inline-flex items-center gap-2 text-sm font-medium">
-                      Read the story
-                      <DrawArrow className="text-ember-300 transition-transform duration-500 group-hover:translate-x-1" />
-                    </span>
-                  </div>
-                </Link>
-              </Reveal>
+                </div>
+                <div className="absolute inset-x-0 bottom-0 p-8 lg:p-10">
+                  <h2 className="max-w-2xl font-display text-3xl leading-[1.05] md:text-4xl lg:text-5xl">
+                    {feature.title}
+                  </h2>
+                  {feature.excerpt && (
+                    <p className="mt-4 max-w-xl text-sm text-bone-100/80 md:text-base">
+                      {feature.excerpt}
+                    </p>
+                  )}
+                  <span className="mt-6 inline-flex items-center gap-2 text-sm font-medium">
+                    Read the story
+                    <DrawArrow className="text-ember-300 transition-transform duration-500 group-hover:translate-x-1" />
+                  </span>
+                </div>
+              </Link>
             )}
             <div className="flex flex-col gap-6">
               {second && (
-                <Reveal delay={200}>
-                  <Link
-                    href={`/${second.slug}`}
-                    className="zoom-parent group relative block overflow-hidden rounded-2xl border border-bone-200 bg-bone-100 dark:border-char-500 dark:bg-char-400"
-                  >
-                    <div className="relative aspect-[16/10]">
-                      {second.heroImage && (
-                        <Image
-                          src={second.heroImage.src}
-                          alt={second.heroImage.alt}
-                          fill
-                          sizes="(min-width: 1024px) 30vw, 100vw"
-                          className="object-cover"
-                        />
-                      )}
-                    </div>
-                    <div className="p-5">
-                      <p className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-ember-500">
-                        <Fork size={12} /> Editor's pick
-                      </p>
-                      <p className="mt-1 font-display text-lg leading-tight text-char-500 group-hover:text-ember-500 dark:text-bone-50">
-                        {second.title}
-                      </p>
-                    </div>
-                  </Link>
-                </Reveal>
+                <Link
+                  href={`/${second.slug}`}
+                  className="zoom-parent group relative block overflow-hidden rounded-2xl border border-bone-200 bg-bone-100 dark:border-char-500 dark:bg-char-400"
+                >
+                  <div className="relative aspect-[16/10]">
+                    {second.heroImage && (
+                      <Image
+                        src={second.heroImage.src}
+                        alt={second.heroImage.alt}
+                        fill
+                        sizes="(min-width: 1024px) 30vw, 100vw"
+                        className="object-cover"
+                      />
+                    )}
+                  </div>
+                  <div className="p-5">
+                    <p className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-ember-500">
+                      <Fork size={12} /> Editor's pick
+                    </p>
+                    <p className="mt-1 font-display text-lg leading-tight text-char-500 group-hover:text-ember-500 dark:text-bone-50">
+                      {second.title}
+                    </p>
+                  </div>
+                </Link>
               )}
-              <Reveal delay={300}>
-                <div className="rounded-2xl border border-bone-200 bg-bone-100 p-5 dark:border-char-500 dark:bg-char-400">
-                  <TrendingList posts={trendingList.slice(0, 5)} title="Trending this week" />
-                </div>
-              </Reveal>
+              <div className="rounded-2xl border border-bone-200 bg-bone-100 p-5 dark:border-char-500 dark:bg-char-400">
+                <TrendingList posts={trendingList.slice(0, 5)} title="Trending this week" />
+              </div>
             </div>
           </div>
         </div>
@@ -247,7 +246,7 @@ export default async function HomePage() {
                     {cover && (
                       <Image
                         src={cover}
-                        alt=""
+                        alt={s.name}
                         fill
                         sizes="(min-width: 1024px) 16vw, (min-width: 640px) 33vw, 50vw"
                         className="object-cover opacity-70 transition duration-700 group-hover:opacity-90"

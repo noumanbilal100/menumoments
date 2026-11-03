@@ -1,5 +1,5 @@
 import { localIndex } from './local-content';
-import { categoriesWithPosts } from './category-map';
+import { categoriesFor, categoriesWithPosts, isIndexableCategory } from './category-map';
 import { COLLECTIONS } from '@/data/collections';
 import { SITE_URL } from './env';
 import { listSitePages } from './site-pages';
@@ -17,13 +17,23 @@ import { listSitePages } from './site-pages';
 /** Yoast's per-file cap; keeps the post split matching the old structure. */
 export const POSTS_PER_SITEMAP = 250;
 
-function iso(d: string | undefined): string {
-  if (!d) return new Date().toISOString();
-  try {
-    return new Date(d).toISOString();
-  } catch {
-    return new Date().toISOString();
-  }
+function iso(d: string | undefined): string | undefined {
+  if (!d) return undefined;
+  const time = new Date(d).getTime();
+  return Number.isNaN(time) ? undefined : new Date(time).toISOString();
+}
+
+/**
+ * Google only trusts lastmod when it is accurate, so a page gets the date its
+ * content last changed. A page with no such date gets no lastmod: stamping the
+ * build time would claim the whole site changed on every deploy.
+ */
+function newest(dates: (string | undefined)[]): string | undefined {
+  return dates.filter((d): d is string => Boolean(d)).sort().pop();
+}
+
+function postDate(p: { publishedAt: string; updatedAt?: string }): string | undefined {
+  return iso(p.updatedAt ?? p.publishedAt);
 }
 
 /** Trailing slash on every URL, matching the site's canonical form. */
@@ -43,19 +53,25 @@ function escapeXml(s: string): string {
 
 export interface SitemapEntry {
   loc: string;
-  lastmod: string;
+  lastmod?: string;
+}
+
+const lastmodTag = (e: SitemapEntry) => (e.lastmod ? `\n    <lastmod>${e.lastmod}</lastmod>` : '');
+
+export function newestLastmod(entries: SitemapEntry[]): string | undefined {
+  return newest(entries.map((e) => e.lastmod));
 }
 
 export function renderUrlSet(entries: SitemapEntry[]): string {
   const body = entries
-    .map((e) => `  <url>\n    <loc>${escapeXml(e.loc)}</loc>\n    <lastmod>${e.lastmod}</lastmod>\n  </url>`)
+    .map((e) => `  <url>\n    <loc>${escapeXml(e.loc)}</loc>${lastmodTag(e)}\n  </url>`)
     .join('\n');
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</urlset>\n`;
 }
 
 export function renderSitemapIndex(entries: SitemapEntry[]): string {
   const body = entries
-    .map((e) => `  <sitemap>\n    <loc>${escapeXml(e.loc)}</loc>\n    <lastmod>${e.lastmod}</lastmod>\n  </sitemap>`)
+    .map((e) => `  <sitemap>\n    <loc>${escapeXml(e.loc)}</loc>${lastmodTag(e)}\n  </sitemap>`)
     .join('\n');
   return `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</sitemapindex>\n`;
 }
@@ -66,7 +82,7 @@ export function postEntries(page: number): SitemapEntry[] {
   const start = (page - 1) * POSTS_PER_SITEMAP;
   return all.slice(start, start + POSTS_PER_SITEMAP).map((p) => ({
     loc: url(`/${p.slug}`),
-    lastmod: iso(p.updatedAt ?? p.publishedAt),
+    lastmod: postDate(p),
   }));
 }
 
@@ -76,24 +92,24 @@ export function postSitemapCount(): number {
 
 /** Static pages + collection landing pages. */
 export async function pageEntries(): Promise<SitemapEntry[]> {
-  const now = new Date().toISOString();
+  const posts = localIndex();
+  const latest = newest(posts.map(postDate));
   const statics = [
-    '',
-    '/blog',
-    '/search',
-    '/collections',
-    '/best-kitchen-gear',
-    '/about-us',
-    '/contact',
-    '/write-for-us',
-    '/privacy-policy',
-    '/terms-conditions',
-    '/disclaimer',
-  ].map((p) => ({ loc: url(p), lastmod: now }));
+    { loc: url('/'), lastmod: latest },
+    { loc: url('/blog'), lastmod: latest },
+    { loc: url('/collections') },
+    { loc: url('/best-kitchen-gear') },
+    { loc: url('/about-us') },
+    { loc: url('/contact') },
+    { loc: url('/write-for-us') },
+    { loc: url('/privacy-policy') },
+    { loc: url('/terms-conditions') },
+    { loc: url('/disclaimer') },
+  ];
 
   const collections = COLLECTIONS.map((c) => ({
     loc: url(`/collections/${c.slug}`),
-    lastmod: now,
+    lastmod: newest(posts.filter((p) => c.postSlugs.includes(p.slug)).map(postDate)),
   }));
 
   const sitePages = (await listSitePages()).map((p) => ({
@@ -105,8 +121,15 @@ export async function pageEntries(): Promise<SitemapEntry[]> {
 }
 
 export function categoryEntries(): SitemapEntry[] {
-  const now = new Date().toISOString();
-  return categoriesWithPosts().map((c) => ({ loc: url(`/category/${c.slug}`), lastmod: now }));
+  const posts = localIndex();
+  return categoriesWithPosts()
+    .filter((c) => isIndexableCategory(c.slug))
+    .map((c) => ({
+      loc: url(`/category/${c.slug}`),
+      lastmod: newest(
+        posts.filter((p) => categoriesFor(p.slug, p.title, p.wpCategorySlugs ?? []).includes(c.slug)).map(postDate),
+      ),
+    }));
 }
 
 export const XML_HEADERS = {

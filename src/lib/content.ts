@@ -77,6 +77,47 @@ export async function getPost(slug: string): Promise<Post | null> {
   return null;
 }
 
+let listedCache: Post[] | null = null;
+
+/** Every post without its body, newest first. */
+export function allListedPosts(): Post[] {
+  return (listedCache ??= localIndex().map(indexEntryToPost));
+}
+
+const TITLE_NOISE =
+  /^(recipe|best|easy|guide|menu|with|your|from|that|this|what|when|have|make|made|home|homemade|delicious|perfect|simple|quick|tip|idea|ultimate|complete|food|cook|cooking)$/;
+
+function titleWords(title: string): Set<string> {
+  const words = title.toLowerCase().split(/[^a-z]+/).map((w) => w.replace(/s$/, ''));
+  return new Set(words.filter((w) => w.length > 3 && !TITLE_NOISE.test(w)));
+}
+
+function pairHash(a: string, b: string): number {
+  let h = 0;
+  for (const c of a + b) h = (h * 31 + c.charCodeAt(0)) | 0;
+  return h;
+}
+
+/**
+ * Posts closest to this one by title and category. Equal matches are ordered
+ * per pair rather than by date, so older posts get linked too instead of every
+ * page in a category pointing at the same few new ones.
+ */
+export function relatedPosts(post: Post, limit = 6): Post[] {
+  const words = titleWords(post.title);
+  return allListedPosts()
+    .filter((p) => p.slug !== post.slug)
+    .map((p) => {
+      let score = p.categories[0] === post.categories[0] ? 2 : 0;
+      for (const c of p.categories) if (post.categories.includes(c)) score += 1;
+      for (const w of titleWords(p.title)) if (words.has(w)) score += 3;
+      return { p, score, tie: pairHash(post.slug, p.slug) };
+    })
+    .sort((a, b) => b.score - a.score || a.tie - b.tie)
+    .slice(0, limit)
+    .map((x) => x.p);
+}
+
 export async function listRecentPosts(limit = 12): Promise<Post[]> {
   const index = localIndex();
   if (index.length) return index.slice(0, limit).map(indexEntryToPost);
@@ -88,8 +129,7 @@ export async function listRecentPosts(limit = 12): Promise<Post[]> {
 }
 
 export async function listPostsInCategory(categorySlug: string, limit = 24): Promise<Post[]> {
-  return localIndex()
-    .map(indexEntryToPost)
+  return allListedPosts()
     .filter((p) => p.categories.includes(categorySlug))
     .slice(0, limit);
 }

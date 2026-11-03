@@ -4,14 +4,14 @@ import { SITE, SITE_URL } from '@/lib/env';
 export const revalidate = 3600;
 
 export async function GET() {
-  const posts = await listRecentPosts(30);
+  const posts = await listRecentPosts(50);
   const items = posts
     .map(
       (p) => `
     <item>
       <title>${escapeXml(p.title)}</title>
-      <link>${SITE_URL}/${p.slug}</link>
-      <guid isPermaLink="true">${SITE_URL}/${p.slug}</guid>
+      <link>${SITE_URL}/${p.slug}/</link>
+      <guid isPermaLink="true">${SITE_URL}/${p.slug}/</guid>
       <pubDate>${new Date(p.publishedAt).toUTCString()}</pubDate>
       <description>${escapeXml(p.excerpt)}</description>
     </item>`,
@@ -21,7 +21,7 @@ export async function GET() {
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>${escapeXml(SITE.name)}</title>
-    <link>${SITE_URL}</link>
+    <link>${SITE_URL}/</link>
     <description>${escapeXml(SITE.description)}</description>
     <language>en-US</language>
     <atom:link href="${SITE_URL}/feed.xml" rel="self" type="application/rss+xml" />
