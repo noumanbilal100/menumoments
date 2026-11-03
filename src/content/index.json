@@ -12,7 +12,8 @@
     },
     "wpCategorySlugs": [
       "kitchen-gadgets",
-      "best-kitchen-products"
+      "best-kitchen-products",
+      "affiliate-product-guides"
     ],
     "author": {
       "name": "Menu Moments",
@@ -31,7 +32,9 @@
       "alt": "Hanky Panky appetizer on toasted cocktail rye bread topped with savory ground beef, spicy sausage, and melted Velveeta cheese under warm natural lighting."
     },
     "wpCategorySlugs": [
-      "recipes"
+      "recipes",
+      "appetizers",
+      "drinks-and-beverages"
     ],
     "author": {
       "name": "Menu Moments",
@@ -50,7 +53,9 @@
       "alt": "Crispy fried chicken fries served with golden French fries in a rustic basket, garnished with parsley on a wooden table."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "snacks",
+      "quick-and-easy-meals"
     ],
     "author": {
       "name": "Menu Moments",
@@ -66,7 +71,9 @@
     "readingMinutes": 5,
     "heroImage": null,
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "drinks-and-beverages",
+      "healthy-eating"
     ],
     "author": {
       "name": "Menu Moments",
@@ -85,7 +92,10 @@
       "alt": "Big Mac bowl recipe with ground beef, lettuce, pickles, cheese, and special sauce in a white ceramic bowl"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "lunch",
+      "healthy-eating",
+      "meal-prep"
     ],
     "author": {
       "name": "Menu Moments",
@@ -104,7 +114,9 @@
       "alt": "Golden-brown breakfast hand pies with egg, cheese, and ham filling on rustic parchment paper"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "breakfast",
+      "quick-and-easy-meals"
     ],
     "author": {
       "name": "Menu Moments",
@@ -123,7 +135,9 @@
       "alt": "Beautifully plated vegan casserole with broccoli, carrots, white beans, and golden breadcrumbs in a creamy dairy-free sauce."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "vegan-recipes",
+      "dinner"
     ],
     "author": {
       "name": "Menu Moments",
@@ -142,7 +156,9 @@
       "alt": "Golden fried squash blossoms stuffed with creamy filling on a rustic ceramic plate, garnished with fresh herbs."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "appetizers",
+      "vegetarian-recipes"
     ],
     "author": {
       "name": "Menu Moments",
@@ -161,7 +177,8 @@
       "alt": "Classic shit on a shingle recipe featuring creamy chipped beef in white sauce served over golden toasted bread on a rustic plate."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "breakfast"
     ],
     "author": {
       "name": "Menu Moments",
@@ -180,7 +197,8 @@
       "alt": "Authentic Popeyes-style red beans served with fluffy rice in a rustic kitchen setting"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner"
     ],
     "author": {
       "name": "Menu Moments",
@@ -199,7 +217,8 @@
       "alt": "Refreshing mockmosa in a champagne flute with sparkling orange juice and fresh orange garnish on a bright breakfast table"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "drinks-and-beverages"
     ],
     "author": {
       "name": "Menu Moments",
@@ -218,7 +237,8 @@
       "alt": "Homemade McGriddle breakfast sandwich with fluffy pancakes, sausage, egg, and melted cheese on a rustic plate"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "breakfast"
     ],
     "author": {
       "name": "Menu Moments",
@@ -237,7 +257,8 @@
       "alt": "Fresh low histamine recipes with zucchini, carrots, quinoa, pears, and herbs arranged in bright natural light on a clean kitchen table."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "healthy-eating"
     ],
     "author": {
       "name": "Menu Moments",
@@ -256,7 +277,9 @@
       "alt": "Realistic Italian hoagie sandwich with deli meats, provolone cheese, lettuce, tomato, and onions on a crusty roll"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "lunch",
+      "international-cuisine"
     ],
     "author": {
       "name": "Menu Moments",
@@ -275,7 +298,8 @@
       "alt": "Golden-brown gluten-free stuffing with fresh herbs, celery, and onions in a rustic baking dish on a holiday table."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner"
     ],
     "author": {
       "name": "Menu Moments",
@@ -294,7 +318,9 @@
       "alt": "Gluten-free crock pot stew with chicken, carrots, potatoes, and herbs in a slow cooker on a modern kitchen counter"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner",
+      "healthy-eating"
     ],
     "author": {
       "name": "Menu Moments",
@@ -313,7 +339,9 @@
       "alt": "\"Moist gluten-free carrot cake with cream cheese frosting and walnut topping on a white plate\""
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "desserts",
+      "baking"
     ],
     "author": {
       "name": "Menu Moments",
@@ -332,7 +360,8 @@
       "alt": "Fresh strawberry ice cream made in a Dash ice cream maker on a modern kitchen counter with ripe strawberries and mint garnish."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "desserts"
     ],
     "author": {
       "name": "Menu Moments",
@@ -351,7 +380,8 @@
       "alt": "Braised mock chuck served in rich brown sauce with carrots, potatoes, and caramelized onions on a white plate"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner"
     ],
     "author": {
       "name": "Menu Moments",
@@ -370,7 +400,8 @@
       "alt": "Tender beef tips crock pot recipe simmering with rich brown gravy and fresh parsley garnish"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner"
     ],
     "author": {
       "name": "Menu Moments",
@@ -389,7 +420,9 @@
       "alt": "Fresh homemade baby puree recipes in colorful bowls with natural ingredients and baby spoon"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "healthy-eating",
+      "family-meals"
     ],
     "author": {
       "name": "Menu Moments",
@@ -408,7 +441,9 @@
       "alt": "Freshly baked vegan casserole with colorful vegetables and golden breadcrumb topping in a white ceramic dish"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "vegan-recipes",
+      "dinner"
     ],
     "author": {
       "name": "Menu Moments",
@@ -427,7 +462,7 @@
       "alt": "\"Rustic jar of homemade crab apple jelly with fresh crab apples and bread spread in natural light\""
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes"
     ],
     "author": {
       "name": "Menu Moments",
@@ -446,7 +481,8 @@
       "alt": "Fluffy golden-brown pancakes without milk topped with fresh berries and maple syrup"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "breakfast"
     ],
     "author": {
       "name": "Menu Moments",
@@ -465,7 +501,8 @@
       "alt": "Crispy thick-cut bacon glazed with maple syrup, caramelized brown sugar, black pepper, and chili flakes on a rustic plate"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "breakfast"
     ],
     "author": {
       "name": "Menu Moments",
@@ -484,7 +521,9 @@
       "alt": "Golden-brown Auntie Anne’s style soft pretzels on cooling rack with coarse salt and butter dip"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "baking",
+      "snacks"
     ],
     "author": {
       "name": "Menu Moments",
@@ -503,7 +542,8 @@
       "alt": "Rich homemade adobo sauce recipe in a ceramic bowl with garlic, bay leaves, and chili peppers on rustic table"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "international-cuisine"
     ],
     "author": {
       "name": "Menu Moments",
@@ -522,7 +562,9 @@
       "alt": "Vegan crockpot recipes with colorful beans, lentils, vegetables, and herbs in a rustic kitchen setting"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "vegan-recipes",
+      "dinner"
     ],
     "author": {
       "name": "Menu Moments",
@@ -541,7 +583,8 @@
       "alt": "Authentic Squid Game dalgona cookie recipe with carved shapes on rustic wooden table"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "desserts"
     ],
     "author": {
       "name": "Menu Moments",
@@ -560,7 +603,8 @@
       "alt": "Smoked pork belly slices on rustic wooden board with charred edges and fresh herbs"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner"
     ],
     "author": {
       "name": "Menu Moments",
@@ -579,7 +623,8 @@
       "alt": "Creamy In-N-Out style burger sauce in a glass bowl with fresh ingredients on a wooden counter"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "quick-and-easy-meals"
     ],
     "author": {
       "name": "Menu Moments",
@@ -598,7 +643,10 @@
       "alt": "Assorted frozen green bean dishes including casserole, salad, sautéed beans, and mashed potatoes with bacon, arranged on a rustic wooden table with natural lighting."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "healthy-eating",
+      "quick-and-easy-meals",
+      "vegetarian-recipes"
     ],
     "author": {
       "name": "Menu Moments",
@@ -617,7 +665,9 @@
       "alt": "A beautifully plated dish featuring golden chickpea flour pancakes, roasted chickpeas, and a fresh vegetable salad on a white ceramic plate, set on a light wooden surface with natural lighting and"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "vegetarian-recipes",
+      "ingredient-guides"
     ],
     "author": {
       "name": "Menu Moments",
@@ -636,7 +686,10 @@
       "alt": "Golden Swiss Gipfeli croissants on parchment paper over rustic wood"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "breakfast",
+      "baking",
+      "international-cuisine"
     ],
     "author": {
       "name": "Menu Moments",
@@ -655,7 +708,9 @@
       "alt": "Sloppy Joe sandwich with saucy ground beef on a bun, served with golden potato chips on a white plate."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner",
+      "quick-and-easy-meals"
     ],
     "author": {
       "name": "Menu Moments",
@@ -674,7 +729,8 @@
       "alt": "A rustic crawfish boil featuring vibrant red crawfish, golden corn on the cob, red potatoes, and sliced sausage on a ceramic plate, styled with natural lighting and minimal background."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner"
     ],
     "author": {
       "name": "Menu Moments",
@@ -693,7 +749,9 @@
       "alt": "Rustic bowl of prawn creole in spicy tomato sauce with white rice and fresh parsley garnish."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner",
+      "international-cuisine"
     ],
     "author": {
       "name": "Menu Moments",
@@ -712,7 +770,9 @@
       "alt": "Keto dinner spread with grilled salmon, roasted asparagus, cauliflower mash, avocado salad, and sautéed mushrooms on a rustic wooden table"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner",
+      "healthy-eating"
     ],
     "author": {
       "name": "Menu Moments",
@@ -731,7 +791,8 @@
       "alt": "Copper mug filled with crushed ice, lime wedge, mint sprig, and gold straw beside bourbon and ginger beer"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "drinks-and-beverages"
     ],
     "author": {
       "name": "Menu Moments",
@@ -750,7 +811,9 @@
       "alt": "Sliced loaf of homemade Ezekiel bread with seeds on crust and dense crumb"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "baking",
+      "healthy-eating"
     ],
     "author": {
       "name": "Menu Moments",
@@ -766,7 +829,8 @@
     "readingMinutes": 6,
     "heroImage": null,
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner"
     ],
     "author": {
       "name": "Menu Moments",
@@ -785,7 +849,9 @@
       "alt": "Golden brown chicken breast cooking in a Dutch oven with herbs and juices on a rustic surface"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner",
+      "cooking-tips"
     ],
     "author": {
       "name": "Menu Moments",
@@ -804,7 +870,9 @@
       "alt": "Golden-brown chicken breast sizzling in a black cast iron skillet with visible sear marks and juices."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner",
+      "cooking-tips"
     ],
     "author": {
       "name": "Menu Moments",
@@ -823,7 +891,9 @@
       "alt": "Pan-frying seasoned chicken breasts in sizzling oil inside a non-stick skillet"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner",
+      "cooking-tips"
     ],
     "author": {
       "name": "Menu Moments",
@@ -842,7 +912,9 @@
       "alt": "Ina Garten smiling in a bright kitchen, presenting a golden-brown whole roasted chicken with lemon wedges in a cast iron skillet, surrounded by fresh rosemary, garlic, cherry tomatoes, and a glass of white wine on a wooden table."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner",
+      "international-cuisine"
     ],
     "author": {
       "name": "Menu Moments",
@@ -861,7 +933,8 @@
       "alt": "Crispy golden-brown chicken thighs sizzling in a cast iron skillet with rosemary, garlic, and lemon"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner"
     ],
     "author": {
       "name": "Menu Moments",
@@ -880,7 +953,7 @@
       "alt": "Homemade sugar wax with lemon slices, sugar granules, and wooden spatula for natural hair removal"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "home-diy"
     ],
     "author": {
       "name": "Menu Moments",
@@ -899,7 +972,9 @@
       "alt": "Premium stand mixer kneading bread dough on a wooden countertop with baking essentials"
     },
     "wpCategorySlugs": [
-      "kitchen-equipment-guides"
+      "kitchen-appliances",
+      "best-kitchen-products",
+      "affiliate-product-guides"
     ],
     "author": {
       "name": "Menu Moments",
@@ -918,7 +993,9 @@
       "alt": "Modern silver stand mixer on kitchen counter with cake ingredients and baked cake"
     },
     "wpCategorySlugs": [
-      "kitchen-equipment-guides"
+      "kitchen-appliances",
+      "best-kitchen-products",
+      "affiliate-product-guides"
     ],
     "author": {
       "name": "Menu Moments",
@@ -937,7 +1014,9 @@
       "alt": "Beginner-friendly stand mixers on a kitchen counter with mixing bowls and baking ingredients ready for use"
     },
     "wpCategorySlugs": [
-      "kitchen-equipment-guides"
+      "kitchen-appliances",
+      "best-kitchen-products",
+      "affiliate-product-guides"
     ],
     "author": {
       "name": "Menu Moments",
@@ -956,7 +1035,8 @@
       "alt": "Stand mixer and hand mixer side by side mixing batter on a kitchen countertop for baking comparison"
     },
     "wpCategorySlugs": [
-      "kitchen-equipment-guides"
+      "kitchen-appliances",
+      "food-and-kitchen-comparisons"
     ],
     "author": {
       "name": "Menu Moments",
@@ -975,7 +1055,7 @@
       "alt": "Stainless steel stand mixer mixing batter on kitchen countertop with baking ingredients and finished baked goods"
     },
     "wpCategorySlugs": [
-      "kitchen-equipment-guides"
+      "kitchen-appliances"
     ],
     "author": {
       "name": "Menu Moments",
@@ -994,7 +1074,8 @@
       "alt": "Modern red stand mixer on a wooden kitchen countertop with stainless steel bowl, eggs, and rolling pin for baking."
     },
     "wpCategorySlugs": [
-      "kitchen-equipment-guides"
+      "kitchen-appliances",
+      "affiliate-product-guides"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1013,7 +1094,8 @@
       "alt": "How to clean a stainless steel pan using safe and effective cookware cleaning methods"
     },
     "wpCategorySlugs": [
-      "kitchen-equipment-guides"
+      "kitchen-cleaning",
+      "cookware"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1032,7 +1114,8 @@
       "alt": "A collage of six images demonstrating the process of seasoning a cast iron pan."
     },
     "wpCategorySlugs": [
-      "kitchen-equipment-guides"
+      "cookware",
+      "kitchen-tips"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1051,7 +1134,8 @@
       "alt": "A spread of diverse, comforting crockpot chicken soups including chicken noodle, creamy chicken, and vegetable variations, served in bowls around a slow cooker, with fresh ingredients like carrots, celery, and herbs."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1070,7 +1154,9 @@
       "alt": "A hearty blue Dutch oven filled with golden-brown stoved chicken legs and thighs, tender potatoes, carrots, and celery, garnished with fresh rosemary and parsley, with steam rising from the comforting one-pot meal on a rustic wooden table."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner",
+      "international-cuisine"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1089,7 +1175,8 @@
       "alt": "Golden crispy air-fried chicken drumsticks and thighs on a cutting board with rosemary, dipping sauce, and digital thermometer reading 165.3°F"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1108,7 +1195,8 @@
       "alt": "Golden brown baked chicken hindquarters in a cast iron skillet with lemon wedges and fresh herbs on a rustic wooden surface"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1127,7 +1215,9 @@
       "alt": "Lifting a ladle of Jamaican chicken soup with dumplings, carrots, and herbs from a red Dutch oven beside a garnished serving bowl"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner",
+      "international-cuisine"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1146,7 +1236,9 @@
       "alt": "Tender shredded chicken with golden stuffing in a rustic crockpot, garnished with herbs and steam rising."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner",
+      "quick-and-easy-meals"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1165,7 +1257,7 @@
       "alt": "Curious dog sniffing fresh eggplant slices on a kitchen counter, highlighting safe feeding exploration."
     },
     "wpCategorySlugs": [
-      "dog-food-guide"
+      "pet-food"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1184,7 +1276,7 @@
       "alt": "Free-range chickens pecking at fresh orange slices in a lush backyard setting with a wooden coop"
     },
     "wpCategorySlugs": [
-      "dog-food-guide"
+      "pet-food"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1203,7 +1295,7 @@
       "alt": "Backyard chickens pecking at ripe red tomatoes on green grass near a rustic coop"
     },
     "wpCategorySlugs": [
-      "dog-food-guide"
+      "pet-food"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1222,7 +1314,7 @@
       "alt": "Backyard chickens pecking at fresh pineapple slices near a rustic coop in a grassy outdoor setting"
     },
     "wpCategorySlugs": [
-      "dog-food-guide"
+      "pet-food"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1241,7 +1333,7 @@
       "alt": "Curious domestic cat sniffing a bowl of plain Greek yogurt on a kitchen counter in soft morning light"
     },
     "wpCategorySlugs": [
-      "dog-food-guide"
+      "pet-food"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1260,7 +1352,7 @@
       "alt": "A rustic table display featuring ugli fruit, udon noodles, umeboshi plums, Ukrainian borscht, and upside-down cake."
     },
     "wpCategorySlugs": [
-      "cooking-tips"
+      "ingredient-guides"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1279,7 +1371,7 @@
       "alt": "Flat lay of 20 colorful foods that start with the letter K, including kiwi, kebabs, kimchi, and korma."
     },
     "wpCategorySlugs": [
-      "cooking-tips"
+      "ingredient-guides"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1298,7 +1390,7 @@
       "alt": "Colorful assortment of foods starting with the letter J, including jalapeños, jackfruit, jambalaya, jelly beans, jicama, jerky, juice, jam, and Japanese curry arranged in a realistic collage."
     },
     "wpCategorySlugs": [
-      "cooking-tips"
+      "ingredient-guides"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1317,7 +1409,7 @@
       "alt": "Vibrant Mexican restaurant table with tacos, enchiladas, guacamole, margaritas, and festive Cinco de Mayo decorations"
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1336,7 +1428,7 @@
       "alt": "Adult and young rabbits eating hay and pellets in a natural setting"
     },
     "wpCategorySlugs": [
-      "dog-food-guide"
+      "pet-food"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1355,7 +1447,7 @@
       "alt": "Colorful assortment of aquarium fish food including flakes, pellets, brine shrimp, and goldfish feed on a dark textured surface"
     },
     "wpCategorySlugs": [
-      "dog-food-guide"
+      "pet-food"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1374,7 +1466,7 @@
       "alt": "Golden retriever puppy beside a bowl of Diamond Puppy Dry Dog Food kibble in a cozy indoor setting"
     },
     "wpCategorySlugs": [
-      "dog-food-guide"
+      "pet-food"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1393,7 +1485,7 @@
       "alt": "Chinese takeout spread featuring General Tso’s chicken, lo mein, fried rice, and spring rolls in a cozy North Reading home setting with online ordering elements"
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1412,7 +1504,8 @@
       "alt": "Traditional Chinese kitchen scene featuring tofu blocks and fermented black soybeans (douchi) on a rustic wooden surface."
     },
     "wpCategorySlugs": [
-      "cooking-tips"
+      "ingredient-guides",
+      "international-cuisine"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1431,7 +1524,9 @@
       "alt": "Freshly baked golden popovers in a cast iron popover pan on a cooling rack, with a silver popover pan in the foreground"
     },
     "wpCategorySlugs": [
-      "kitchen-equipment-guides"
+      "bakeware",
+      "best-kitchen-products",
+      "affiliate-product-guides"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1450,7 +1545,9 @@
       "alt": "Sliced banana bread with chocolate chips on a wooden cutting board with butter and peanut butter spreads in a bright kitchen"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "baking",
+      "desserts"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1469,7 +1566,8 @@
       "alt": "Close-up of chocolate bars showing signs of spoilage, including white bloom, discoloration, and mold, arranged on a neutral surface to illustrate chocolate expiration."
     },
     "wpCategorySlugs": [
-      "cooking-tips"
+      "food-storage",
+      "ingredient-guides"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1488,7 +1586,8 @@
       "alt": "Dubai-style pistachio chocolate bars on a marble surface, topped with crushed green pistachios and glossy chocolate finish"
     },
     "wpCategorySlugs": [
-      "cooking-tips"
+      "recipes",
+      "desserts"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1507,7 +1606,8 @@
       "alt": "Melting chocolate chips in a double boiler with a wooden spoon stirring glossy, smooth chocolate"
     },
     "wpCategorySlugs": [
-      "cooking-tips"
+      "cooking-tips",
+      "baking-tips"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1526,7 +1626,7 @@
       "alt": "Dark chocolate bar beside a cup of coffee on rustic wood, symbolizing caffeine content in chocolate"
     },
     "wpCategorySlugs": [
-      "cooking-tips"
+      "ingredient-guides"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1545,7 +1645,8 @@
       "alt": "A four-step collage showing the process of making stuffing balls, including ingredients prep, sautéing onions, mixing with bread cubes and herbs, and forming balls on a baking tray."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "baking"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1564,7 +1665,9 @@
       "alt": "Row of modern beverage refrigerators and wine coolers in a showroom setting, showcasing glass doors, stainless steel finishes, and neatly arranged drinks."
     },
     "wpCategorySlugs": [
-      "kitchen-equipment-guides"
+      "kitchen-appliances",
+      "best-kitchen-products",
+      "affiliate-product-guides"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1583,7 +1686,8 @@
       "alt": "Butter block on wax paper at room temperature beside a refrigerated butter dish, illustrating proper butter storage options."
     },
     "wpCategorySlugs": [
-      "cooking-tips"
+      "food-storage",
+      "ingredient-guides"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1602,7 +1706,8 @@
       "alt": "Butter conversion visual showing sticks of butter, a measuring cup, and a kitchen scale displaying grams on a wooden surface"
     },
     "wpCategorySlugs": [
-      "cooking-tips"
+      "kitchen-tips",
+      "ingredient-guides"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1621,7 +1726,7 @@
       "alt": "Golden retriever looking guilty beside an empty butter wrapper on a kitchen floor"
     },
     "wpCategorySlugs": [
-      "dog-food-guide"
+      "pet-food"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1640,7 +1745,8 @@
       "alt": "Stick of butter next to a stainless steel tablespoon on a wooden cutting board, illustrating butter measurement conversion"
     },
     "wpCategorySlugs": [
-      "cooking-tips"
+      "kitchen-tips",
+      "ingredient-guides"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1659,7 +1765,7 @@
       "alt": "Tabby cat licking peanut butter from a spoon beside a jar and peanuts on a kitchen counter"
     },
     "wpCategorySlugs": [
-      "dog-food-guide"
+      "pet-food"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1678,7 +1784,9 @@
       "alt": "Modern blenders for smoothies in 2025 displayed on a clean kitchen counter with fresh fruits and vibrant red smoothies."
     },
     "wpCategorySlugs": [
-      "kitchen-equipment-guides"
+      "kitchen-appliances",
+      "best-kitchen-products",
+      "affiliate-product-guides"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1697,7 +1805,9 @@
       "alt": "Modern drip coffee maker brewing fresh coffee on a minimalist kitchen counter, ideal for coffee lovers in 2025"
     },
     "wpCategorySlugs": [
-      "kitchen-equipment-guides"
+      "kitchen-appliances",
+      "best-kitchen-products",
+      "affiliate-product-guides"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1716,7 +1826,8 @@
       "alt": "Crispy Bang Bang Shrimp coated in creamy spicy sauce, garnished with scallions and served in a white bowl with lemon wedge on a neutral stone surface."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "appetizers"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1735,7 +1846,9 @@
       "alt": "Seafood Salad di Mare featuring shrimp, squid, octopus, clams, mussels, cherry tomatoes, olives, and celery garnished with parsley in a white bowl on a rustic wooden table"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "lunch",
+      "international-cuisine"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1754,7 +1867,8 @@
       "alt": "Realistic smash burger with crispy beef patty, melted cheese, fresh lettuce, tomato, and sesame bun on parchment paper"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1773,7 +1887,8 @@
       "alt": "Crispy orange chicken glazed in tangy sauce, garnished with scallions and sesame seeds, served with steamed rice on a white plate"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1792,7 +1907,9 @@
       "alt": "Glossy homemade teriyaki sauce in a glass jar with spoon drizzle, sesame seeds on the side"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "quick-and-easy-meals",
+      "international-cuisine"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1811,7 +1928,8 @@
       "alt": "Homemade Chex Party Mix in a white ceramic bowl featuring Rice Chex, Corn Chex, pretzels, peanuts, and breadsticks on a beige textured background"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "snacks"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1830,7 +1948,9 @@
       "alt": "Freshly baked chocolate chip cookies on a rustic wooden table with soft natural lighting and baking ingredients in the background"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "desserts",
+      "baking"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1849,7 +1969,8 @@
       "alt": "Homemade applesauce in a white bowl with fresh apples and cinnamon sticks on a rustic wooden surface"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "snacks"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1868,7 +1989,7 @@
       "alt": "Golden-brown dog eating plain yogurt from a white bowl on a wooden floor with a white brick wall background"
     },
     "wpCategorySlugs": [
-      "dog-food-guide"
+      "pet-food"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1887,7 +2008,9 @@
       "alt": "Instant Pot chicken noodle soup with shredded chicken, egg noodles, carrots, and celery in a white bowl on a stone countertop"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner",
+      "quick-and-easy-meals"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1906,7 +2029,8 @@
       "alt": "Bowl of homemade split pea soup garnished with herbs, served with bread and spoon on a rustic table"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1925,7 +2049,8 @@
       "alt": "Realistic visual of four easy egg cooking methods—fried, boiled, poached, and scrambled—arranged on a dark textured surface for culinary inspiration."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "cooking-tips",
+      "breakfast"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1944,7 +2069,8 @@
       "alt": "Whisked egg wash in a glass bowl with baking ingredients and tools arranged on a wooden surface, illustrating a basic egg wash recipe for pastry and crust."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "baking"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1963,7 +2089,7 @@
       "alt": "Golden retriever curiously inspecting a bowl of cracked eggshells on a wooden table, illustrating canine interest in eggshell safety and nutrition."
     },
     "wpCategorySlugs": [
-      "dog-food-guide"
+      "pet-food"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1982,7 +2108,8 @@
       "alt": "Creamy classic egg salad garnished with scallions and paprika, served in a white bowl with rustic bread and boiled egg halves on a light background."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "lunch"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2001,7 +2128,8 @@
       "alt": "Fresh brown eggs and frozen yolks in an ice cube tray on a wooden surface, illustrating safe egg freezing techniques."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "kitchen-tips",
+      "food-storage"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2020,7 +2148,9 @@
       "alt": "Perfectly cooked hard boiled eggs using the Instant Pot 5-5-5 method, displayed on a ceramic plate with an Instant Pot in the background"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "breakfast",
+      "quick-and-easy-meals"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2039,7 +2169,8 @@
       "alt": "Fresh egg submerged in water for a float test, with carton eggs nearby on a wooden surface"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "kitchen-tips",
+      "food-storage"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2058,7 +2189,7 @@
       "alt": "Perfectly boiled egg sliced open to reveal a bright yellow yolk on a white plate, ideal for illustrating hard-boiled egg preparation."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "cooking-tips"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2077,7 +2208,8 @@
       "alt": "Egg freshness test with submerged egg in water, cracked egg on plate, and carton of brown eggs on marble countertop"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "kitchen-tips",
+      "food-storage"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2115,7 +2247,8 @@
       "alt": "Split image showing dishwasher interior with plates and hands washing dishes under running water, comparing water usage"
     },
     "wpCategorySlugs": [
-      "kitchen-appliances"
+      "kitchen-appliances",
+      "food-and-kitchen-comparisons"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2153,7 +2286,9 @@
       "alt": "Modern kitchen countertop featuring a black air fryer and stainless steel Instant Pot with digital controls, alongside a bowl of crispy French fries — ideal for air fryer comparison and review content."
     },
     "wpCategorySlugs": [
-      "kitchen-equipment-guides"
+      "kitchen-appliances",
+      "best-kitchen-products",
+      "affiliate-product-guides"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2172,7 +2307,8 @@
       "alt": "Air fryer with aluminum foil-lined basket cooking seasoned potato wedges, demonstrating safe foil usage in a modern kitchen setting."
     },
     "wpCategorySlugs": [
-      "kitchen-appliances"
+      "kitchen-appliances",
+      "kitchen-tips"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2191,7 +2327,9 @@
       "alt": "Air fryer pork chops recipe cooked to juicy perfection with rosemary sprigs and seasoning"
     },
     "wpCategorySlugs": [
-      "recipes"
+      "recipes",
+      "dinner",
+      "cooking-tips"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2210,7 +2348,9 @@
       "alt": "Juicy golden chicken breast served with herbs and vegetables, with an air fryer in the background."
     },
     "wpCategorySlugs": [
-      "recipes"
+      "recipes",
+      "dinner",
+      "cooking-tips"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2229,7 +2369,9 @@
       "alt": "Black air fryer with a red carton of golden French fries in the basket, set against a light textured background with bold cooking time text overlay."
     },
     "wpCategorySlugs": [
-      "recipes"
+      "recipes",
+      "snacks",
+      "cooking-tips"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2248,7 +2390,7 @@
       "alt": "McDonald's Happy Meal box with classic toy, fries, and drink on red background highlighting history, toy lineup, pricing, and nutrition guide"
     },
     "wpCategorySlugs": [
-      "best-happy-hours"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2267,8 +2409,9 @@
       "alt": "McDonald's Hash Brown in branded sleeve on red background with article title about recipe, nutrition, allergens, and crispy tips"
     },
     "wpCategorySlugs": [
-      "easy-recipes",
-      "top-restaurant-menus"
+      "recipes",
+      "breakfast",
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2287,7 +2430,9 @@
       "alt": "Infographic showing nutritional breakdown with icons for calories, fat, carbs, and protein in a colorful, minimalist design."
     },
     "wpCategorySlugs": [
-      "kitchen-equipment-guides"
+      "kitchen-appliances",
+      "best-kitchen-products",
+      "affiliate-product-guides"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2306,7 +2451,8 @@
       "alt": "Freshly poached egg lifted from a white ceramic mug with a slotted spoon, steam rising, on a cozy kitchen counter with a blurred microwave in the background."
     },
     "wpCategorySlugs": [
-      "kitchen-appliances"
+      "kitchen-appliances",
+      "cooking-tips"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2325,7 +2471,8 @@
       "alt": "Modern microwave on a clean kitchen counter with raw chicken breasts on a plate inside; door ajar, steam visible on window, digital display set to “Defrost Mode.”"
     },
     "wpCategorySlugs": [
-      "kitchen-appliances"
+      "kitchen-appliances",
+      "cooking-tips"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2344,7 +2491,8 @@
       "alt": "Person holding a foam takeout container labeled “Not Microwave Safe” beside a microwave-safe glass dish with wavy lines icon, set in a warmly lit modern kitchen."
     },
     "wpCategorySlugs": [
-      "kitchen-appliances"
+      "kitchen-appliances",
+      "kitchen-tips"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2363,7 +2511,9 @@
       "alt": "Freshly steamed broccoli in a clear glass bowl with visible steam, sitting on a countertop outside a modern microwave, with bright lighting and a neutral kitchen background."
     },
     "wpCategorySlugs": [
-      "kitchen-appliances"
+      "kitchen-appliances",
+      "cooking-tips",
+      "healthy-eating"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2382,7 +2532,8 @@
       "alt": "Open stainless steel microwave in a clean, modern kitchen; sparkling interior with lemon, vinegar bowl, sponge, and cloth on countertop under warm natural light."
     },
     "wpCategorySlugs": [
-      "kitchen-appliances"
+      "kitchen-appliances",
+      "kitchen-cleaning"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2439,7 +2590,7 @@
       "alt": "O’Charley’s Restaurant exterior with green circular signage, brick and beige walls, dual black awnings labeled “Restaurant + Bar,” and glass entrance marked with address number 2413."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2458,7 +2609,7 @@
       "alt": "Nighttime exterior of Seven Brew Drive Thru Coffee with illuminated circular logo, modern blue-accented structure, cars in drive-thru, and “105” address over window. Handwritten menu visible behind glass with customers at service window."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2477,7 +2628,7 @@
       "alt": "Exterior of Walk-On’s Bistreaux & Bar with red lettering on blue banner, large glass windows, wood-slatted awning, and painted mural stating “Game Day with a Taste of Louisiana.” Includes landscaped parking area."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2496,7 +2647,7 @@
       "alt": "Silver Diner exterior with shiny chrome design, neon lights, rooftop clock, and signage reading “Much More Than A Diner” and “We Buy Fresh & Local – You Eat Well.” Interior visible through windows with diners and staff in classic setting."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2515,7 +2666,7 @@
       "alt": "Front view of China Wok restaurant next to Smithville Technology store; features brick facade, red awning, entrance ramp, and window ads for security and phone plans—restaurant entrance clearly marked."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2534,7 +2685,7 @@
       "alt": "A Jack in the Box restaurant with a stone exterior, illuminated entrance, and a sign announcing its upcoming opening at 9337 Santee; interior visible through the glass doors."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2553,7 +2704,7 @@
       "alt": "Exterior of Hwy 55 restaurant featuring red triangular sign with white text, white building with black trim and large windows, red patio umbrellas, and building number 2451."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2572,7 +2723,7 @@
       "alt": "J. Alexander’s Restaurant exterior at dusk, with red illuminated signage, stone walls, large glass windows, and covered outdoor seating area lit warmly."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2591,7 +2742,7 @@
       "alt": "Exterior of LongHorn Steakhouse with illuminated red and white signage, stone walls, black benches in front, and landscaped greenery near entrance—set in warm lighting ambiance."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2610,7 +2761,7 @@
       "alt": "The Eatery restaurant exterior with beige and red facade, fork and spoon sign above entrance, double glass doors marked “Welcome,” flower pots on each side, and lamp posts in front under a clear blue sky."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2629,7 +2780,7 @@
       "alt": "Panda Express restaurant exterior with wood and stone facade, red circular panda logo and text signage, outdoor seating shaded by red umbrellas, and address number “1401” visible on building."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2648,7 +2799,7 @@
       "alt": "Exterior of Pizza King restaurant with gray walls, red gable roof, yellow “Pizza King” sign featuring crown logo above entrance, two front windows, and street-side location with visible trees and sidewalk."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2667,7 +2818,7 @@
       "alt": "Philz Coffee storefront with large glass windows, a yellow awning, and outdoor tables and chairs; people enjoy drinks and relax on blue couches, with a dog also present in the seating area."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2686,7 +2837,7 @@
       "alt": "Exterior of LongHorn Steakhouse with rustic stone façade, “LONGHORN STEAKHOUSE” signage, mounted longhorn skull above entrance, address number “2720,” stone pillars, benches, and small landscaped area in foreground."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2705,7 +2856,7 @@
       "alt": "Exterior of Hell’s Kitchen restaurant with large glass entrance, glowing red backdrop, yellow “Hell’s Kitchen” sign, pitchfork symbol, and a chef statue inside the foyer—highlighting dramatic and upscale dining ambiance."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2724,7 +2875,7 @@
       "alt": "Exterior of Gloria’s Latin Cuisine with white and dark gray facade, large arched windows, signage above entrance, landscaped area with small tree, and parking lot in foreground."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2743,7 +2894,7 @@
       "alt": "Exterior of Tijuana Flats and Jersey Mike’s Subs side by side, with colorful signage, fenced outdoor seating area shaded by red and blue umbrellas, and tall trees adding greenery in front of the patio."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2762,7 +2913,7 @@
       "alt": "Exterior of Porto’s Bakery & Cafe showing bold signage, colorful building panels, palm trees, and outdoor umbrellas near a glass entrance marked with address number 8233."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2781,7 +2932,7 @@
       "alt": "Exterior of Piada Italian Street Food restaurant with red signage, glass-panel facade, black metal frame, and outdoor seating area. Black SUV parked in front; entrance labeled with address number “6495.”"
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2800,7 +2951,7 @@
       "alt": "Topgolf building at twilight featuring illuminated signage, large glass entrance, multi-story design, and golf-themed logo; visible stop sign and pedestrian crossing in foreground."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2819,7 +2970,7 @@
       "alt": "Storefront of Ding Tea Taiwanese Tea House with bold red and white signage, glass door numbered 970, and a neon “OPEN” sign; adjacent to a nail salon at number 966."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2838,7 +2989,7 @@
       "alt": "Exterior view of China King restaurant with bold red signage, address number 1475, food posters in the windows, and a tree adding greenery to the front entrance."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2857,7 +3008,7 @@
       "alt": "Nighttime street view of Hell's Kitchen restaurant exterior, showcasing its glowing red sign above the entrance, open doorway with visible indoor seating, and adjacent storefronts. The scene captures a cozy, urban dining atmosphere."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2876,7 +3027,7 @@
       "alt": "Front exterior of Andy's Frozen Custard with red accents, large glass windows, and a hiring sign advertising $10/hour starting wage."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2892,7 +3043,7 @@
     "readingMinutes": 5,
     "heroImage": null,
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2911,7 +3062,7 @@
       "alt": "Bright and colorful exterior of a Taco Bueno restaurant with a large \"Bueno\" sign and neatly maintained landscaping."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2927,7 +3078,7 @@
     "readingMinutes": 5,
     "heroImage": null,
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2943,7 +3094,7 @@
     "readingMinutes": 6,
     "heroImage": null,
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2962,7 +3113,7 @@
       "alt": "Exterior of Black Angus Steakhouse featuring beige facade, bold signage, a black cow statue, and lush landscaping with palm trees under a partly cloudy sky."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2981,7 +3132,7 @@
       "alt": "Exterior view of a Chicken Express restaurant with red and stone architecture, outdoor seating with red benches, and visible parking spaces."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3000,7 +3151,7 @@
       "alt": "Krystal restaurant exterior featuring large glass windows, a bold red and gray color scheme, and prominent logo signage on a modern facade under a clear sky."
     },
     "wpCategorySlugs": [
-      "best-happy-hours"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3019,7 +3170,7 @@
       "alt": "Modern exterior of Black Rock restaurant with dark brick walls, large glass windows, palm trees, and the number “8200” near the entrance; a red car is parked to the side."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3035,7 +3186,7 @@
     "readingMinutes": 6,
     "heroImage": null,
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3054,7 +3205,7 @@
       "alt": "Exterior of Twin Peaks restaurant showing green neon “TWIN PEAKS” sign, red-framed windows, stone and wood facade, green metal roof, and signage reading “EATS • DRINKS • SCENIC VIEWS” above the entrance, surrounded by a paved lot and landscaping."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3073,7 +3224,7 @@
       "alt": "Exterior view of Sheetz convenience store and gas station showing red awnings, red signage above doors and windows, brick building design, patio seating with green umbrellas, landscaped bushes and trees, and a designated handicapped parking spot under clear skies."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3092,7 +3243,7 @@
       "alt": "Daylight photo of First Watch restaurant exterior showing brick and light stone facade, signage reading “FIRST WATCH BREAKFAST • BRUNCH • LUNCH,” green umbrella-covered outdoor seating area, surrounding parking lot, and landscaping with small plants under partly cloudy skies."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3111,7 +3262,7 @@
       "alt": "Exterior of Cook Out restaurant with red flame logo signage, brick and stone building features, smaller signs for burgers, BBQ, hot dogs, and shakes, cars parked in front, and landscaping with bushes under a mostly clear sky."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3130,7 +3281,7 @@
       "alt": "Daytime image of Firehouse Subs restaurant exterior showing red awnings, prominent red and yellow sign above entrance, beige building facade, patio seating area, and landscaped bushes under a clear blue sky."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3149,7 +3300,7 @@
       "alt": "Night view of Dragonfly restaurant exterior featuring illuminated yellow-blue signage, red neon roof accents, glass entrance with overhead lighting, and tall decorative plants flanking the doorway."
     },
     "wpCategorySlugs": [
-      "best-happy-hours"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3168,7 +3319,7 @@
       "alt": "Exterior of Miyako restaurant with red illuminated “MIYAKO” letters, “SUSHI HIBACHI” signage above, columns flanking the entrance, and warm lighting — representing a contemporary Japanese dining venue."
     },
     "wpCategorySlugs": [
-      "best-happy-hours"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3187,7 +3338,7 @@
       "alt": "Exterior of Pinchers restaurant featuring red crab logo, beige walls, blue awnings, palm tree, and signage reading \"The Marina at Edison Ford\" — representing a waterfront dining venue."
     },
     "wpCategorySlugs": [
-      "best-happy-hours"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3206,7 +3357,7 @@
       "alt": "Exterior of Steak 'n Shake restaurant with red-and-white Coca-Cola umbrellas, glass entrance, bold red signage, and landscaped walkway on a clear day."
     },
     "wpCategorySlugs": [
-      "best-happy-hours"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3225,7 +3376,7 @@
       "alt": "Image showing the front of T.G.I. Friday’s restaurant with striped awnings, a large branded sign, nearby Riverside Outlet, and a pedestrian walking by under a clear sunny sky."
     },
     "wpCategorySlugs": [
-      "best-happy-hours"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3244,7 +3395,7 @@
       "alt": "Photo of Ruth’s Chris Steak House entrance with visible signage, outdoor seating, and contemporary exterior design including wall lanterns and large windows."
     },
     "wpCategorySlugs": [
-      "best-happy-hours"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3263,7 +3414,8 @@
       "alt": "Plate of smoked venison snack sticks on a rustic wooden table, surrounded by fresh herbs and ingredients, in cozy natural lighting."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "snacks"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3282,7 +3434,8 @@
       "alt": "A rustic wooden table displays a plated Roam diet meal surrounded by fresh ingredients, with natural lighting and cozy kitchen ambiance in a horizontal 1280x720 format."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "healthy-eating"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3301,7 +3454,8 @@
       "alt": "Beautifully plated pork jowl in three styles—crispy, braised, and grilled—on a rustic wooden table surrounded by fresh ingredients, softly lit in a cozy kitchen setting."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3320,7 +3474,8 @@
       "alt": "Beautifully plated Pork Chop Supreme on rustic wooden table with fresh herbs and vegetables in cozy kitchen lighting."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3339,7 +3494,9 @@
       "alt": "Kirschwasser-based dish plated on a rustic wooden table with fresh ingredients, natural lighting, and cozy kitchen ambiance."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "desserts",
+      "drinks-and-beverages"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3358,7 +3515,8 @@
       "alt": "Beautifully plated high-protein pureed food surrounded by fresh ingredients on a rustic wooden table with cozy kitchen ambiance and natural lighting."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "healthy-eating"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3377,7 +3535,9 @@
       "alt": "Healthy marshmallows plated on a rustic wooden table surrounded by fresh ingredients, captured in cozy kitchen lighting with a shallow depth of field."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "desserts",
+      "healthy-eating"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3396,7 +3556,8 @@
       "alt": "A delicious clean keto meal plated on a rustic wooden table, surrounded by fresh ingredients, with natural lighting and cozy kitchen ambiance in the background."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "healthy-eating"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3415,7 +3576,8 @@
       "alt": "Authentic Texas-style Cin Chili served on a rustic wooden table, surrounded by fresh peppers, onions, and herbs with natural lighting and cozy kitchen ambiance."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3434,7 +3596,7 @@
       "alt": "Horizontal featured image of a homemade breast milk soap recipe, artistically arranged on a rustic wooden table surrounded by fresh natural ingredients, with soft lighting and a cozy kitchen background."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "home-diy"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3453,7 +3615,9 @@
       "alt": "Beautifully plated Jamaican breakfast with ackee, saltfish, fried plantains, and fresh produce on a rustic wooden table, captured with natural lighting and a warm kitchen vibe."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "breakfast",
+      "international-cuisine"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3472,7 +3636,8 @@
       "alt": "A beautifully styled Bloody Molly cocktail on a rustic wooden table surrounded by fresh ingredients, with warm natural lighting and a cozy kitchen background."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "drinks-and-beverages"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3491,7 +3656,9 @@
       "alt": "A horizontal image of beautifully plated beef enoki rolls on a rustic wooden table, surrounded by fresh vegetables and mushrooms, with warm natural lighting and a shallow depth of field creating a cozy kitchen atmosphere."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "appetizers",
+      "international-cuisine"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3510,7 +3677,7 @@
       "alt": "Horizontal image of homemade Amish apple butter plated on a rustic wooden table, surrounded by fresh apples and cinnamon sticks, in warm natural light and a cozy kitchen setting."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3526,7 +3693,9 @@
     "readingMinutes": 5,
     "heroImage": null,
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "vegan-recipes",
+      "healthy-eating"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3545,7 +3714,9 @@
       "alt": "Snickerdoodle Banana Bread on a rustic wooden table, surrounded by fresh ingredients with cozy natural lighting"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "baking",
+      "desserts"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3564,7 +3735,9 @@
       "alt": "1280x720 horizontal image of shamrock green and gold macarons on a rustic wooden table. Fresh mint, pistachios, and vanilla pods surround the plate. The natural lighting and shallow depth of field create a warm kitchen atmosphere ideal for festive food photography."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "desserts",
+      "baking"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3583,7 +3756,7 @@
       "alt": "A stylish metal recipe tin box with cards and dividers, placed on a rustic wooden table surrounded by fresh ingredients under warm natural lighting."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "kitchen-organization"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3602,7 +3775,8 @@
       "alt": "A bowl of authentic moonshine mash beautifully presented on a rustic wooden table, surrounded by fresh ingredients in a cozy kitchen with natural lighting."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "drinks-and-beverages"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3621,7 +3795,9 @@
       "alt": "A cozy horizontal image of lemon balm tea served in elegant cups on a rustic wooden table, surrounded by fresh lemon balm leaves, honey, lemon slices, and calming herbs, with natural lighting and shallow focus."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "drinks-and-beverages",
+      "healthy-eating"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3640,7 +3816,9 @@
       "alt": "A horizontally plated savory squash and pumpkin dish on a rustic wooden table, surrounded by seasonal vegetables and warm kitchen lighting—perfect for a food blog feature."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner",
+      "vegetarian-recipes"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3659,7 +3837,8 @@
       "alt": "High-resolution image of beautifully plated Thermomix® dishes on a rustic wooden table, surrounded by fresh ingredients and bathed in natural light, ideal for a food blog."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "kitchen-appliances",
+      "cooking-tips"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3678,7 +3857,8 @@
       "alt": "Horizontal featured image of a classic amber ale brewed with Belgian Candi Syrup D-45, served in a clear glass on a rustic wooden table, surrounded by hops, malt, and fresh ingredients. Natural lighting highlights the warm amber hue in a cozy kitchen ambiance."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "drinks-and-beverages"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3697,7 +3877,9 @@
       "alt": "Moist pineapple juice cake with glossy glaze plated on rustic wood, surrounded by fresh pineapple and baking ingredients, in warm natural kitchen lighting."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "desserts",
+      "baking"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3716,7 +3898,8 @@
       "alt": "Horizontal image of moist, breadcrumb-free meatloaf slices arranged on a ceramic plate atop a rustic wooden table, surrounded by fresh herbs, garlic, and onions in warm natural lighting with a cozy kitchen background."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3735,7 +3918,7 @@
       "alt": "Colorful Sonic Drive-In exterior with a large logo sign, red benches under a canopy, and landscaped greenery."
     },
     "wpCategorySlugs": [
-      "best-happy-hours"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3754,7 +3937,9 @@
       "alt": "A vibrant, landscape-style image showcasing fresh, well-plated South African biltong alongside traditional side dishes. The composition features realistic textures, soft shadows, and a bright, modern aesthetic with a clean background."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "snacks",
+      "international-cuisine"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3773,7 +3958,7 @@
       "alt": "Bright landscape image of a well-plated, whipped tallow balm styled as a gourmet dish; creamy texture with herbal garnish, set against a clean white background with soft shadows."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "home-diy"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3792,7 +3977,8 @@
       "alt": "Landscape image of homemade Jimmy Dean-style breakfast sausages served with eggs and herbs on a clean white plate, against a bright, minimalist background with soft shadows."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "breakfast"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3811,7 +3997,8 @@
       "alt": "A landscape-oriented, modern flat-lay of a homemade hot cocoa mix without dry milk, artfully arranged with vibrant cocoa powder, marshmallows, cinnamon sticks, and steaming hot chocolate in a white ceramic mug on a clean, light-colored background."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "drinks-and-beverages"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3830,7 +4017,8 @@
       "alt": "Landscape photo of crispy homemade saucer pastries filled with savory ingredients, arranged on a white ceramic platter with vibrant garnishes and soft shadows against a clean, modern background."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "snacks"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3849,7 +4037,8 @@
       "alt": "Colorful vegetarian Passover sushi rolls arranged on a clean white plate with fresh herbs, bright vegetables, and soft shadows over a modern white background"
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "international-cuisine"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3868,7 +4057,7 @@
       "alt": "Landscape-format image of a modern kitchen scene featuring fresh ingredients, measuring tools, and a step-by-step recipe card. Designed to illustrate measurable math IEP goals, such as ingredient measurement, time estimation, and life skill development in cooking."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "kitchen-tips"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3887,7 +4076,9 @@
       "alt": "Landscape photo of a moist Amish applesauce cake topped with raisins and walnuts, plated with soft shadows on a clean, bright surface. Vibrant colors and a modern, inviting presentation make the dessert look fresh and appetizing."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "desserts",
+      "baking"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3906,7 +4097,9 @@
       "alt": "Landscape-oriented photo of Birria Bombs and tacos, freshly plated with rich, vibrant colors on a clean white background. The dish features tender beef wrapped in crispy tortillas, garnished with herbs and served with dipping sauce. Modern, bright presentation with soft shadows for a realistic and inviting look."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner",
+      "international-cuisine"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3925,7 +4118,8 @@
       "alt": "Beautifully plated Pork Chop Supreme served with creamy mashed potatoes and steamed vegetables, styled on a clean, modern surface with vibrant lighting and soft shadows."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3944,7 +4138,10 @@
       "alt": "Elegant bowl of Moriyo Kheer garnished with slivered almonds and saffron strands, served on a white ceramic plate with soft shadows and a clean, vibrant background — styled for modern food presentation."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "desserts",
+      "international-cuisine",
+      "vegetarian-recipes"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3963,7 +4160,9 @@
       "alt": "A fresh GAPS cream cheese dessert in a white ceramic ramekin with a nut-based crust, topped with raspberries and mint leaves; set on a clean white surface with soft shadows and vibrant highlights for a health-conscious presentation."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "desserts",
+      "healthy-eating"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3982,7 +4181,7 @@
       "alt": "Vibrant fenugreek horse treats arranged neatly on a clean white plate; landscape layout with soft shadows, bright colors, and modern presentation suitable for a blog or recipe website."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "pet-food"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4001,7 +4200,7 @@
       "alt": "A vibrant, naturally styled dish inspired by the French Mulberry Bug Spray recipe, featuring fresh beautyberry elements in a clean, modern composition with bright colors and soft shadows."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "home-diy"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4020,7 +4219,8 @@
       "alt": "Mindfully presented home-cooked dish from the Heartumental Recipe Guide, featuring vibrant ingredients, soft shadows, and a clean, modern layout."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "cooking-tips",
+      "kitchen-tips"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4039,7 +4239,8 @@
       "alt": "Spicy Alabama Hot Pockets plated on a modern white dish with melted cheese oozing from golden, crispy pastry; surrounded by fresh herbs and soft shadows on a bright clean background."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "snacks"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4058,7 +4259,9 @@
       "alt": "A vibrant, well-plated fusion dish from ‘Jalbiteworldfood’, featuring global flavors in a fresh and realistic presentation with a clean, bright background."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "quick-and-easy-meals",
+      "international-cuisine"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4077,7 +4280,9 @@
       "alt": "Vibrant, well-plated Middle Eastern dish inspired by the Terra Massoud recipe, styled with modern presentation, soft shadows, and clean background."
     },
     "wpCategorySlugs": [
-      "easy-recipes"
+      "recipes",
+      "dinner",
+      "international-cuisine"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4096,7 +4301,7 @@
       "alt": "Landscape image of Miller’s Ale House Daily Specials featuring a vibrant sports bar spread — including buffalo wings, sliders, loaded fries, and dipping sauces plated with soft shadows and clean styling on a white background. The short title “Miller’s Ale House Specials” is subtly placed in bold typography on the image."
     },
     "wpCategorySlugs": [
-      "daily-specials"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4115,7 +4320,7 @@
       "alt": "Landscape image of Buffalo Wild Wings Daily Specials showcasing a vibrant plate of wings in various sauces — buffalo, honey BBQ, and garlic parmesan — served with crisp celery sticks and dipping sauces. Soft shadows and a clean white background enhance the modern, appetizing layout. The title “Buffalo Wild Wings Wing Deal Guide: Get Buy One Get One Free Wings, Order Delivery & More Specials Daily” is logically placed at the top right in bold, inviting typography."
     },
     "wpCategorySlugs": [
-      "daily-specials"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4134,7 +4339,7 @@
       "alt": "BJ's Restaurant Brewhouse daily specials menu board with images of deep dish pizza, prime rib, baby back ribs, and Pizookie desserts."
     },
     "wpCategorySlugs": [
-      "daily-specials"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4153,7 +4358,7 @@
       "alt": "Landscape image showcasing Cracker Barrel Daily Specials with Prices — featuring fresh, homestyle dishes like fried chicken, mashed potatoes, country vegetables, and golden cornbread arranged with soft shadows and vibrant colors on clean white plates. The title “Cracker Barrel Menu with Prices Daily Specials” is clearly displayed on the image."
     },
     "wpCategorySlugs": [
-      "daily-specials"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4172,7 +4377,7 @@
       "alt": "Landscape image of Amigos Daily Specials featuring a colorful Mexican meal spread — tacos, enchiladas, and fresh sides arranged with vibrant garnishes, soft shadows, and modern plating on a clean, inviting background. \"Amigos Daily Specials\" title is prominently displayed on the image."
     },
     "wpCategorySlugs": [
-      "daily-specials"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4191,7 +4396,7 @@
       "alt": "Landscape image of Subway® Daily Specials featuring a fresh, colorful assortment of subs and sides — beautifully plated with crisp vegetables, vibrant sauces, and a clean white background accented by soft shadows and modern styling."
     },
     "wpCategorySlugs": [
-      "daily-specials"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4210,7 +4415,7 @@
       "alt": "Landscape image showcasing a beautifully arranged Ruby Tuesday meal selection from the Daily Specials & Deals Menu — featuring fresh, vibrant dishes on white plates with soft shadows, colorful garnishes, and a clean, modern background."
     },
     "wpCategorySlugs": [
-      "daily-specials"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4229,7 +4434,7 @@
       "alt": "Panoramic high-resolution image displaying Buffalo Wild Wings daily specials: saucy chicken wings with ranch and BBQ dip, a stacked burger with lettuce, tomato, and cheese, golden fries, and celery sticks—all presented across a wide layout on white plates with colorful garnishes and bright lighting."
     },
     "wpCategorySlugs": [
-      "daily-specials"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4248,7 +4453,7 @@
       "alt": "A plated surf and turf meal featuring lobster tail, steak topped with shrimp and bacon, baked potato with butter, and steamed broccoli. Served with a lemon wedge, melted butter dish, and a glass of red wine in a refined dining setting."
     },
     "wpCategorySlugs": [
-      "daily-specials"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4267,7 +4472,7 @@
       "alt": "Landscape image showing a variety of soft foods suitable for elderly individuals with swallowing difficulties, including pureed vegetables, mashed potatoes, applesauce, soft scrambled eggs, and creamy soups, served on a tray with utensils and napkins in a warm, homely setting."
     },
     "wpCategorySlugs": [
-      "soft-food-diet"
+      "healthy-eating"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4286,7 +4491,7 @@
       "alt": "Landscape image of a hearty Applebee’s meal deal featuring a large burger with toppings, endless golden fries, and a soft drink in a branded cup, all set on a restaurant-style table with casual dining ambiance."
     },
     "wpCategorySlugs": [
-      "daily-specials"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4305,7 +4510,7 @@
       "alt": "A landscape image featuring a selection of soft foods ideal for people with braces, including mashed potatoes, pasta with creamy sauce, steamed vegetables, and fruit smoothies arranged on a kitchen counter."
     },
     "wpCategorySlugs": [
-      "soft-food-diet"
+      "healthy-eating"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4324,7 +4529,7 @@
       "alt": "Exterior of a modern Denny’s restaurant featuring beige and gray panels, red and yellow Denny’s signage, large glass windows, and “AMERICA’S DINER” text above the entrance."
     },
     "wpCategorySlugs": [
-      "best-happy-hours"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4343,7 +4548,7 @@
       "alt": "Interior of American Deli restaurant featuring an illuminated “American Deli” sign, digital menu boards with food items, visible kitchen space, and a counter with register screens and a drink dispenser."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4362,7 +4567,7 @@
       "alt": "Blaze Pizza restaurant exterior with modern black paneling, red and gray vertical accent stripes, large Blaze Pizza flame logo, and “FAST FIRE’D” signage above tall glass windows and patio railing."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4381,7 +4586,7 @@
       "alt": "City BBQ restaurant exterior with brick and wood siding, red awning, large signage reading “City BBQ” and “PUBLIC SMOKEHOUSE,” and a “NOW OPEN” banner above the entrance, set against a sunny sky."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4400,7 +4605,7 @@
       "alt": "The Melting Pot fondue restaurant exterior with beige and gray facade, orange awning, red floral landscaping, and a decorative streetlamp banner featuring a sun and cacti."
     },
     "wpCategorySlugs": [
-      "best-happy-hours"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4419,7 +4624,7 @@
       "alt": "Olive Garden Italian Kitchen restaurant exterior with stone accent facade, white “Olive Garden” signage with green olive branch logo, landscaped entryway, and benches near the entrance under an overcast sky."
     },
     "wpCategorySlugs": [
-      "best-happy-hours"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4438,7 +4643,7 @@
       "alt": "Exterior of Red Robin restaurant with red and wood-toned facade, bold signage reading “Red Robin Gourmet Burgers and Brews,” glass entryway beneath the address 8190, and surrounding landscaping."
     },
     "wpCategorySlugs": [
-      "best-happy-hours"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4457,7 +4662,7 @@
       "alt": "Front exterior of Marco’s Restaurant with black awning, bold white signage, neon “OPEN” sign above the entrance, and large windows revealing indoor dining setup."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4476,7 +4681,7 @@
       "alt": "Front exterior of Red Lobster restaurant with red and white facade, signature signage featuring a red lobster logo, the tagline “FRESH FISH • LIVE LOBSTER,” and landscaped entryway with stairs."
     },
     "wpCategorySlugs": [
-      "best-happy-hours"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4495,7 +4700,7 @@
       "alt": "Nighttime exterior of Bar Louie restaurant with illuminated signage reading “Bar Louie,” tagline “Eat • Drink • Be Happy,” and glass-front doors showcasing meal offerings like lunch, dinner, and happy hour."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4514,7 +4719,7 @@
       "alt": "Front view of Jason’s Deli restaurant with a rounded brick entrance, large red oval sign, black awning, red window shades, and a sunny parking lot scene with landscaping and pedestrians."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4533,7 +4738,7 @@
       "alt": "Long John Silver’s restaurant exterior with blue roof, red fish logo, yellow signage, blue awnings over two entrances, and promotional signs for fish meals."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4552,7 +4757,7 @@
       "alt": "Front view of Swensons Drive-In restaurant with red signage on the roof, large windows, a red awning, and multiple parked cars in front under an overcast sky."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4571,7 +4776,7 @@
       "alt": "Front view of Swensons Drive-In restaurant with red signage on the roof, large windows, a red awning, and multiple parked cars in front under an overcast sky."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4590,7 +4795,7 @@
       "alt": "Scooter’s Coffee drive-thru location with red signage, white and dark gray exterior, American flag, and several cars in line under a partly cloudy sky."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4609,7 +4814,7 @@
       "alt": "Nighttime view of Buffalo Wild Wings restaurant with illuminated signage, yellow buffalo logo, outdoor seating area, and an empty parking lot under a dark sky."
     },
     "wpCategorySlugs": [
-      "best-happy-hours"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4628,7 +4833,7 @@
       "alt": "Evening view of MISSION BBQ restaurant with lighted signage, American flag, outdoor picnic tables, and corrugated metal awnings under a dark sky."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4647,7 +4852,7 @@
       "alt": "Exterior of a Chili’s restaurant with stone and wood siding, black awnings, the red chili pepper logo, and visible street number 11910, with handicap parking signs in front."
     },
     "wpCategorySlugs": [
-      "best-happy-hours"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4666,7 +4871,7 @@
       "alt": "Front exterior of Applebee’s restaurant with red brick facade, red apple logo signage, pink window awnings, and green benches beneath a cloudy sky."
     },
     "wpCategorySlugs": [
-      "best-happy-hours"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4685,7 +4890,7 @@
       "alt": "Taco John’s Menu: Best Items to Try for Every Craving"
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4704,7 +4909,7 @@
       "alt": "Exterior of a Golden Chick restaurant at dusk, with brick and stone facade, illuminated signage, patio picnic tables, string lights, and a sign on the door reading \"Opening Soon Training in Progress."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4723,7 +4928,7 @@
       "alt": "Street-level view of BLUE Sushi Sake Grill, a modern brick restaurant with large windows, outdoor seating with blue umbrellas, and a black metal fence along a tree-lined sidewalk."
     },
     "wpCategorySlugs": [
-      "best-happy-hours"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4742,7 +4947,7 @@
       "alt": "Exterior of The Blue Fish restaurant with teal walls, black awning, cursive signage, palm trees, and outdoor seating along a city sidewalk."
     },
     "wpCategorySlugs": [
-      "best-happy-hours"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4761,7 +4966,7 @@
       "alt": "Front exterior of Jaggers restaurant with large red signage, menu offerings listed on the wall, and promotional posters in the entrance windows."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4780,7 +4985,7 @@
       "alt": "Exterior view of Bill Miller Bar-B-Q restaurant with brick and wood design, pitched roof, and covered walkway in front of empty parking lot under cloudy skies."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4799,7 +5004,7 @@
       "alt": "Front view of an IHOP restaurant with red brick walls, blue awnings, and signage, including a poster advertising blueberry cheesecake waffles."
     },
     "wpCategorySlugs": [
-      "best-happy-hours"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4818,7 +5023,7 @@
       "alt": "Historic wooden mill with a large water wheel beside a cascading waterfall, surrounded by bare trees and a grassy landscape."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4837,7 +5042,7 @@
       "alt": "A nighttime view of the exterior of Herbs & Rye steakhouse and cocktail bar, with illuminated signage, parked cars, and patrons standing near the entrance."
     },
     "wpCategorySlugs": [
-      "best-happy-hours"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4856,7 +5061,7 @@
       "alt": "Exterior of The Boiling Crab restaurant at night, featuring a brick facade, neon signs, and large windows showing a lively dining scene inside."
     },
     "wpCategorySlugs": [
-      "top-restaurant-menus"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4875,7 +5080,7 @@
       "alt": "Texas Roadhouse Happy Hour Deals: Best Times, Menus, and Prices to Enjoy"
     },
     "wpCategorySlugs": [
-      "best-happy-hours"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",
@@ -4894,7 +5099,7 @@
       "alt": "Outback Steakhouse restaurant exterior glowing in sunset light, with its signature rustic architecture and welcoming atmosphere."
     },
     "wpCategorySlugs": [
-      "best-happy-hours"
+      "food-reviews"
     ],
     "author": {
       "name": "Menu Moments",

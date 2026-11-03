@@ -37,6 +37,7 @@ const SECTION_TITLE: Record<SectionKey, string> = {
 
 function categoryTitle(cat: Category): string {
   if (cat.slug === 'recipes') return 'All Recipes: Dinners, Desserts & More';
+  if (cat.slug === 'affiliate-product-guides') return 'Buying Guides: Top Kitchen Product Picks';
   if (/recipes/i.test(cat.name)) return `${cat.name} & Meal Ideas`;
   return `${cat.name}: ${SECTION_TITLE[cat.section]}`;
 }

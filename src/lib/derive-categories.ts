@@ -7,8 +7,8 @@
  * takes out three homepage sections and most of the mega menu.
  *
  * Rules are keyword matches against the slug and title, ordered so the
- * most specific win. Each post keeps its real WP categories and gains
- * the derived ones on top; nothing is overwritten.
+ * most specific win. They over-fire ("best" in a recipe title, "grill" in a
+ * copycat dish), so they only run for a post saved with no categories.
  */
 
 type Rule = [category: string, pattern: RegExp];

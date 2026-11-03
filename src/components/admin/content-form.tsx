@@ -416,8 +416,8 @@ export function ContentForm({
                 ))}
               </div>
               <p className="mt-3 text-[11px] leading-relaxed text-char-200">
-                The site also files posts automatically from words in the title (for example
-                &ldquo;recipe&rdquo; or &ldquo;menu&rdquo;).
+                The highest ticked category in this list is the post&apos;s main one. If you tick
+                none, the site files the post from words in its title.
               </p>
             </div>
           )}

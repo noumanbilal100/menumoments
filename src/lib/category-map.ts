@@ -19,8 +19,10 @@ interface IndexLike {
 }
 
 /**
- * The full category list for one post: WP's own categories mapped onto
- * the taxonomy, plus the ones derived from the slug and title.
+ * The full category list for one post. Categories saved with the post are the
+ * whole answer; guessing from the slug and title only covers a post saved with
+ * none. Taxonomy order keeps the first one, the post's primary category, the
+ * same after the admin form saves it.
  */
 export function categoriesFor(
   slug: string,
@@ -32,11 +34,13 @@ export function categoriesFor(
     const cat = getCategory(wpSlug);
     if (cat) mapped.add(cat.slug);
   }
-  if (!mapped.size) for (const c of legacyCategoriesFor(slug)) mapped.add(c);
-  for (const c of deriveCategories(slug, title, [...mapped])) mapped.add(c);
+  if (!mapped.size) {
+    for (const c of legacyCategoriesFor(slug)) mapped.add(c);
+    for (const c of deriveCategories(slug, title, [...mapped])) mapped.add(c);
+  }
   // Hand-listed buying guides always file under product-reviews.
   if (isProductReview(slug)) mapped.add(PRODUCT_REVIEW_CATEGORY);
-  return [...mapped];
+  return CATEGORIES.filter((c) => mapped.has(c.slug)).map((c) => c.slug);
 }
 
 let populatedCache: Set<string> | null = null;

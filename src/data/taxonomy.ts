@@ -33,6 +33,7 @@ export type CategorySlug =
   | 'baking-tips'
   | 'kitchen-organization'
   | 'kitchen-cleaning'
+  | 'home-diy'
   // Gear
   | 'kitchen-appliances'
   | 'cookware'
@@ -44,6 +45,7 @@ export type CategorySlug =
   | 'meal-planning'
   | 'grocery-guides'
   | 'ingredient-guides'
+  | 'pet-food'
   // Reviews & buying guides
   | 'food-reviews'
   | 'product-reviews'
@@ -93,7 +95,7 @@ export const CATEGORIES: Category[] = [
   { slug: 'drinks-and-beverages', name: 'Drinks & Beverages', section: 'recipes', description: 'Cocktails, mocktails, coffees and cold brews.' },
 
   // Lifestyle
-  { slug: 'healthy-eating', name: 'Healthy eating', section: 'lifestyle', description: 'Balanced plates without dogma.' },
+  { slug: 'healthy-eating', name: 'Healthy eating', section: 'lifestyle', description: 'Balanced plates without dogma.', legacySlugs: ['soft-food-diet'] },
   { slug: 'meal-prep', name: 'Meal prep', section: 'lifestyle', description: 'Cook once, eat all week.' },
   { slug: 'family-meals', name: 'Family meals', section: 'lifestyle', description: 'Recipes that please a whole table.' },
   { slug: 'quick-and-easy-meals', name: 'Quick & easy meals', section: 'lifestyle', description: '30 minutes or less, start to finish.' },
@@ -107,6 +109,7 @@ export const CATEGORIES: Category[] = [
   { slug: 'baking-tips', name: 'Baking tips', section: 'kitchen-tips', description: 'Ratios, temperatures, doughs that behave.' },
   { slug: 'kitchen-organization', name: 'Kitchen organization', section: 'kitchen-tips', description: 'Systems for pantries, drawers, counters.' },
   { slug: 'kitchen-cleaning', name: 'Kitchen cleaning', section: 'kitchen-tips', description: 'Keep it spotless without wrecking your finishes.' },
+  { slug: 'home-diy', name: 'Natural home & DIY', section: 'kitchen-tips', description: 'Homemade soaps, balms and other natural recipes for the home.' },
 
   // Gear
   { slug: 'kitchen-appliances', name: 'Kitchen appliances', section: 'gear', description: 'From stand mixers to air fryers.', legacySlugs: ['kitchen-appliances', 'kitchen-equipment-guides'] },
@@ -120,9 +123,10 @@ export const CATEGORIES: Category[] = [
   { slug: 'meal-planning', name: 'Meal planning', section: 'planning', description: 'Frameworks for a workable week of meals.' },
   { slug: 'grocery-guides', name: 'Grocery guides', section: 'planning', description: 'What to buy, where, and when.' },
   { slug: 'ingredient-guides', name: 'Ingredient guides', section: 'planning', description: 'Deep dives on the foods themselves.' },
+  { slug: 'pet-food', name: 'Pet food', section: 'planning', description: 'What dogs, cats, chickens and other pets can safely eat.', legacySlugs: ['dog-food-guide'] },
 
   // Reviews
-  { slug: 'food-reviews', name: 'Food reviews', section: 'reviews', description: 'Restaurants, chains and the dishes worth ordering.', legacySlugs: ['top-restaurant-menus', 'best-happy-hours', 'daily-specials', 'soft-food-diet'] },
+  { slug: 'food-reviews', name: 'Food reviews', section: 'reviews', description: 'Restaurants, chains and the dishes worth ordering.', legacySlugs: ['top-restaurant-menus', 'best-happy-hours', 'daily-specials'] },
   { slug: 'product-reviews', name: 'Product reviews', section: 'reviews', description: 'Honest, hands-on takes.' },
   { slug: 'kitchen-product-reviews', name: 'Kitchen product reviews', section: 'reviews', description: 'The tools we actually keep.' },
   { slug: 'recipe-tools', name: 'Recipe tools', section: 'reviews', description: 'Apps, timers, converters, calculators.' },
@@ -130,7 +134,7 @@ export const CATEGORIES: Category[] = [
   { slug: 'food-and-kitchen-comparisons', name: 'Food & kitchen comparisons', section: 'reviews', description: 'Head-to-heads and versus posts.' },
   { slug: 'best-kitchen-products', name: 'Best kitchen products', section: 'reviews', description: 'Category winners across price ranges.' },
   { slug: 'amazon-kitchen-finds', name: 'Amazon kitchen finds', section: 'reviews', description: 'Under-the-radar buys worth the tab.' },
-  { slug: 'affiliate-product-guides', name: 'Buying guides', section: 'reviews', description: 'Long-form buyers guides.', legacySlugs: ['dog-food-guide'] },
+  { slug: 'affiliate-product-guides', name: 'Buying guides', section: 'reviews', description: 'Our top product picks, compared and ready to buy.' },
 ];
 
 const bySlug = new Map(CATEGORIES.map((c) => [c.slug, c]));

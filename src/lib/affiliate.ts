@@ -10,39 +10,13 @@ import type { Post } from './content';
  *      and extract a table of contents.
  */
 
-const AFFILIATE_CATEGORIES = new Set([
-  'product-reviews',
-  'kitchen-product-reviews',
-  'best-kitchen-products',
-  'kitchen-gift-guides',
-  'food-and-kitchen-comparisons',
-  'amazon-kitchen-finds',
-  'affiliate-product-guides',
-  'kitchen-appliances',
-  'cookware',
-  'bakeware',
-  'kitchen-gadgets',
-  'knives-and-cutting-tools',
-]);
-
 /**
- * True if the post looks like a buying guide / product roundup / review.
- * Uses (in order): the derived post kind, category membership, slug hints,
- * and finally the presence of Amazon affiliate anchors in the HTML.
+ * True if the post uses the buying-guide layout: everything filed under Buying
+ * guides, plus reviews. Categories are chosen by hand now, so an informational
+ * post that merely mentions a product no longer switches layout.
  */
 export function isAffiliateArticle(post: Post): boolean {
-  if (post.kind === 'review' || post.kind === 'roundup') return true;
-  if (post.categories.some((c) => AFFILIATE_CATEGORIES.has(c))) {
-    // These categories can still contain simple guides, so require at least
-    // one other affiliate signal before switching to the specialised layout.
-    if (
-      /\b(best|top|vs|review|guide|comparison|worth-it)\b/i.test(post.slug) ||
-      /amzn\.to|amazon\.[a-z.]+\/(dp|gp\/product)|[?&]tag=/i.test(post.html)
-    ) {
-      return true;
-    }
-  }
-  return false;
+  return post.kind === 'review' || post.categories.includes('affiliate-product-guides');
 }
 
 export interface HeadingRef {

@@ -12,7 +12,8 @@ export function deriveKindAndRecipe(
   const s = slug.toLowerCase();
   const catSet = new Set(categories);
 
-  const isRecipe = s.includes('recipe') || catSet.has('recipes');
+  // Not the slug: "recipe" also appears in bug spray recipes and recipe boxes.
+  const isRecipe = catSet.has('recipes');
   const isReview =
     catSet.has('food-reviews') ||
     catSet.has('product-reviews') ||
