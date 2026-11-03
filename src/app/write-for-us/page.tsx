@@ -42,11 +42,10 @@ export default function WriteForUsPage() {
         <li>Pieces already published elsewhere.</li>
       </ul>
 
-      <h2>Rates & rights</h2>
+      <h2>Rates</h2>
       <p>
-        Rates start at <strong>$120 for standard posts</strong> and $250+ for original recipes with
-        photography. We buy first-web rights and hold exclusivity for 60 days. After that, you're
-        free to republish with a credit link back.
+        Contributions are paid. For pricing, email us at{' '}
+        <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
       </p>
 
       <h2>How to pitch</h2>
