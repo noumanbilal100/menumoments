@@ -25,6 +25,7 @@ import { blockForPost, splitBeforeHeading } from '@/data/post-products';
 import { shouldShowAds } from '@/lib/ads';
 import { imageFor, postBreadcrumbJsonLd, postJsonLd } from '@/lib/structured-data';
 import { JsonLd } from '@/components/json-ld';
+import { NewsletterForm } from '@/components/newsletter-form';
 import { pageMeta } from '@/lib/seo';
 import { ADSENSE_SLOTS } from '@/lib/env';
 
@@ -386,24 +387,13 @@ export default async function PostPage({
               <h3 className="mt-2 max-w-lg font-display text-2xl leading-tight text-char-500 dark:text-bone-50">
                 {news.title}
               </h3>
-              <form className="mt-5 flex flex-col gap-2 sm:flex-row sm:max-w-md">
-                <label htmlFor="post-newsletter" className="sr-only">
-                  Email
-                </label>
-                <input
-                  id="post-newsletter"
-                  type="email"
-                  required
-                  placeholder="you@yourinbox.com"
-                  className="flex-1 rounded-full border border-char-500/15 bg-bone-100 px-5 py-2.5 text-sm outline-none focus:border-ember-500 dark:border-bone-50/15 dark:bg-char-600"
-                />
-                <button
-                  type="submit"
-                  className="rounded-full bg-ember-500 px-5 py-2.5 text-sm font-medium text-white transition-all hover:bg-ember-600 hover:shadow-embered"
-                >
-                  Subscribe
-                </button>
-              </form>
+              <NewsletterForm
+                id="post-newsletter"
+                placeholder="you@yourinbox.com"
+                className="mt-5 flex flex-col gap-2 sm:flex-row sm:max-w-md"
+                inputClassName="flex-1 rounded-full border border-char-500/15 bg-bone-100 px-5 py-2.5 text-sm outline-none focus:border-ember-500 dark:border-bone-50/15 dark:bg-char-600"
+                buttonClassName="rounded-full bg-ember-500 px-5 py-2.5 text-sm font-medium text-white transition-all hover:bg-ember-600 hover:shadow-embered"
+              />
               <p className="mt-3 text-xs text-char-200">{news.sub}</p>
             </section>
           </div>

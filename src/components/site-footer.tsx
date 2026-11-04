@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Logo } from './logo';
+import { NewsletterForm } from './newsletter-form';
 import { SECTIONS, SectionKey } from '@/data/taxonomy';
 import { liveCategoriesInSection } from '@/lib/category-map';
 import { SITE } from '@/lib/env';
@@ -25,22 +26,14 @@ export function SiteFooter() {
               {SITE.description}
             </p>
 
-            <form className="mt-6 flex max-w-sm items-center gap-2 rounded-full border border-bone-100/20 bg-char-400 p-1.5">
-              <label htmlFor="newsletter" className="sr-only">Email address</label>
-              <input
-                id="newsletter"
-                type="email"
-                required
-                placeholder="Recipes in your inbox"
-                className="flex-1 border-0 bg-transparent px-3 text-sm outline-none placeholder:text-bone-100/50"
-              />
-              <button
-                type="submit"
-                className="rounded-full bg-ember-500 px-4 py-2 text-sm font-medium text-white transition-all hover:bg-ember-600 hover:shadow-embered"
-              >
-                Subscribe
-              </button>
-            </form>
+            <NewsletterForm
+              id="newsletter"
+              placeholder="Recipes in your inbox"
+              className="mt-6 flex max-w-sm items-center gap-2 rounded-full border border-bone-100/20 bg-char-400 p-1.5"
+              inputClassName="flex-1 border-0 bg-transparent px-3 text-sm outline-none placeholder:text-bone-100/50"
+              buttonClassName="rounded-full bg-ember-500 px-4 py-2 text-sm font-medium text-white transition-all hover:bg-ember-600 hover:shadow-embered"
+              errorClassName="mt-2 text-xs text-red-300"
+            />
             <p className="mt-3 text-xs text-bone-100/50">Weekly. Unsubscribe with one click.</p>
 
             <div className="mt-8 flex items-center gap-2 text-ember-200">

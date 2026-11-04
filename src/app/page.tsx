@@ -7,6 +7,7 @@ import { TrendingList } from '@/components/trending-list';
 import { CollectionCard } from '@/components/collection-card';
 import { Reveal } from '@/components/reveal';
 import { Counter } from '@/components/counter';
+import { NewsletterForm } from '@/components/newsletter-form';
 import {
   Whisk,
   Olive,
@@ -452,22 +453,15 @@ export default async function HomePage() {
               Plus a kitchen shortcut, a product we're loving, and a link worth clicking. No spam,
               unsubscribe in one click.
             </p>
-            <form className="mx-auto mt-8 flex max-w-md items-center gap-2 rounded-full border border-char-500/15 bg-bone-100 p-1.5">
-              <label htmlFor="hero-newsletter" className="sr-only">Email</label>
-              <input
-                id="hero-newsletter"
-                type="email"
-                placeholder="you@yourinbox.com"
-                className="flex-1 border-0 bg-transparent px-4 text-sm outline-none placeholder:text-char-200"
-                required
-              />
-              <button
-                type="submit"
-                className="rounded-full bg-char-500 px-5 py-2.5 text-sm font-medium text-bone-50 transition-all hover:bg-ember-500 hover:shadow-embered"
-              >
-                Subscribe →
-              </button>
-            </form>
+            <NewsletterForm
+              id="hero-newsletter"
+              placeholder="you@yourinbox.com"
+              buttonLabel="Subscribe →"
+              className="mx-auto mt-8 flex max-w-md items-center gap-2 rounded-full border border-char-500/15 bg-bone-100 p-1.5"
+              inputClassName="flex-1 border-0 bg-transparent px-4 text-sm outline-none placeholder:text-char-200"
+              buttonClassName="rounded-full bg-char-500 px-5 py-2.5 text-sm font-medium text-bone-50 transition-all hover:bg-ember-500 hover:shadow-embered"
+              errorClassName="mt-3 text-sm text-red-700"
+            />
             <p className="mt-4 text-xs text-char-200">
               Free. One email a week. Unsubscribe anytime.
             </p>

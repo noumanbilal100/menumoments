@@ -21,7 +21,8 @@ export default function PrivacyPolicyPage() {
       <h2>What we collect</h2>
       <p>
         We collect the minimum needed to run the site: server logs (IP, user agent, referrer),
-        newsletter emails you submit yourself, and anonymous analytics on which pages people read.
+        newsletter sign-ups and contact messages you submit yourself, and anonymous analytics on
+        which pages people read.
       </p>
 
       <h2>Cookies</h2>
@@ -32,7 +33,7 @@ export default function PrivacyPolicyPage() {
 
       <h2>Third-party services</h2>
       <ul>
-        <li>Newsletter delivery via a third-party provider (your email is stored with them).</li>
+        <li>Cloudflare, which carries contact form messages and newsletter sign-ups to our inbox.</li>
         <li>Amazon Associates and other affiliate networks &mdash; see our <a href="/disclaimer/">disclaimer</a>.</li>
         <li>Analytics for aggregate usage patterns only, never personal profiling.</li>
       </ul>
@@ -41,7 +42,7 @@ export default function PrivacyPolicyPage() {
       <p>
         You can request a copy of any personal data we hold about you, or ask us to delete it, by
         emailing <a href={`mailto:${SITE.email}`}>{SITE.email}</a>. Newsletter subscribers can
-        unsubscribe with the link at the bottom of every email.
+        unsubscribe by emailing the same address.
       </p>
 
       <h2>Children</h2>

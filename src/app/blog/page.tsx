@@ -11,6 +11,7 @@ import { COLLECTIONS } from '@/data/collections';
 import { pageMeta } from '@/lib/seo';
 import { collectionJsonLd } from '@/lib/structured-data';
 import { JsonLd } from '@/components/json-ld';
+import { NewsletterForm } from '@/components/newsletter-form';
 
 const TITLE = 'All Recipes, Kitchen Guides & Food Reviews';
 const DESCRIPTION =
@@ -139,20 +140,13 @@ export default async function BlogIndex() {
               <p className="font-display text-lg leading-tight">
                 One good recipe every Sunday.
               </p>
-              <form className="mt-4 flex flex-col gap-2">
-                <input
-                  type="email"
-                  required
-                  placeholder="Email"
-                  className="rounded-full border border-ink-500/15 bg-bone-100 px-4 py-2 text-sm outline-none focus:border-clay-500 dark:border-cream-50/15 dark:bg-ink-600"
-                />
-                <button
-                  type="submit"
-                  className="rounded-full bg-clay-500 px-4 py-2 text-sm font-medium text-white hover:bg-clay-600"
-                >
-                  Subscribe
-                </button>
-              </form>
+              <NewsletterForm
+                id="blog-newsletter"
+                placeholder="Email"
+                className="mt-4 flex flex-col gap-2"
+                inputClassName="rounded-full border border-ink-500/15 bg-bone-100 px-4 py-2 text-sm outline-none focus:border-clay-500 dark:border-cream-50/15 dark:bg-ink-600"
+                buttonClassName="rounded-full bg-clay-500 px-4 py-2 text-sm font-medium text-white hover:bg-clay-600"
+              />
             </div>
           </div>
         </aside>
