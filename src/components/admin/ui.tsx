@@ -3,6 +3,11 @@ import type { ReactNode } from 'react';
 export const cardClass =
   'rounded-xl border border-bone-200 bg-bone-50 shadow-[0_1px_2px_rgba(15,13,11,0.04)] dark:border-char-400 dark:bg-char-500';
 
+export const inputClass =
+  'mt-1 w-full rounded-lg border border-bone-200 bg-bone-50 px-3 py-2 text-sm text-char-500 outline-none focus:border-ember-500 dark:border-char-400 dark:bg-char-600 dark:text-bone-50';
+
+export const labelClass = 'text-xs font-medium text-char-300 dark:text-bone-100';
+
 export function PageHeader({
   title,
   description,

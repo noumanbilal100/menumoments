@@ -6,7 +6,7 @@ import { CATEGORIES, SECTIONS, type SectionKey } from '@/data/taxonomy';
 import type { ActionState } from '@/app/admin/actions';
 import { RichEditor, type RichEditorHandle } from './rich-editor';
 import { compressImage, formatBytes } from './image-tools';
-import { cardClass } from './ui';
+import { cardClass, inputClass as input, labelClass as label } from './ui';
 
 /** Vercel rejects request bodies above 4.5 MB; leave room for the form. */
 const MAX_UPLOAD_BYTES = 4 * 1024 * 1024;
@@ -22,14 +22,12 @@ export interface ContentFormValues {
   author?: string;
   categories?: string[];
   heroImage?: { src: string; alt: string; width?: number; height?: number } | null;
+  /** Alt text to start with when there is no hero image yet. */
+  heroAlt?: string;
   seoTitle?: string;
   metaDescription?: string;
   focusKeyword?: string;
 }
-
-const input =
-  'mt-1 w-full rounded-lg border border-bone-200 bg-bone-50 px-3 py-2 text-sm text-char-500 outline-none focus:border-ember-500 dark:border-char-400 dark:bg-char-600 dark:text-bone-50';
-const label = 'text-xs font-medium text-char-300 dark:text-bone-100';
 
 function slugify(s: string): string {
   return s
@@ -386,7 +384,7 @@ export function ContentForm({
                 <label htmlFor="heroAlt" className={label}>
                   Image description (alt text)
                 </label>
-                <input id="heroAlt" name="heroAlt" defaultValue={values.heroImage?.alt} className={input} />
+                <input id="heroAlt" name="heroAlt" defaultValue={values.heroImage?.alt ?? values.heroAlt} className={input} />
               </div>
             </div>
           )}
