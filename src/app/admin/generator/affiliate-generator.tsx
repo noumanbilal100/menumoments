@@ -91,9 +91,22 @@ export function AffiliateGenerator() {
 
   const sections = useMemo(() => sectionsFor(setup), [setup]);
   const results = useMemo(
-    () => Object.fromEntries(sections.map((s) => [s.id, readSection(s, answers[s.id] ?? '')])),
-    [sections, answers],
+    () => Object.fromEntries(sections.map((s) => [s.id, readSection(s, answers[s.id] ?? '', setup)])),
+    [sections, answers, setup],
   );
+  const overviewResult = results.overview?.value;
+
+  // Part 1's reply names any product the editor left unnamed; the later prompts need those names.
+  useEffect(() => {
+    if (overviewResult?.kind !== 'overview') return;
+    const picks = overviewResult.data.picks;
+    if (!setup.products.some((p, i) => !p.name.trim() && picks[i + 1]?.name)) return;
+    setSetup((s) => ({
+      ...s,
+      products: s.products.map((p, i) => (p.name.trim() || !picks[i + 1]?.name ? p : { ...p, name: picks[i + 1].name })),
+    }));
+  }, [overviewResult, setup.products]);
+  const unnamed = setup.products.some((p) => !p.name.trim());
   const productIssues = setup.products.map(productProblems);
   const setupProblems = [
     ...(!setup.keyword.trim() ? ['Add the main keyword.'] : []),
@@ -102,7 +115,7 @@ export function AffiliateGenerator() {
     ...productIssues.flatMap((p, i) => (p.length ? [`Product ${i + 1} needs a ${p.join(', ')}.`] : [])),
   ];
   const missingRequired = sections.filter((s) => s.required && !results[s.id]?.value);
-  const canBuild = !setupProblems.length && !missingRequired.length;
+  const canBuild = !setupProblems.length && !missingRequired.length && !unnamed;
 
   function update(patch: Partial<GenSetup>) {
     setSetup((s) => ({ ...s, ...patch }));
@@ -288,7 +301,9 @@ export function AffiliateGenerator() {
       <section className={`${cardClass} space-y-4 p-5`}>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h2 className="text-sm font-semibold">2. Products, best first</h2>
-          <p className="text-xs text-char-200">Product 1 is your top pick. Use the arrows to reorder.</p>
+          <p className="text-xs text-char-200">
+            Only the link and image are needed; ChatGPT fills in missing names. Product 1 is your top pick.
+          </p>
         </div>
 
         <details className="rounded-lg border border-dashed border-bone-300 p-3 dark:border-char-400">
@@ -343,7 +358,7 @@ export function AffiliateGenerator() {
                     aria-label={`Product ${i + 1} name`}
                     value={p.name}
                     onChange={(e) => setProduct(i, { name: e.target.value })}
-                    placeholder="Product name, e.g. DELAMU 20-in-1 Sushi Making Kit"
+                    placeholder="Product name (optional: ChatGPT fills it in from the link)"
                     className={`${inputClass} mt-0 md:col-span-2`}
                   />
                   <textarea
@@ -399,8 +414,9 @@ export function AffiliateGenerator() {
         <div>
           <h2 className="text-sm font-semibold">3. Write it with ChatGPT</h2>
           <p className="mt-1 text-xs leading-relaxed text-char-200">
-            For each part: copy the prompt, paste it into ChatGPT, then paste ChatGPT’s whole reply in the box. A new chat for each
-            part works best. If you change the products later, copy the prompts again.
+            Start with part 1. For each part: copy the prompt, paste it into ChatGPT, then paste ChatGPT’s whole reply in the box.
+            A new chat for each part works best, with web search on so ChatGPT can open the product links. If you change the
+            products later, copy the prompts again.
           </p>
         </div>
         {setupProblems.length > 0 && (
@@ -414,6 +430,7 @@ export function AffiliateGenerator() {
             const r = results[s.id];
             const answer = answers[s.id] ?? '';
             const state = r?.value ? 'ready' : answer.trim() ? 'problem' : 'waiting';
+            const needsNames = s.kind !== 'overview' && unnamed;
             return (
               <li key={s.id} className="rounded-lg border border-bone-200 p-4 dark:border-char-400">
                 <div className="flex flex-wrap items-start justify-between gap-3">
@@ -439,13 +456,18 @@ export function AffiliateGenerator() {
                     <button
                       type="button"
                       onClick={() => void copyPrompt(s.id, promptFor(s, setup))}
-                      disabled={setupProblems.length > 0}
+                      disabled={setupProblems.length > 0 || needsNames}
                       className={primaryButton}
                     >
                       {copied === s.id ? 'Copied ✓' : 'Copy prompt'}
                     </button>
                   </div>
                 </div>
+                {needsNames && !setupProblems.length && (
+                  <p className="mt-2 text-[11px] text-char-200">
+                    Paste the reply to part 1 first. It fills in the product names this prompt needs.
+                  </p>
+                )}
                 <textarea
                   aria-label={`ChatGPT reply for ${s.title}`}
                   rows={answer ? 6 : 3}
@@ -485,7 +507,11 @@ export function AffiliateGenerator() {
           </p>
         ) : (
           <p className="text-xs text-char-200">
-            {setupProblems.length ? 'Finish the topic and products first.' : `Still needed: ${missingRequired.map((s) => s.title).join(', ')}.`}
+            {setupProblems.length
+              ? 'Finish the topic and products first.'
+              : missingRequired.length
+                ? `Still needed: ${missingRequired.map((s) => s.title).join(', ')}.`
+                : 'Some products still have no name. Type them in step 2.'}
           </p>
         )}
         <button type="button" onClick={build} disabled={!canBuild} className={primaryButton}>

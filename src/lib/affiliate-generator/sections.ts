@@ -50,10 +50,13 @@ function header(setup: GenSetup, task: string): string {
   const list = setup.products
     .map((p, i) => {
       const facts = p.facts.trim() ? `\n     Known facts: ${p.facts.trim().replace(/\s*\n\s*/g, '; ')}` : '';
-      return `[P${i + 1}] ${p.name.trim()}\n     Link: ${p.url.trim()}${facts}`;
+      return `[P${i + 1}] ${p.name.trim() || '(name not given: open the link to identify it)'}\n     Link: ${p.url.trim()}${facts}`;
     })
     .join('\n');
   const notes = setup.notes.trim() ? `\nEDITOR'S NOTES\n${setup.notes.trim()}\n` : '';
+  const unnamed = setup.products.some((p) => !p.name.trim())
+    ? `\n- Some products have no name yet. Open their links to find out exactly which product each one is. If you cannot open a link or are not sure, write UNKNOWN as its NAME and never guess.`
+    : '';
   return `You are helping write a buying guide for Menu Moments (menumoments.com), a food and kitchen website for home cooks in the United States.
 
 ARTICLE
@@ -71,7 +74,7 @@ WRITING RULES
 - Write clear, friendly American English for real home cooks. Keep paragraphs short (2 to 4 sentences) and specific.
 - This is a research-based guide. Never say or imply that we bought, tested, used or measured the products. For product details, use phrases such as "according to the listing" or "the manufacturer says".
 - Do not invent prices, star ratings, review counts, awards, dimensions or package contents. If you are not sure about a detail, describe it in general terms and tell readers to check the current listing.
-- If you can browse the web, open each product link and use what the listing says.
+- If you can browse the web, open each product link and use what the listing says.${unnamed}
 - When you mention one of the products, write its tag, for example [P2], instead of its name. The website turns each tag into the product's linked name. Never put a tag in TITLE, SEO_TITLE, META, EXCERPT, HERO_ALT, BADGE or SHORT_NAME.
 - Use the main keyword "${setup.keyword.trim()}" naturally where it fits, plus close variations. Never stuff keywords.
 - Do not add links, emojis, tables or headings of your own. Use **bold** only for a few key phrases.
@@ -89,6 +92,7 @@ function overviewTemplate(setup: GenSetup): string {
   const n = setup.products.length;
   const picks = setup.products
     .map((_, i) => `### PICK P${i + 1}
+NAME: (the product's full name as shown on its listing, without the store's name)
 BADGE: (2 to 4 words${i === 0 ? ', this one is "Best Overall"' : ', different from every other product, e.g. Best Budget, Best Value or Best for Beginners'})
 BEST_FOR: (who it suits, one short line)
 SUMMARY: (2 sentences on why it made the list)
@@ -212,6 +216,8 @@ export interface Item {
 }
 
 export interface Pick {
+  /** The listing's name, which fills in any product the editor left unnamed. */
+  name: string;
   badge: string;
   bestFor: string;
   summary: string;
@@ -276,7 +282,7 @@ export interface ReadResult {
 }
 
 const LABELS: Record<SectionKind, string[]> = {
-  overview: ['TITLE', 'SEO_TITLE', 'META', 'EXCERPT', 'HERO_ALT', 'INTRO', 'RECOMMENDATION', 'EVALUATION_INTRO', 'BADGE', 'BEST_FOR', 'SUMMARY', 'SHORT_NAME', 'MAIN_APPEAL', 'BEST_BUYER', 'CHECK'],
+  overview: ['TITLE', 'SEO_TITLE', 'META', 'EXCERPT', 'HERO_ALT', 'INTRO', 'RECOMMENDATION', 'EVALUATION_INTRO', 'NAME', 'BADGE', 'BEST_FOR', 'SUMMARY', 'SHORT_NAME', 'MAIN_APPEAL', 'BEST_BUYER', 'CHECK'],
   guide: ['GUIDE_INTRO', 'VERSUS_HEADING', 'VERSUS_A_TITLE', 'VERSUS_A_TEXT', 'VERSUS_B_TITLE', 'VERSUS_B_TEXT', 'VERSUS_AFTER', 'MUST_HAVE', 'NICE_TO_HAVE', 'TITLE', 'TEXT'],
   reviews: ['BEST_FOR', 'REVIEW', 'PROS', 'CONS', 'VERDICT'],
   wrapup: ['OVERALL_PROS', 'OVERALL_CONS', 'VERDICT_INTRO', 'TOP_PICK', 'CLOSING', 'LINE', 'TITLE', 'LEAD', 'TEXT', 'QUESTION', 'ANSWER'],
@@ -297,7 +303,7 @@ function itemsOf(blocks: Block[], type: string): Item[] {
     .map((b) => ({ title: val(b.fields.TITLE), text: val(b.fields.TEXT) }));
 }
 
-export function readSection(section: SectionDef, reply: string): ReadResult {
+export function readSection(section: SectionDef, reply: string, setup: GenSetup): ReadResult {
   const errors: string[] = [];
   const warnings: string[] = [];
   if (!reply.trim()) return { value: null, errors: [], warnings: [] };
@@ -323,7 +329,13 @@ export function readSection(section: SectionDef, reply: string): ReadResult {
           errors.push(`Quick pick for product ${n} is missing.`);
           continue;
         }
+        const name = val(f.NAME).replace(/^["“]|["”]$/g, '');
+        if (!setup.products[n - 1]?.name.trim() && (!name || /^unknown\b/i.test(name))) {
+          errors.push(`ChatGPT could not identify product ${n}. Type its name in step 2, then copy this prompt again.`);
+          continue;
+        }
         picks[n] = {
+          name: /^unknown\b/i.test(name) ? '' : name,
           badge: val(f.BADGE),
           bestFor: val(f.BEST_FOR),
           summary: val(f.SUMMARY),

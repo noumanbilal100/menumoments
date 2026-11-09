@@ -134,9 +134,9 @@ export function storeFor(url: string): string {
   }
 }
 
+/** A name is optional: ChatGPT identifies unnamed products from their links in the first reply. */
 export function productProblems(p: GenProduct): string[] {
   const problems: string[] = [];
-  if (!p.name.trim()) problems.push('name');
   if (!isUrl(p.url)) problems.push('link');
   if (!isUrl(p.image)) problems.push('image');
   return problems;
