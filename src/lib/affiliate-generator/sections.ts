@@ -45,7 +45,7 @@ export function sectionsFor(setup: GenSetup): SectionDef[] {
 // Prompts
 // ---------------------------------------------------------------------------
 
-function header(setup: GenSetup, task: string): string {
+function header(setup: GenSetup, task: string, extraFormat = ''): string {
   const year = new Date().getFullYear();
   const list = setup.products
     .map((p, i) => {
@@ -83,7 +83,7 @@ REPLY FORMAT
 Reply with ONLY the template below, filled in, inside one \`\`\`text code block.
 Keep every label exactly as written (in capitals, followed by a colon) and keep every ### line.
 Replace each instruction in parentheses with your own text.
-
+${extraFormat}
 `;
 }
 
@@ -204,6 +204,53 @@ export function promptFor(section: SectionDef, setup: GenSetup): string {
     case 'wrapup':
       return header(setup, `Write the overall pros and cons, the "who should buy which" advice, the FAQs and the final verdict.`) + wrapupTemplate(setup);
   }
+}
+
+const PART_MARKERS: [SectionKind, string][] = [
+  ['overview', 'OVERVIEW'],
+  ['guide', 'BUYING GUIDE'],
+  ['reviews', 'REVIEWS'],
+  ['wrapup', 'WRAP-UP'],
+];
+
+const PART_LINE = /^[\s#*]*={2,}\s*(OVERVIEW|BUYING GUIDE|REVIEWS|WRAP-?UP)\s*={2,}[\s*]*$/i;
+
+/** Every section in one prompt, divided by === lines so the reply can be split back into its sections. */
+export function masterPromptFor(setup: GenSetup): string {
+  const refs = setup.products.map((_, i) => i + 1);
+  const templates: Record<SectionKind, string> = {
+    overview: overviewTemplate(setup),
+    guide: guideTemplate(setup),
+    reviews: reviewsTemplate(refs),
+    wrapup: wrapupTemplate(setup),
+  };
+  const task =
+    'Write the complete buying guide in one reply: headline and SEO fields, introduction, quick picks, comparison-table entries, the buying guide, a full review of every product, the "who should buy which" advice, FAQs and the final verdict.';
+  const format = `Keep every === line too; the website uses them to find each part.
+This is a long reply. If you run out of space, stop at the end of a complete line. When I write "continue", carry on from exactly where you stopped, in a new \`\`\`text code block, without repeating anything.
+`;
+  return header(setup, task, format) + PART_MARKERS.map(([kind, marker]) => `=== ${marker} ===\n\n${templates[kind]}`).join('\n\n');
+}
+
+/**
+ * Splits a reply to the master prompt into its sections. Text before the first
+ * === line is ChatGPT's preamble. A "continue" reply pasted underneath simply
+ * carries on the part it was in.
+ */
+export function splitMasterReply(text: string): Partial<Record<SectionKind, string>> {
+  const parts: Partial<Record<SectionKind, string>> = {};
+  let current: SectionKind | null = null;
+  for (const line of text.replace(/\r\n?/g, '\n').split('\n')) {
+    const m = line.match(PART_LINE);
+    if (m) {
+      const name = m[1].toUpperCase().replace('WRAPUP', 'WRAP-UP');
+      current = PART_MARKERS.find(([, marker]) => marker === name)?.[0] ?? null;
+      if (current) parts[current] ??= '';
+      continue;
+    }
+    if (current) parts[current] += `${line}\n`;
+  }
+  return parts;
 }
 
 // ---------------------------------------------------------------------------

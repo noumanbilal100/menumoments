@@ -7,10 +7,13 @@ import { ContentForm } from '@/components/admin/content-form';
 import { cardClass, inputClass, labelClass } from '@/components/admin/ui';
 import { buildArticle, type BuiltArticle } from '@/lib/affiliate-generator/render';
 import {
+  masterPromptFor,
   readSection,
   sectionsFor,
+  splitMasterReply,
   promptFor,
   type GuideData,
+  type ReadResult,
   type OverviewData,
   type ReviewData,
   type WrapupData,
@@ -30,10 +33,14 @@ import {
 const STORAGE_KEY = 'mm-affiliate-generator';
 const MAX_PRODUCTS = 20;
 
+/** One prompt for the whole article, or one per section for long line-ups. */
+type Mode = 'master' | 'sections';
+
 interface Saved {
   setup: GenSetup;
   answers: Record<string, string>;
   touched: { nouns: boolean; category: boolean };
+  mode?: Mode;
 }
 
 const smallButton =
@@ -59,6 +66,7 @@ export function AffiliateGenerator() {
   const [setup, setSetup] = useState<GenSetup>(EMPTY_SETUP);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [touched, setTouched] = useState({ nouns: false, category: false });
+  const [mode, setMode] = useState<Mode>('master');
   const [loaded, setLoaded] = useState(false);
   const [bulk, setBulk] = useState('');
   const [copied, setCopied] = useState<string | null>(null);
@@ -73,6 +81,7 @@ export function AffiliateGenerator() {
         setSetup(saved.setup);
         setAnswers(saved.answers ?? {});
         setTouched(saved.touched ?? { nouns: true, category: true });
+        setMode(saved.mode ?? 'master');
       }
     } catch {
       // Nothing usable saved.
@@ -83,16 +92,21 @@ export function AffiliateGenerator() {
   useEffect(() => {
     if (!loaded) return;
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ setup, answers, touched } satisfies Saved));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ setup, answers, touched, mode } satisfies Saved));
     } catch {
       // Storage full or blocked; the work just isn't kept across reloads.
     }
-  }, [setup, answers, touched, loaded]);
+  }, [setup, answers, touched, mode, loaded]);
 
   const sections = useMemo(() => sectionsFor(setup), [setup]);
+  const masterReply = answers.master ?? '';
+  const masterParts = useMemo(() => splitMasterReply(masterReply), [masterReply]);
   const results = useMemo(
-    () => Object.fromEntries(sections.map((s) => [s.id, readSection(s, answers[s.id] ?? '', setup)])),
-    [sections, answers, setup],
+    () =>
+      Object.fromEntries(
+        sections.map((s) => [s.id, readSection(s, (mode === 'master' ? masterParts[s.kind] : answers[s.id]) ?? '', setup)]),
+      ) as Record<string, ReadResult>,
+    [sections, answers, masterParts, mode, setup],
   );
   const overviewResult = results.overview?.value;
 
@@ -411,13 +425,31 @@ export function AffiliateGenerator() {
 
       {/* 3. Prompts -------------------------------------------------------- */}
       <section className={`${cardClass} space-y-4 p-5`}>
-        <div>
-          <h2 className="text-sm font-semibold">3. Write it with ChatGPT</h2>
-          <p className="mt-1 text-xs leading-relaxed text-char-200">
-            Start with part 1. For each part: copy the prompt, paste it into ChatGPT, then paste ChatGPT’s whole reply in the box.
-            A new chat for each part works best, with web search on so ChatGPT can open the product links. If you change the
-            products later, copy the prompts again.
-          </p>
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <h2 className="text-sm font-semibold">3. Write it with ChatGPT</h2>
+            <p className="mt-1 max-w-2xl text-xs leading-relaxed text-char-200">
+              {mode === 'master'
+                ? 'Copy the master prompt into a new ChatGPT chat with web search on, then paste its whole reply below. If ChatGPT stops halfway, type “continue” in ChatGPT and paste that reply underneath the first one in the same box.'
+                : 'Start with part 1. For each part: copy the prompt, paste it into a new ChatGPT chat with web search on, then paste ChatGPT’s whole reply in the box.'}{' '}
+              If you change the products later, copy the prompt again.
+            </p>
+          </div>
+          <div className="flex rounded-lg border border-bone-200 p-0.5 dark:border-char-400" role="group" aria-label="Prompt style">
+            {(['master', 'sections'] as const).map((m) => (
+              <button
+                key={m}
+                type="button"
+                onClick={() => setMode(m)}
+                aria-pressed={mode === m}
+                className={`rounded-md px-3 py-1.5 text-xs font-medium ${
+                  mode === m ? 'bg-char-500 text-white dark:bg-bone-50 dark:text-char-600' : 'text-char-300 dark:text-bone-100'
+                }`}
+              >
+                {m === 'master' ? 'One master prompt' : 'Section by section'}
+              </button>
+            ))}
+          </div>
         </div>
         {setupProblems.length > 0 && (
           <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800 dark:border-amber-800 dark:bg-amber-900/30 dark:text-amber-200">
@@ -425,75 +457,104 @@ export function AffiliateGenerator() {
             {setupProblems.length > 3 ? ` (+${setupProblems.length - 3} more)` : ''}
           </div>
         )}
-        <ol className="space-y-4">
-          {sections.map((s, i) => {
-            const r = results[s.id];
-            const answer = answers[s.id] ?? '';
-            const state = r?.value ? 'ready' : answer.trim() ? 'problem' : 'waiting';
-            const needsNames = s.kind !== 'overview' && unnamed;
-            return (
-              <li key={s.id} className="rounded-lg border border-bone-200 p-4 dark:border-char-400">
-                <div className="flex flex-wrap items-start justify-between gap-3">
-                  <div>
-                    <p className="text-sm font-semibold">
-                      {i + 1}. {s.title}
-                      {!s.required && <span className="ml-2 text-[11px] font-normal text-char-200">optional</span>}
+        {mode === 'master' ? (
+          <div className="space-y-3 rounded-lg border border-bone-200 p-4 dark:border-char-400">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p className="text-sm font-semibold">Master prompt</p>
+                <p className="mt-0.5 text-xs text-char-200">The whole article in one go: intro, quick picks, buying guide, every review, FAQs and verdict.</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => void copyPrompt('master', masterPromptFor(setup))}
+                disabled={setupProblems.length > 0}
+                className={primaryButton}
+              >
+                {copied === 'master' ? 'Copied ✓' : 'Copy master prompt'}
+              </button>
+            </div>
+            <textarea
+              aria-label="ChatGPT reply to the master prompt"
+              rows={masterReply ? 10 : 4}
+              value={masterReply}
+              onChange={(e) => setAnswers((a) => ({ ...a, master: e.target.value }))}
+              placeholder="Paste ChatGPT’s whole reply here, and any “continue” replies underneath it"
+              className={`${inputClass} font-mono text-xs`}
+            />
+            {masterReply.trim() && !Object.keys(masterParts).length && (
+              <p className="text-[11px] text-red-700 dark:text-red-300">
+                No === parts found. Paste ChatGPT’s whole reply, including lines such as === OVERVIEW ===.
+              </p>
+            )}
+            {masterReply.trim() && Object.keys(masterParts).length > 0 && (
+              <ul className="space-y-2">
+                {sections.map((s) => (
+                  <li key={s.id} className="rounded-md bg-bone-100/70 px-3 py-2 dark:bg-char-400/40">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-xs font-medium">
+                        {s.title}
+                        {!s.required && <span className="ml-1.5 font-normal text-char-200">optional</span>}
+                      </span>
+                      <StatusChip result={results[s.id]} hasText={Boolean(masterParts[s.kind]?.trim())} />
+                    </div>
+                    {!masterParts[s.kind]?.trim() && s.required && (
+                      <p className="mt-1 text-[11px] text-amber-700 dark:text-amber-300">
+                        Not in the reply yet. If ChatGPT stopped early, type “continue” and paste its next reply underneath.
+                      </p>
+                    )}
+                    <Messages result={results[s.id]} />
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ) : (
+          <ol className="space-y-4">
+            {sections.map((s, i) => {
+              const r = results[s.id];
+              const answer = answers[s.id] ?? '';
+              const needsNames = s.kind !== 'overview' && unnamed;
+              return (
+                <li key={s.id} className="rounded-lg border border-bone-200 p-4 dark:border-char-400">
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <div>
+                      <p className="text-sm font-semibold">
+                        {i + 1}. {s.title}
+                        {!s.required && <span className="ml-2 text-[11px] font-normal text-char-200">optional</span>}
+                      </p>
+                      <p className="mt-0.5 text-xs text-char-200">{s.description}</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <StatusChip result={r} hasText={Boolean(answer.trim())} />
+                      <button
+                        type="button"
+                        onClick={() => void copyPrompt(s.id, promptFor(s, setup))}
+                        disabled={setupProblems.length > 0 || needsNames}
+                        className={primaryButton}
+                      >
+                        {copied === s.id ? 'Copied ✓' : 'Copy prompt'}
+                      </button>
+                    </div>
+                  </div>
+                  {needsNames && !setupProblems.length && (
+                    <p className="mt-2 text-[11px] text-char-200">
+                      Paste the reply to part 1 first. It fills in the product names this prompt needs.
                     </p>
-                    <p className="mt-0.5 text-xs text-char-200">{s.description}</p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span
-                      className={`rounded-md px-2 py-0.5 text-[11px] font-medium ${
-                        state === 'ready'
-                          ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300'
-                          : state === 'problem'
-                            ? 'bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300'
-                            : 'bg-bone-100 text-char-300 dark:bg-char-400 dark:text-bone-100'
-                      }`}
-                    >
-                      {state === 'ready' ? '✓ Ready' : state === 'problem' ? 'Needs a fix' : 'Waiting for reply'}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => void copyPrompt(s.id, promptFor(s, setup))}
-                      disabled={setupProblems.length > 0 || needsNames}
-                      className={primaryButton}
-                    >
-                      {copied === s.id ? 'Copied ✓' : 'Copy prompt'}
-                    </button>
-                  </div>
-                </div>
-                {needsNames && !setupProblems.length && (
-                  <p className="mt-2 text-[11px] text-char-200">
-                    Paste the reply to part 1 first. It fills in the product names this prompt needs.
-                  </p>
-                )}
-                <textarea
-                  aria-label={`ChatGPT reply for ${s.title}`}
-                  rows={answer ? 6 : 3}
-                  value={answer}
-                  onChange={(e) => setAnswers((a) => ({ ...a, [s.id]: e.target.value }))}
-                  placeholder="Paste ChatGPT’s reply here"
-                  className={`${inputClass} mt-3 font-mono text-xs`}
-                />
-                {r?.errors.length ? (
-                  <ul className="mt-2 list-disc space-y-0.5 pl-5 text-[11px] text-red-700 dark:text-red-300">
-                    {r.errors.map((e) => (
-                      <li key={e}>{e}</li>
-                    ))}
-                  </ul>
-                ) : null}
-                {r?.warnings.length ? (
-                  <ul className="mt-2 list-disc space-y-0.5 pl-5 text-[11px] text-amber-700 dark:text-amber-300">
-                    {r.warnings.map((w) => (
-                      <li key={w}>{w}</li>
-                    ))}
-                  </ul>
-                ) : null}
-              </li>
-            );
-          })}
-        </ol>
+                  )}
+                  <textarea
+                    aria-label={`ChatGPT reply for ${s.title}`}
+                    rows={answer ? 6 : 3}
+                    value={answer}
+                    onChange={(e) => setAnswers((a) => ({ ...a, [s.id]: e.target.value }))}
+                    placeholder="Paste ChatGPT’s reply here"
+                    className={`${inputClass} mt-3 font-mono text-xs`}
+                  />
+                  <Messages result={r} />
+                </li>
+              );
+            })}
+          </ol>
+        )}
       </section>
 
       {/* 4. Build ---------------------------------------------------------- */}
@@ -549,5 +610,43 @@ export function AffiliateGenerator() {
         </section>
       )}
     </div>
+  );
+}
+
+function StatusChip({ result, hasText }: { result: ReadResult | undefined; hasText: boolean }) {
+  const state = result?.value ? 'ready' : hasText ? 'problem' : 'waiting';
+  return (
+    <span
+      className={`rounded-md px-2 py-0.5 text-[11px] font-medium ${
+        state === 'ready'
+          ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300'
+          : state === 'problem'
+            ? 'bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300'
+            : 'bg-bone-100 text-char-300 dark:bg-char-400 dark:text-bone-100'
+      }`}
+    >
+      {state === 'ready' ? '✓ Ready' : state === 'problem' ? 'Needs a fix' : 'Waiting for reply'}
+    </span>
+  );
+}
+
+function Messages({ result }: { result: ReadResult | undefined }) {
+  return (
+    <>
+      {result?.errors.length ? (
+        <ul className="mt-2 list-disc space-y-0.5 pl-5 text-[11px] text-red-700 dark:text-red-300">
+          {result.errors.map((e) => (
+            <li key={e}>{e}</li>
+          ))}
+        </ul>
+      ) : null}
+      {result?.warnings.length ? (
+        <ul className="mt-2 list-disc space-y-0.5 pl-5 text-[11px] text-amber-700 dark:text-amber-300">
+          {result.warnings.map((w) => (
+            <li key={w}>{w}</li>
+          ))}
+        </ul>
+      ) : null}
+    </>
   );
 }
