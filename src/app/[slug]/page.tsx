@@ -2,7 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { notFound, permanentRedirect } from 'next/navigation';
-import { getPost, listRecentPosts, allPostSlugs, relatedPosts } from '@/lib/content';
+import { getPost, listRecentPosts, allPostSlugs, relatedPosts, type Post } from '@/lib/content';
+import type { PageRecord } from '@/lib/cms/content';
 import { getCategory } from '@/data/taxonomy';
 import { COLLECTIONS } from '@/data/collections';
 import { PostCard } from '@/components/post-card';
@@ -22,6 +23,7 @@ import { PageShell } from '@/components/page-shell';
 import { HeroFigure } from '@/components/hero-figure';
 import { cleanPostHtml } from '@/lib/clean-html';
 import { getSitePage, listSitePages } from '@/lib/site-pages';
+import { getFreshPost, getFreshSitePage } from '@/lib/fresh-content';
 import { blockForPost, splitBeforeHeading } from '@/data/post-products';
 import { shouldShowAds } from '@/lib/ads';
 import { absoluteUrl, imageFor, postBreadcrumbJsonLd, postJsonLd, sitePageJsonLd } from '@/lib/structured-data';
@@ -38,16 +40,32 @@ export async function generateStaticParams() {
   return [...allPostSlugs(), ...pages.map((p) => p.slug)].map((slug) => ({ slug }));
 }
 
+/**
+ * What lives at /<slug>/: a post or page from this build first, then one
+ * published since the build was made, read from the repository until the
+ * rebuild that includes it goes live (see src/lib/fresh-content.ts).
+ */
+async function contentAt(slug: string): Promise<{ post: Post } | { page: PageRecord } | null> {
+  const post = await getPost(slug);
+  if (post) return { post };
+  const page = await getSitePage(slug);
+  if (page) return { page };
+  const freshPost = await getFreshPost(slug);
+  if (freshPost) return { post: freshPost };
+  const freshPage = await getFreshSitePage(slug);
+  return freshPage ? { page: freshPage } : null;
+}
+
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const post = await getPost(slug);
-  if (!post) {
-    const page = await getSitePage(slug);
-    if (!page) return {};
+  const found = await contentAt(slug);
+  if (!found) return {};
+  if ('page' in found) {
+    const { page } = found;
     return {
       ...pageMeta({
         title: page.seo?.seoTitle || page.title,
@@ -58,6 +76,7 @@ export async function generateMetadata({
       keywords: page.seo?.focusKeyword ? [page.seo.focusKeyword] : undefined,
     };
   }
+  const { post } = found;
   const seo = post.seo ?? {};
   const category = post.categories[0] ? getCategory(post.categories[0]) : undefined;
   return {
@@ -141,10 +160,10 @@ export default async function PostPage({
   const asCategory = getCategory(slug);
   if (asCategory) permanentRedirect(`/category/${asCategory.slug}/`);
 
-  const post = await getPost(slug);
-  if (!post) {
-    const page = await getSitePage(slug);
-    if (!page) notFound();
+  const found = await contentAt(slug);
+  if (!found) notFound();
+  if ('page' in found) {
+    const { page } = found;
     return (
       <>
         <JsonLd data={sitePageJsonLd(page)} />
@@ -154,6 +173,7 @@ export default async function PostPage({
       </>
     );
   }
+  const { post } = found;
 
   const primaryCat = post.categories[0] ? getCategory(post.categories[0]) : undefined;
   const secondaryCats = post.categories

@@ -39,7 +39,13 @@ export default async function EditSitePage({
         isNew={false}
         action={savePageAction}
         liveUrl={page.status === 'published' ? `/${page.slug}/` : undefined}
-        savedNotice={saved ? 'Page created.' : undefined}
+        savedNotice={
+          saved
+            ? page.status === 'published'
+              ? 'Page published. It is live now; the sitemap lists it after Cloudflare rebuilds the site, in a few minutes.'
+              : 'Draft saved.'
+            : undefined
+        }
         values={{
           slug: page.slug,
           title: page.title,

@@ -48,7 +48,13 @@ export default async function EditPostPage({
         isNew={false}
         action={savePostAction}
         liveUrl={status === 'published' ? `/${record.slug}/` : undefined}
-        savedNotice={saved ? 'Post created.' : undefined}
+        savedNotice={
+          saved
+            ? status === 'published'
+              ? 'Post published. Its page is live now; the homepage, categories and sitemap list it after Cloudflare rebuilds the site, in a few minutes.'
+              : 'Draft saved.'
+            : undefined
+        }
         values={{
           slug: record.slug,
           title: record.title,

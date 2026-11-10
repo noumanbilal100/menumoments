@@ -59,9 +59,14 @@ function ghHeaders(token: string, accept = 'application/vnd.github+json'): Recor
   };
 }
 
+/** GitHub's API; overridable for GitHub Enterprise or a local stand-in when testing. */
+function apiBase(): string {
+  return (process.env.GITHUB_API_URL?.trim() || 'https://api.github.com').replace(/\/+$/, '');
+}
+
 async function gh<T>(urlPath: string, init: RequestInit & { raw?: boolean } = {}): Promise<T> {
   const { repo, token } = githubTarget();
-  const res = await fetch(`https://api.github.com/repos/${repo}${urlPath}`, {
+  const res = await fetch(`${apiBase()}/repos/${repo}${urlPath}`, {
     ...init,
     cache: 'no-store',
     headers: {
@@ -86,7 +91,7 @@ async function githubList(dir: string): Promise<string[]> {
   const { branch } = githubTarget();
   const { repo, token } = githubTarget();
   const res = await fetch(
-    `https://api.github.com/repos/${repo}/contents/${encodeURI(dir)}?ref=${encodeURIComponent(branch)}`,
+    `${apiBase()}/repos/${repo}/contents/${encodeURI(dir)}?ref=${encodeURIComponent(branch)}`,
     {
       cache: 'no-store',
       headers: ghHeaders(token),
@@ -177,6 +182,48 @@ async function fsCommit(changes: FileChange[]): Promise<string> {
     }
   }
   return 'local';
+}
+
+// ---------------------------------------------------------------------------
+// Reads for public pages
+// ---------------------------------------------------------------------------
+
+/*
+ * Public pages read the repository only for content saved after the running
+ * build (see src/lib/fresh-content.ts). These reads leave fetch caching at
+ * Next's default: the admin's `no-store` would turn a statically generated
+ * route dynamic, and Next refuses that at runtime ("Page changed from static
+ * to dynamic"). Any failure is null, so the page falls back to its 404.
+ */
+
+/** A repository file's contents for a public page; null when missing or unreachable. */
+export async function readRepoFileForPage(file: string): Promise<string | null> {
+  if (storeMode() !== 'github') return null;
+  try {
+    const { repo, branch, token } = githubTarget();
+    const res = await fetch(`${apiBase()}/repos/${repo}/contents/${encodeURI(file)}?ref=${encodeURIComponent(branch)}`, {
+      headers: ghHeaders(token, 'application/vnd.github.raw+json'),
+    });
+    return res.ok ? await res.text() : null;
+  } catch {
+    return null;
+  }
+}
+
+/** File names in a repository folder for a public page; null when unreachable. */
+export async function listRepoDirForPage(dir: string): Promise<string[] | null> {
+  if (storeMode() !== 'github') return null;
+  try {
+    const { repo, branch, token } = githubTarget();
+    const res = await fetch(`${apiBase()}/repos/${repo}/contents/${encodeURI(dir)}?ref=${encodeURIComponent(branch)}`, {
+      headers: ghHeaders(token),
+    });
+    if (!res.ok) return null;
+    const items = (await res.json()) as { name: string; type: string }[];
+    return Array.isArray(items) ? items.filter((i) => i.type === 'file').map((i) => i.name) : null;
+  } catch {
+    return null;
+  }
 }
 
 // ---------------------------------------------------------------------------

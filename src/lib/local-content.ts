@@ -42,57 +42,63 @@ export function hasLocalPost(slug: string): boolean {
   return INDEX.some((e) => e.slug === slug);
 }
 
+/** A post file as stored in src/content/posts/. */
+export interface PostFile {
+  slug: string;
+  title: string;
+  excerpt: string;
+  html: string;
+  wpCategorySlugs: string[];
+  heroImage: { src: string; alt: string; width?: number; height?: number; title?: string; caption?: string } | null;
+  publishedAt: string;
+  updatedAt?: string;
+  readingMinutes: number;
+  author: { name: string; avatar: string | null };
+  seo?: PostSeo;
+}
+
+/** A stored post as the site renders it. */
+export function postFromFile(data: PostFile): Post {
+  const categories = categoriesFor(data.slug, data.title, data.wpCategorySlugs ?? []);
+  const { kind, recipe } = deriveKindAndRecipe(data.slug, categories);
+
+  return {
+    slug: data.slug,
+    title: data.title,
+    excerpt: cleanExcerpt(data.excerpt),
+    html: cleanPostHtml(data.html, data.title),
+    categories,
+    heroImage: data.heroImage
+      ? {
+          src: data.heroImage.src,
+          alt: data.heroImage.alt,
+          width: data.heroImage.width,
+          height: data.heroImage.height,
+          title: data.heroImage.title,
+          caption: data.heroImage.caption,
+        }
+      : undefined,
+    publishedAt: data.publishedAt,
+    updatedAt: data.updatedAt,
+    readingMinutes: data.readingMinutes,
+    author: {
+      name: data.author.name,
+      avatar: data.author.avatar ?? undefined,
+    },
+    source: 'mdx',
+    kind,
+    recipe,
+    seo: data.seo,
+  };
+}
+
 /** Read one full post from disk. */
 export async function readLocalPost(slug: string): Promise<Post | null> {
   if (!hasLocalPost(slug)) return null;
   try {
     const raw = await readContentFile(`posts/${slug}.json`);
     if (!raw) return null;
-    const data = JSON.parse(raw) as {
-      slug: string;
-      title: string;
-      excerpt: string;
-      html: string;
-      wpCategorySlugs: string[];
-      heroImage: { src: string; alt: string; width?: number; height?: number; title?: string; caption?: string } | null;
-      publishedAt: string;
-      updatedAt?: string;
-      readingMinutes: number;
-      author: { name: string; avatar: string | null };
-      seo?: PostSeo;
-    };
-
-    const categories = categoriesFor(data.slug, data.title, data.wpCategorySlugs ?? []);
-    const { kind, recipe } = deriveKindAndRecipe(data.slug, categories);
-
-    return {
-      slug: data.slug,
-      title: data.title,
-      excerpt: cleanExcerpt(data.excerpt),
-      html: cleanPostHtml(data.html, data.title),
-      categories,
-      heroImage: data.heroImage
-        ? {
-            src: data.heroImage.src,
-            alt: data.heroImage.alt,
-            width: data.heroImage.width,
-            height: data.heroImage.height,
-            title: data.heroImage.title,
-            caption: data.heroImage.caption,
-          }
-        : undefined,
-      publishedAt: data.publishedAt,
-      updatedAt: data.updatedAt,
-      readingMinutes: data.readingMinutes,
-      author: {
-        name: data.author.name,
-        avatar: data.author.avatar ?? undefined,
-      },
-      source: 'mdx',
-      kind,
-      recipe,
-      seo: data.seo,
-    };
+    return postFromFile(JSON.parse(raw) as PostFile);
   } catch {
     return null;
   }
