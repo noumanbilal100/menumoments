@@ -11,6 +11,7 @@ import { CATEGORIES, getCategory, isGeneralCategory, type Category } from '@/dat
 import { legacyCategoriesFor } from '@/data/legacy-posts';
 import { isProductReview, PRODUCT_REVIEW_CATEGORY } from '@/data/product-reviews';
 import { deriveCategories } from './derive-categories';
+import { isNoindexPost } from '@/data/noindex-posts';
 
 interface IndexLike {
   slug: string;
@@ -50,13 +51,16 @@ export function categoriesFor(
     .map(({ c }) => c.slug);
 }
 
+/** Posts the site lists; noindexed ones (data/noindex-posts.ts) neither fill nor count toward a category. */
+const LISTED = (indexData as unknown as IndexLike[]).filter((e) => !isNoindexPost(e.slug));
+
 let populatedCache: Set<string> | null = null;
 
 /** Category slugs with at least one post behind them. */
 export function populatedCategorySlugs(): Set<string> {
   if (populatedCache) return populatedCache;
   const live = new Set<string>();
-  for (const entry of indexData as unknown as IndexLike[]) {
+  for (const entry of LISTED) {
     for (const c of categoriesFor(entry.slug, entry.title, entry.wpCategorySlugs ?? [])) {
       live.add(c);
     }
@@ -70,7 +74,7 @@ let countCache: Map<string, number> | null = null;
 function categoryPostCount(slug: string): number {
   if (!countCache) {
     countCache = new Map();
-    for (const entry of indexData as unknown as IndexLike[]) {
+    for (const entry of LISTED) {
       for (const c of categoriesFor(entry.slug, entry.title, entry.wpCategorySlugs ?? [])) {
         countCache.set(c, (countCache.get(c) ?? 0) + 1);
       }

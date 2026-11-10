@@ -34,6 +34,7 @@ import { absoluteUrl, imageFor, postBreadcrumbJsonLd, postJsonLd, sitePageJsonLd
 import { JsonLd } from '@/components/json-ld';
 import { NewsletterForm } from '@/components/newsletter-form';
 import { pageMeta } from '@/lib/seo';
+import { isNoindexPost } from '@/data/noindex-posts';
 import { ADSENSE_SLOTS } from '@/lib/env';
 
 export const revalidate = 3600;
@@ -89,6 +90,8 @@ export async function generateMetadata({
       description: decodeEntities(seo.metaDescription) ?? post.excerpt,
       path: `/${slug}/`,
       canonical: seo.canonical,
+      // Off-topic posts stay online but out of search (data/noindex-posts.ts).
+      noindex: isNoindexPost(post.slug),
       image: imageFor(post),
       socialTitle: decodeEntities(seo.ogTitle),
       socialDescription: decodeEntities(seo.ogDescription),

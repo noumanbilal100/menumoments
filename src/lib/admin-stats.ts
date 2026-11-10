@@ -1,4 +1,4 @@
-import { localIndex, indexEntryToPost } from './local-content';
+import { allIndexEntries, indexEntryToPost } from './local-content';
 import { readContentFile } from './content-files';
 import { isAffiliateArticle } from './affiliate';
 import { NO_ADS_CATEGORIES, shouldShowAds } from './ads';
@@ -37,7 +37,7 @@ export interface ProductPhotoGap {
 }
 
 export async function adminSnapshot(): Promise<AdminSnapshot> {
-  const index = localIndex();
+  const index = allIndexEntries();
   const posts = index.map(indexEntryToPost);
   const affiliate = posts.filter((p) => isAffiliateArticle(p));
   const adsOn = posts.filter((p) => shouldShowAds(p)).length;
@@ -127,7 +127,7 @@ export interface AdminPostRow {
 }
 
 export function adminPostRows(): AdminPostRow[] {
-  return localIndex()
+  return allIndexEntries()
     .map(indexEntryToPost)
     .map((p) => {
       const affiliate = isAffiliateArticle(p);

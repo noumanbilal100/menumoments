@@ -11,6 +11,7 @@
 import { cleanExcerpt, cleanPostHtml } from './clean-html';
 import { readContentFile } from './content-files';
 import indexData from '@/content/index.json';
+import { isNoindexPost } from '@/data/noindex-posts';
 import { deriveKindAndRecipe } from './recipe-derive';
 import { categoriesFor } from './category-map';
 import type { Post, PostSeo } from './content';
@@ -28,12 +29,19 @@ export interface LocalIndexEntry {
 }
 
 const INDEX: LocalIndexEntry[] = indexData as unknown as LocalIndexEntry[];
+/** What the site lists: every post except the noindexed ones (see data/noindex-posts.ts). */
+const LISTED: LocalIndexEntry[] = INDEX.filter((e) => !isNoindexPost(e.slug));
 
-/** Every slug in the local store. */
+/** Every slug in the local store, listed or not; each still gets its page. */
 export const LOCAL_SLUGS: string[] = INDEX.map((e) => e.slug);
 
-/** Newest-first list of index entries (already sorted by the script). */
+/** Newest-first list of the posts the site lists: sitemaps, categories, related posts, feed. */
 export function localIndex(): LocalIndexEntry[] {
+  return LISTED;
+}
+
+/** Every post in the store, including the noindexed ones (for the admin). */
+export function allIndexEntries(): LocalIndexEntry[] {
   return INDEX;
 }
 
