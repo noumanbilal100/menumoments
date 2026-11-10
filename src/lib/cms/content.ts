@@ -1,6 +1,7 @@
 import { CATEGORIES, getCategory } from '@/data/taxonomy';
 import { stripPastedMarkup } from '@/lib/clean-html';
 import { commitChanges, listRepoDir, readRepoFile, type FileChange } from './store';
+import { checkInternalLinks, type LinkReport } from '@/lib/internal-links';
 
 /**
  * Create / read / update / delete for posts and site pages.
@@ -304,6 +305,13 @@ async function heroFrom(form: FormData, slug: string, title: string, upload: Upl
   return { hero: { src, alt, ...size, ...details }, changes: [] };
 }
 
+/** Every slug a link in an article may point at: published posts, drafts, pages and the one being saved. */
+async function linkableSlugs(index: IndexEntry[], self: string): Promise<Set<string>> {
+  const [drafts, pages] = await Promise.all([listRepoDir(DRAFTS_DIR), listRepoDir(PAGES_DIR)]);
+  const names = [...drafts, ...pages].filter((n) => n.endsWith('.json')).map((n) => n.slice(0, -5));
+  return new Set([...index.map((e) => e.slug), ...names, self]);
+}
+
 // ---------------------------------------------------------------------------
 // Posts
 // ---------------------------------------------------------------------------
@@ -332,7 +340,10 @@ export async function listDrafts(): Promise<PostRecord[]> {
  * Creates (when `existing` is null) or updates a post from the editor form.
  * Moving between draft and published moves the file and the index entry.
  */
-export async function savePost(form: FormData, existing: LoadedPost | null): Promise<{ slug: string; status: Status }> {
+export async function savePost(
+  form: FormData,
+  existing: LoadedPost | null,
+): Promise<{ slug: string; status: Status; links: LinkReport }> {
   const title = clean(form.get('title'));
   if (!title) throw new ValidationError('Title is required.');
   if (title.length > 200) throw new ValidationError('Title is longer than 200 characters.');
@@ -348,7 +359,11 @@ export async function savePost(form: FormData, existing: LoadedPost | null): Pro
   if (!plainText(rawHtml) && !/<img\b/i.test(rawHtml)) throw new ValidationError('Content is empty.');
 
   const upload = uploader();
-  const body = await resolvePendingImages(sanitizeHtml(rawHtml), form, slug, upload);
+  const index = await readIndex();
+  const uploaded = await resolvePendingImages(sanitizeHtml(rawHtml), form, slug, upload);
+  // Links to addresses that don't exist (ChatGPT guesses them) are pointed at the right post, or unlinked.
+  const checked = checkInternalLinks(uploaded.html, await linkableSlugs(index, slug));
+  const body = { ...uploaded, html: checked.html };
   const hero = await heroFrom(form, slug, title, upload);
 
   const categories = form
@@ -381,7 +396,6 @@ export async function savePost(form: FormData, existing: LoadedPost | null): Pro
   if (!record.updatedAt) delete record.updatedAt;
 
   const changes: FileChange[] = [...body.changes, ...hero.changes];
-  const index = await readIndex();
   const withoutThis = index.filter((e) => e.slug !== slug);
 
   if (status === 'published') {
@@ -398,7 +412,7 @@ export async function savePost(form: FormData, existing: LoadedPost | null): Pro
 
   const verb = !existing ? 'Add' : existing.status !== status ? (status === 'published' ? 'Publish' : 'Unpublish') : 'Update';
   await commitChanges(changes, `Admin: ${verb} ${status === 'draft' ? 'draft' : 'post'} "${title}"`);
-  return { slug, status };
+  return { slug, status, links: checked.report };
 }
 
 export async function deletePost(slug: string): Promise<void> {
@@ -428,7 +442,7 @@ export async function listPages(): Promise<PageRecord[]> {
   return pages.filter((p): p is PageRecord => Boolean(p)).sort((a, b) => a.title.localeCompare(b.title));
 }
 
-export async function savePage(form: FormData, existing: PageRecord | null): Promise<{ slug: string }> {
+export async function savePage(form: FormData, existing: PageRecord | null): Promise<{ slug: string; links: LinkReport }> {
   const title = clean(form.get('title'));
   if (!title) throw new ValidationError('Title is required.');
   const slug = existing ? existing.slug : validSlug(clean(form.get('slug')) || slugify(title));
@@ -439,7 +453,9 @@ export async function savePage(form: FormData, existing: PageRecord | null): Pro
   const rawHtml = clean(form.get('html'));
   if (!plainText(rawHtml) && !/<img\b/i.test(rawHtml)) throw new ValidationError('Content is empty.');
   const upload = uploader();
-  const body = await resolvePendingImages(sanitizeHtml(rawHtml), form, slug, upload);
+  const uploaded = await resolvePendingImages(sanitizeHtml(rawHtml), form, slug, upload);
+  const checked = checkInternalLinks(uploaded.html, await linkableSlugs(await readIndex(), slug));
+  const body = { ...uploaded, html: checked.html };
   const hero = await heroFrom(form, slug, title, upload);
 
   const record: PageRecord = {
@@ -457,7 +473,7 @@ export async function savePage(form: FormData, existing: PageRecord | null): Pro
     [...body.changes, ...hero.changes, { path: `${PAGES_DIR}/${slug}.json`, content: json(record) }],
     `Admin: ${existing ? 'Update' : 'Add'} page "${title}"`,
   );
-  return { slug };
+  return { slug, links: checked.report };
 }
 
 export async function deletePage(slug: string): Promise<void> {

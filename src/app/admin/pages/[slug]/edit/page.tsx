@@ -5,6 +5,7 @@ import { DeleteButton } from '@/components/admin/delete-button';
 import { Badge, PageHeader } from '@/components/admin/ui';
 import { loadPage } from '@/lib/cms/content';
 import { deletePageAction, savePageAction } from '../../../actions';
+import { linkNote } from '@/lib/internal-links';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,10 +14,11 @@ export default async function EditSitePage({
   searchParams,
 }: {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ saved?: string }>;
+  searchParams: Promise<{ saved?: string; fixed?: string; unlinked?: string }>;
 }) {
   const { slug } = await params;
-  const { saved } = await searchParams;
+  const { saved, fixed, unlinked } = await searchParams;
+  const links = linkNote(Number(fixed) || 0, Number(unlinked) || 0);
   const page = await loadPage(slug);
   if (!page) notFound();
 
@@ -42,8 +44,8 @@ export default async function EditSitePage({
         savedNotice={
           saved
             ? page.status === 'published'
-              ? 'Page published. It is live now; the sitemap lists it after Cloudflare rebuilds the site, in a few minutes.'
-              : 'Draft saved.'
+              ? 'Page published. It is live now; the sitemap lists it after Cloudflare rebuilds the site, in a few minutes.' + links
+              : 'Draft saved.' + links
             : undefined
         }
         values={{

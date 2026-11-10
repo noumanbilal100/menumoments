@@ -1030,3 +1030,49 @@ body {
 .ad-slot:has(ins.adsbygoogle[data-ad-status="unfilled"]) {
   display: none;
 }
+
+/* "Read next" box placed mid-article (src/lib/read-next.ts). */
+.prose-article .mm-readnext {
+  margin: 2.5rem 0;
+  padding: 1.25rem 1.5rem;
+  border-left: 4px solid var(--accent);
+  border-radius: 0.75rem;
+  background: var(--accent-soft);
+}
+.prose-article .mm-readnext-title {
+  margin: 0 0 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.prose-article .mm-readnext ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.prose-article .mm-readnext li {
+  margin: 0.4rem 0;
+  padding: 0;
+  line-height: 1.45;
+}
+.prose-article .mm-readnext li::before {
+  content: none;
+}
+.prose-article .mm-readnext a {
+  font-weight: 600;
+}
+.prose-article .mm-readnext-tag {
+  display: inline-block;
+  margin-right: 0.5rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  vertical-align: 0.1em;
+  color: #fff;
+  background: var(--accent);
+}

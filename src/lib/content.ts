@@ -87,12 +87,12 @@ export function allListedPosts(): Post[] {
 const TITLE_NOISE =
   /^(recipe|best|easy|guide|menu|with|your|from|that|this|what|when|have|make|made|home|homemade|delicious|perfect|simple|quick|tip|idea|ultimate|complete|food|cook|cooking)$/;
 
-function titleWords(title: string): Set<string> {
+export function titleWords(title: string): Set<string> {
   const words = title.toLowerCase().split(/[^a-z]+/).map((w) => w.replace(/s$/, ''));
   return new Set(words.filter((w) => w.length > 3 && !TITLE_NOISE.test(w)));
 }
 
-function pairHash(a: string, b: string): number {
+export function pairHash(a: string, b: string): number {
   let h = 0;
   for (const c of a + b) h = (h * 31 + c.charCodeAt(0)) | 0;
   return h;

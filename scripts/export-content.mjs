@@ -54,6 +54,8 @@ function ownImages(record) {
   return [...new Set(own)].slice(0, 1000);
 }
 const sitemapImages = {};
+/** Each post's text, to count the links other posts make to it once every post is known. */
+const bodies = new Map();
 
 const meta = [];
 for (const name of fs.readdirSync(postsDir).filter((n) => n.endsWith('.json'))) {
@@ -76,7 +78,26 @@ for (const name of fs.readdirSync(postsDir).filter((n) => n.endsWith('.json'))) 
   meta.push({ slug: post.slug, hasSeo: Boolean(post.seo), productPhotoGaps: gaps });
   const images = ownImages(post);
   if (images.length) sitemapImages[post.slug] = images;
+  bodies.set(post.slug, String(post.html ?? ''));
 }
+
+/*
+ * How many other posts link to each post from their text. The "Read next"
+ * box in each article (src/lib/read-next.ts) favours posts few others link
+ * to, so no post is left reachable only through menus and lists.
+ */
+const inbound = Object.fromEntries([...bodies.keys()].map((slug) => [slug, 0]));
+for (const [slug, html] of bodies) {
+  const targets = new Set();
+  for (const m of html.matchAll(/<a\b[^>]*\bhref=["'](?:https?:\/\/(?:www\.)?menumoments\.com)?\/([a-z0-9-]+)\/?(?:[?#][^"']*)?["']/gi)) {
+    const target = m[1].toLowerCase();
+    if (target !== slug && target in inbound) targets.add(target);
+  }
+  for (const t of targets) inbound[t]++;
+}
+const graphOut = `${JSON.stringify({ inbound })}\n`;
+fs.writeFileSync(path.join(generatedDir, 'link-graph.json'), graphOut);
+fs.writeFileSync(path.join(mirrorDir, '.generated', 'link-graph.json'), graphOut);
 
 const sitePagesDir = path.join(root, 'src', 'content', 'site-pages');
 const sitePages = fs.existsSync(sitePagesDir)

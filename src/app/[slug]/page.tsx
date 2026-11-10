@@ -22,6 +22,7 @@ import { ProductRecommendations } from '@/components/product-recommendations';
 import { PageShell } from '@/components/page-shell';
 import { HeroFigure } from '@/components/hero-figure';
 import { Breadcrumbs } from '@/components/breadcrumbs';
+import { guideCluster, insertMidArticle, readNextFor, readNextHtml } from '@/lib/read-next';
 import { postTrail } from '@/lib/silo';
 import { cleanPostHtml } from '@/lib/clean-html';
 import { getSitePage, listSitePages } from '@/lib/site-pages';
@@ -190,10 +191,16 @@ export default async function PostPage({
 
   // Buying guides / reviews get a dedicated Wirecutter-style layout.
   if (isAffiliateArticle(post)) {
+    // The guide lists every post on its topic; the related grid then shows other posts, not the same ones again.
+    const cluster = guideCluster(post);
+    const inCluster = new Set(cluster?.posts.map((p) => p.slug) ?? []);
+    const related = relatedPosts(post, 12)
+      .filter((r) => !inCluster.has(r.slug))
+      .slice(0, 6);
     return (
       <>
         <span data-no-ads hidden />
-        <AffiliateArticle post={post} related={relatedFiltered} />
+        <AffiliateArticle post={post} related={related} cluster={cluster} />
       </>
     );
   }
@@ -202,8 +209,11 @@ export default async function PostPage({
   const news = newsletterCopy(post.kind);
   const kindText = kindLabel(post.kind);
   const adsOn = shouldShowAds(post);
+  // "Read next" in the middle of the text: in-silo posts the page doesn't already link.
+  const readNext = await readNextFor(post, new Set(relatedFiltered.map((r) => r.slug)));
+  const bodyHtml = insertMidArticle(post.html, readNextHtml(readNext));
   const productAnchor = blockForPost(post.slug)?.beforeHeading;
-  const productSplit = productAnchor ? splitBeforeHeading(post.html, productAnchor) : null;
+  const productSplit = productAnchor ? splitBeforeHeading(bodyHtml, productAnchor) : null;
 
   return (
     <article>
@@ -342,7 +352,7 @@ export default async function PostPage({
               </>
             ) : (
               <>
-                <div className="prose-article" dangerouslySetInnerHTML={{ __html: post.html }} />
+                <div className="prose-article" dangerouslySetInnerHTML={{ __html: bodyHtml }} />
                 <ProductRecommendations slug={post.slug} />
               </>
             )}

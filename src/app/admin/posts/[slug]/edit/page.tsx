@@ -7,6 +7,7 @@ import { getCategory } from '@/data/taxonomy';
 import { stripPastedMarkup } from '@/lib/clean-html';
 import { loadPost } from '@/lib/cms/content';
 import { deletePostAction, savePostAction } from '../../../actions';
+import { linkNote } from '@/lib/internal-links';
 
 export const dynamic = 'force-dynamic';
 
@@ -15,10 +16,11 @@ export default async function EditPostPage({
   searchParams,
 }: {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ saved?: string }>;
+  searchParams: Promise<{ saved?: string; fixed?: string; unlinked?: string }>;
 }) {
   const { slug } = await params;
-  const { saved } = await searchParams;
+  const { saved, fixed, unlinked } = await searchParams;
+  const links = linkNote(Number(fixed) || 0, Number(unlinked) || 0);
   const loaded = await loadPost(slug);
   if (!loaded) notFound();
   const { record, status } = loaded;
@@ -51,8 +53,8 @@ export default async function EditPostPage({
         savedNotice={
           saved
             ? status === 'published'
-              ? 'Post published. Its page is live now; the homepage, categories and sitemap list it after Cloudflare rebuilds the site, in a few minutes.'
-              : 'Draft saved.'
+              ? 'Post published. Its page is live now; the homepage, categories and sitemap list it after Cloudflare rebuilds the site, in a few minutes.' + links
+              : 'Draft saved.' + links
             : undefined
         }
         values={{

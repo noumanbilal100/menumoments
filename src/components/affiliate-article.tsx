@@ -27,9 +27,12 @@ import { postTrail } from '@/lib/silo';
 export function AffiliateArticle({
   post,
   related,
+  cluster,
 }: {
   post: Post;
   related: Post[];
+  /** Every other post on the guide's topic (see guideCluster in lib/read-next.ts). */
+  cluster?: { topic: string; posts: Post[] } | null;
 }) {
   const { html, headings, firstAffiliateAnchorId } = enhanceAffiliateHtml(post.html);
 
@@ -182,6 +185,25 @@ export function AffiliateArticle({
               className="prose-article prose-affiliate"
               dangerouslySetInnerHTML={{ __html: html }}
             />
+
+            {/* Every post on the guide's topic: the guide links down to them as they link up to it. */}
+            {cluster && cluster.posts.length > 0 && (
+              <section className="mt-14 rounded-2xl border border-bone-200 bg-bone-50 p-6 dark:border-char-500 dark:bg-char-500 md:p-8">
+                <h2 className="font-display text-2xl text-char-500 dark:text-bone-50">
+                  More {cluster.topic} guides
+                </h2>
+                <ul className="mt-4 grid gap-x-8 gap-y-2.5 text-sm sm:grid-cols-2">
+                  {cluster.posts.map((p) => (
+                    <li key={p.slug} className="flex gap-2">
+                      <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-ember-500" />
+                      <Link href={`/${p.slug}/`} className="text-char-500 hover:text-ember-500 dark:text-bone-50">
+                        {p.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
 
             {/* Full disclosure at bottom */}
             <section className="mt-14 rounded-2xl border border-bone-200 bg-bone-50 p-6 text-sm text-char-300 dark:border-char-500 dark:bg-char-500 dark:text-bone-100/80 md:p-8">
