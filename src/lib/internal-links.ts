@@ -1,4 +1,8 @@
 import { getCategory, getSectionHub } from '@/data/taxonomy';
+import POST_REDIRECTS from '@/data/post-redirects.json';
+
+/** Retired post addresses and the post that replaced each (next.config.mjs redirects them). */
+const RETIRED = POST_REDIRECTS as Record<string, string>;
 
 /**
  * Checks the links inside an article that point at this site.
@@ -16,7 +20,7 @@ export interface LinkReport {
   unlinked: string[];
 }
 
-/** Addresses that are not posts but exist: built-in pages, and old ones that redirect (see next.config.mjs). */
+/** Addresses that are not posts but exist: the built-in pages. */
 const OTHER_PAGES = new Set([
   'blog',
   'collections',
@@ -30,10 +34,6 @@ const OTHER_PAGES = new Set([
   'best-kitchen-gear',
   'shop',
   'feed',
-  'can-chickens-eat-oranges-a-guide-for-backyard-chickens',
-  'how-to-poach-an-egg-in-the-microwave',
-  'are-microwaves-bad-for-you',
-  'https-menumoments-com-topgolf-food-and-drink-menu',
 ]);
 
 const FILLER = new Set(['a', 'an', 'the']);
@@ -98,7 +98,8 @@ export function checkInternalLinks(html: string, known: Set<string>): { html: st
     }
     if (known.has(slug) || OTHER_PAGES.has(slug)) return whole;
 
-    const target = closestSlug(slug, known);
+    // A retired address goes straight to the post that replaced it.
+    const target = RETIRED[slug] ?? closestSlug(slug, known);
     if (target) {
       const to = `/${target}/${rest}`;
       report.fixed.push({ from: href, to });

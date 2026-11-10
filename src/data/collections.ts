@@ -125,7 +125,6 @@ export const COLLECTIONS: Collection[] = [
     categorySlug: 'vegan-recipes',
     postSlugs: [
       'vegan-casserole-dish-recipes',
-      'vegan-casserole-recipes',
       'vegan-crockpot-recipes',
       'chickpea-flour-recipes',
       'kosher-for-pesach-sushi-recipe-easy-passover-sushi-guide-with-vegetarian-options',

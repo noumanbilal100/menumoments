@@ -1076,3 +1076,11 @@ body {
   color: #fff;
   background: var(--accent);
 }
+
+/* Wide tables in articles scroll sideways on phones instead of squeezing. */
+.prose-article .mm-scroll {
+  overflow-x: auto;
+}
+.prose-article .mm-scroll table {
+  min-width: 520px;
+}

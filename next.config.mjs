@@ -1,4 +1,14 @@
+import { readFileSync } from 'node:fs';
+
 const CANONICAL_ORIGIN = 'https://menumoments.com';
+
+/**
+ * Retired post addresses and the post that replaced each: posts republished
+ * under a longer slug, and duplicates merged into one. The admin's link check
+ * (src/lib/internal-links.ts) reads the same file, so links to an old address
+ * are pointed at the new one.
+ */
+const POST_REDIRECTS = JSON.parse(readFileSync(new URL('./src/data/post-redirects.json', import.meta.url), 'utf8'));
 
 /** One hop to the canonical URL, trailing slash included. */
 const toCanonicalOrigin = (has) => [
@@ -54,31 +64,11 @@ const nextConfig = {
       { source: '/blog/page/:n', destination: '/blog/', permanent: true },
       { source: '/tag/:slug', destination: '/blog/', permanent: true },
       { source: '/author/:slug', destination: '/about-us/', permanent: true },
-      // Posts that were republished under a longer slug
-      {
-        source: '/can-chickens-eat-oranges-a-guide-for-backyard-chickens',
-        destination: '/can-chickens-eat-oranges-safe-backyard-chicken-food-guide/',
-        permanent: true,
-      },
-      {
-        source: '/how-to-poach-an-egg-in-the-microwave',
-        destination: '/how-to-poach-an-egg-in-the-microwave-in-1-minute/',
-        permanent: true,
-      },
-      {
-        source: '/are-microwaves-bad-for-you',
-        destination: '/are-microwaves-bad-for-you-the-truth-about-microwave-radiation-cooking-and-food-safety/',
-        permanent: true,
-      },
+      // Retired post addresses (republished or merged posts), from src/data/post-redirects.json
+      ...Object.entries(POST_REDIRECTS).map(([from, to]) => ({ source: `/${from}`, destination: `/${to}/`, permanent: true })),
       { source: '/wp-admin/:path*', destination: '/', permanent: false },
       // The shop moved to a descriptive URL
       { source: '/shop', destination: '/best-kitchen-gear/', permanent: true },
-      // Fix a malformed legacy URL that exists in the sitemap
-      {
-        source: '/https-menumoments-com-topgolf-food-and-drink-menu',
-        destination: '/topgolf-food-and-drink-menu/',
-        permanent: true,
-      },
     ];
   },
 };

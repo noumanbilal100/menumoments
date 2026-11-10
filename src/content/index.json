@@ -594,27 +594,6 @@
     }
   },
   {
-    "slug": "vegan-casserole-recipes",
-    "title": "Vegan Casserole Recipes: Informal, Comfort-First, Plant-Based Meals for Every Day",
-    "excerpt": "Vegan casserole recipes are all about comfort, flexibility, and creativity. A good casserole is the kind of dish you throw together when you want something cozy, filling, and forgiving. Whether you’re cooking for a family dinner, meal prepping for the week, or experimenting with new flavors, vegan casseroles offer endless room to play with vegetables, … Read more",
-    "publishedAt": "2026-01-25T10:19:19",
-    "updatedAt": "2026-01-26T09:41:23",
-    "readingMinutes": 7,
-    "heroImage": {
-      "src": "/img/wp/c3e71e34a3-vegan-casserole.webp",
-      "alt": "Freshly baked vegan casserole with colorful vegetables and golden breadcrumb topping in a white ceramic dish"
-    },
-    "wpCategorySlugs": [
-      "recipes",
-      "vegan-recipes",
-      "dinner"
-    ],
-    "author": {
-      "name": "Menu Moments",
-      "avatar": null
-    }
-  },
-  {
     "slug": "recipes-with-crab-apple-jelly",
     "title": "Recipes with Crab Apple Jelly: Sweet & Savory Ideas",
     "excerpt": "Crab apple jelly is one of those magical ingredients that can take a dish from ordinary to extraordinary. Its sweet and tangy flavor makes it incredibly versatile, whether you want to use it in desserts, savory dishes, or even as a glaze for meats. If you’re asking what to make with crab apple jelly or … Read more",
@@ -978,23 +957,6 @@
       "recipes",
       "baking",
       "healthy-eating"
-    ],
-    "author": {
-      "name": "Menu Moments",
-      "avatar": null
-    }
-  },
-  {
-    "slug": "cast-iron-skillet-recipes-chicken",
-    "title": "Cast Iron Skillet Recipes Chicken: The Ultimate Guide for Juicy, Crispy, and Flavorful Meals",
-    "excerpt": "Cooking cast iron skillet recipes chicken is an art that blends flavor, technique, and the natural heat-retention properties of cast iron cookware. Whether you’re a beginner or a seasoned home cook, cast iron skillet chicken recipes offer one-pan efficiency, even heat distribution, and the ability to create perfectly seared, golden-brown chicken with juicy meat inside. In … Read more",
-    "publishedAt": "2026-01-16T12:37:20",
-    "updatedAt": "2026-01-17T17:51:23",
-    "readingMinutes": 6,
-    "heroImage": null,
-    "wpCategorySlugs": [
-      "recipes",
-      "dinner"
     ],
     "author": {
       "name": "Menu Moments",
@@ -1860,16 +1822,17 @@
   },
   {
     "slug": "butter-conversion-how-many-sticks-in-1-cup-measure-butter-in-grams",
-    "title": "Butter Conversion: How Many Sticks in 1 Cup? Measure Butter in Grams",
-    "excerpt": "Stick of Butter Conversion Guide: How Many Sticks of Butter Equal 1 Cup? When you’re cooking or baking, recipes often call for butter in different units—sometimes in sticks, sometimes in cups, grams, or tablespoons. This can make it confusing to know how much butter you actually need. Understanding butter conversion is essential if you want … Read more",
+    "title": "Butter Conversion Chart & Calculator: Sticks, Cups, Tablespoons and Grams",
+    "excerpt": "1 stick of butter = ½ cup = 8 tablespoons = 113 grams. Convert any amount of butter between sticks, cups, tablespoons, grams and ounces with our calculator and charts.",
     "publishedAt": "2025-08-29T10:18:41",
-    "updatedAt": "2025-10-16T13:02:30",
-    "readingMinutes": 7,
+    "updatedAt": "2026-11-10T12:47:02",
+    "readingMinutes": 6,
     "heroImage": {
       "src": "/img/wp/3ecf18fa9e-bco-2b52d9fd-9151-4664-b123-e1aa411e308f.webp",
       "alt": "Butter conversion visual showing sticks of butter, a measuring cup, and a kitchen scale displaying grams on a wooden surface"
     },
     "wpCategorySlugs": [
+      "cooking-tips",
       "kitchen-tips",
       "ingredient-guides"
     ],
@@ -1891,26 +1854,6 @@
     },
     "wpCategorySlugs": [
       "pet-food"
-    ],
-    "author": {
-      "name": "Menu Moments",
-      "avatar": null
-    }
-  },
-  {
-    "slug": "butter-conversion-how-many-tablespoons-in-a-stick-measure-butter",
-    "title": "Butter Conversion: How Many Tablespoons in a Stick? Measure Butter!",
-    "excerpt": "Tablespoons in a Stick of Butter: The Ultimate Cheat Sheet for Butter Measurements If you’ve ever been halfway through cooking and baking, only to wonder how much butter is in a stick, you’re not alone. Recipes can call for butter in sticks, grams, cups, or tablespoons, and without a handy conversion, it can slow you … Read more",
-    "publishedAt": "2025-08-29T10:17:53",
-    "updatedAt": "2025-10-16T12:16:52",
-    "readingMinutes": 8,
-    "heroImage": {
-      "src": "/img/wp/7e9653aa96-bco-4ba93e9a-eaa9-426d-a0d6-ef805d153a8e.webp",
-      "alt": "Stick of butter next to a stainless steel tablespoon on a wooden cutting board, illustrating butter measurement conversion"
-    },
-    "wpCategorySlugs": [
-      "kitchen-tips",
-      "ingredient-guides"
     ],
     "author": {
       "name": "Menu Moments",
@@ -2354,26 +2297,6 @@
     },
     "wpCategorySlugs": [
       "cooking-tips"
-    ],
-    "author": {
-      "name": "Menu Moments",
-      "avatar": null
-    }
-  },
-  {
-    "slug": "tell-if-eggs-are-bad-taste-of-home-freshness-test",
-    "title": "Tell if Eggs are Bad: Taste of Home Freshness Test",
-    "excerpt": "Tell If Eggs Go Bad: The Complete Guide to Egg Freshness and Safety Eggs are one of the most versatile and nutritious foods you can keep in your kitchen. From scrambled eggs in the morning to baking cakes and desserts, they are an essential ingredient in countless recipes. However, like any food, eggs don’t last … Read more",
-    "publishedAt": "2025-08-22T15:23:43",
-    "updatedAt": "2025-09-08T09:55:36",
-    "readingMinutes": 8,
-    "heroImage": {
-      "src": "/img/wp/4cda94976f-bco-e918d779-284d-4a28-bd62-e9a3a1e0b47a.webp",
-      "alt": "Egg freshness test with submerged egg in water, cracked egg on plate, and carton of brown eggs on marble countertop"
-    },
-    "wpCategorySlugs": [
-      "kitchen-tips",
-      "food-storage"
     ],
     "author": {
       "name": "Menu Moments",
@@ -3627,26 +3550,6 @@
     }
   },
   {
-    "slug": "how-to-make-pork-chop-supreme-easy-comfort-food-recipe-guide",
-    "title": "How to Make Pork Chop Supreme – Easy Comfort Food Recipe Guide",
-    "excerpt": "Pork Chop Supreme Recipe: A Complete Guide to the Ultimate Comfort Meal Introduction to Pork Chop Supreme Pork chop supreme is one of the most beloved comfort food dishes that brings a balance of rich flavor, creamy texture, and hearty satisfaction. This dish, often referred to as the pork chop supreme recipe, is especially popular … Read more",
-    "publishedAt": "2025-07-27T10:18:22",
-    "updatedAt": "2025-08-06T07:59:09",
-    "readingMinutes": 5,
-    "heroImage": {
-      "src": "/img/wp/2b9e3a1b57-copilot-20250727-151741.webp",
-      "alt": "Beautifully plated Pork Chop Supreme on rustic wooden table with fresh herbs and vegetables in cozy kitchen lighting."
-    },
-    "wpCategorySlugs": [
-      "recipes",
-      "dinner"
-    ],
-    "author": {
-      "name": "Menu Moments",
-      "avatar": null
-    }
-  },
-  {
     "slug": "delicious-kirschwasser-recipes-for-baking-cocktails-and-more",
     "title": "Delicious Kirschwasser Recipes for Baking, Cocktails, and More",
     "excerpt": "Kirschwasser Recipes: A Complete Guide to Cooking and Mixing with Cherry Brandy Introduction If you’re a food enthusiast who enjoys experimenting with unique ingredients, kirschwasser—also known simply as kirsch—should be on your radar. This clear cherry brandy, distilled from morello cherries, has long been treasured in European cuisine, especially in the Black Forest region of … Read more",
@@ -4577,25 +4480,6 @@
     "heroImage": {
       "src": "/img/wp/48997de16c-bco-cc90c98a-409e-4cee-99b0-240f9244d0a8.webp",
       "alt": "Landscape image showcasing a beautifully arranged Ruby Tuesday meal selection from the Daily Specials & Deals Menu — featuring fresh, vibrant dishes on white plates with soft shadows, colorful garnishes, and a clean, modern background."
-    },
-    "wpCategorySlugs": [
-      "food-reviews"
-    ],
-    "author": {
-      "name": "Menu Moments",
-      "avatar": null
-    }
-  },
-  {
-    "slug": "bdubs-daily-specials-this-week-best-buffalo-wild-wings-deals-promos",
-    "title": "BDubs Daily Specials This Week | Best Buffalo Wild Wings Deals & Promos",
-    "excerpt": "Bdubs daily specials You Can’t Miss This Week Are you craving wings and want to catch the best buffalo wild wings daily specials this week? Whether you’re planning to order delivery or pick up, dine-in and watch sports, or grab some boneless wings with your friends during happy hour, this detailed guide covers every deal, … Read more",
-    "publishedAt": "2025-07-11T14:30:00",
-    "updatedAt": "2025-08-06T07:54:06",
-    "readingMinutes": 4,
-    "heroImage": {
-      "src": "/img/wp/e35bed8b36-copilot-20250711-192740.webp",
-      "alt": "Panoramic high-resolution image displaying Buffalo Wild Wings daily specials: saucy chicken wings with ranch and BBQ dip, a stacked burger with lettuce, tomato, and cheese, golden fries, and celery sticks—all presented across a wide layout on white plates with colorful garnishes and bright lighting."
     },
     "wpCategorySlugs": [
       "food-reviews"

@@ -22,6 +22,7 @@ import { ProductRecommendations } from '@/components/product-recommendations';
 import { PageShell } from '@/components/page-shell';
 import { HeroFigure } from '@/components/hero-figure';
 import { Breadcrumbs } from '@/components/breadcrumbs';
+import { ArticleBody } from '@/components/article-body';
 import { guideCluster, insertMidArticle, readNextFor, readNextHtml } from '@/lib/read-next';
 import { postTrail } from '@/lib/silo';
 import { cleanPostHtml } from '@/lib/clean-html';
@@ -343,16 +344,13 @@ export default async function PostPage({
 
             {productSplit ? (
               <>
-                <div className="prose-article" dangerouslySetInnerHTML={{ __html: productSplit[0] }} />
+                <ArticleBody html={productSplit[0]} />
                 <ProductRecommendations slug={post.slug} />
-                <div
-                  className="prose-article prose-continued"
-                  dangerouslySetInnerHTML={{ __html: productSplit[1] }}
-                />
+                <ArticleBody html={productSplit[1]} className="prose-article prose-continued" />
               </>
             ) : (
               <>
-                <div className="prose-article" dangerouslySetInnerHTML={{ __html: bodyHtml }} />
+                <ArticleBody html={bodyHtml} />
                 <ProductRecommendations slug={post.slug} />
               </>
             )}
