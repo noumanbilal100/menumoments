@@ -1,6 +1,7 @@
 import { esc, titleCase } from './format';
 import type { BuiltArticle } from './render';
 import { categoryFor, nounsFor, storeFor } from './setup';
+import { makeTidier, type Tidier } from './tidy';
 
 /**
  * Turns an article ChatGPT wrote in its own Markdown, from the editor's own
@@ -35,7 +36,11 @@ export interface ImportResult {
   summary: ImportSummary;
   errors: string[];
   warnings: string[];
+  /** What the importer did on its own, for the editor's information. */
+  info: string[];
 }
+
+type Nouns = { plural: string; singular: string };
 
 type Block =
   | { t: 'h'; level: number; text: string }
@@ -62,8 +67,8 @@ const PRODUCT_LINE = /^\s*\*\*\s*product\s*:?\s*\*\*\s*:?\s*(.+)$/i;
 const PRICE_LINE = /^\s*\*\*\s*(?:listed\s+|current\s+)?price\s*:?\s*\*\*\s*:?\s*(.+)$/i;
 const NUMBERED = /^\s*\d+[.)]\s+/;
 
-/** Phrases ChatGPT writes for the person who prompted it, not for readers. */
-const NOTES_FOR_EDITOR = [/\bsupplied\b/i, /\bverified-price\b/i, /\bprovided (?:for|in|with) (?:this|the) (?:prompt|comparison)\b/i, /\bas an ai\b/i];
+/** Words that say nothing about what a keyword is about. */
+const STOP_WORDS = new Set(['best', 'top', 'the', 'for', 'and', 'of', 'in', 'on', 'under', 'with', 'to', 'buying', 'guide', 'review', 'reviews']);
 
 // ---------------------------------------------------------------------------
 // Markdown
@@ -186,10 +191,11 @@ function matchProduct(text: string, products: ImportedProduct[], threshold = 0.6
   return bestScore >= threshold ? best : undefined;
 }
 
-/** "Best Overall Espresso Machine Under $500" → "Best Overall". */
-function badgeFrom(label: string, nouns: { plural: string; singular: string }): string {
+/** "Best Overall Espresso Machine Under $500" → "Best Overall". The nouns come from the keyword and from the title. */
+function badgeFrom(label: string, nounSets: Nouns[]): string {
   let s = plain(label);
-  for (const noun of [nouns.plural, nouns.singular].filter(Boolean)) {
+  const nouns = [...new Set(nounSets.flatMap((n) => [n.plural, n.singular]))].filter(Boolean).sort((a, b) => b.length - a.length);
+  for (const noun of nouns) {
     s = s.replace(new RegExp(`\\b${noun.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'ig'), '');
   }
   s = s.replace(/\b(under|below|less than)\s+\$?[\d,]+\b/gi, '').replace(/\s+/g, ' ').trim();
@@ -197,7 +203,7 @@ function badgeFrom(label: string, nouns: { plural: string; singular: string }): 
 }
 
 /** A section opening with a store link and an image is a product; reads it and removes those lines. */
-function takeProduct(section: Section, nouns: { plural: string; singular: string }): ImportedProduct | null {
+function takeProduct(section: Section, nouns: Nouns[]): ImportedProduct | null {
   const firstHeading = section.blocks.findIndex((b) => b.t === 'h');
   const top = section.blocks.slice(0, firstHeading === -1 ? section.blocks.length : firstHeading);
   const image = top.find((b): b is Extract<Block, { t: 'img' }> => b.t === 'img');
@@ -223,6 +229,31 @@ function takeProduct(section: Section, nouns: { plural: string; singular: string
 // ---------------------------------------------------------------------------
 // Rendering
 // ---------------------------------------------------------------------------
+
+/** Notes for the editor and (when asked) prices come out of the text; empty paragraphs and list items go. */
+function tidyBlocks(blocks: Block[], tidy: Tidier, prices: boolean): Block[] {
+  const out: Block[] = [];
+  for (const b of blocks) {
+    if (b.t === 'p') {
+      const text = tidy.text(b.text);
+      if (text.trim()) out.push({ ...b, text });
+    } else if (b.t === 'ul' || b.t === 'ol') {
+      const items = b.items.map((x) => tidy.text(x)).filter((x) => x.trim());
+      if (items.length) out.push({ ...b, items });
+    } else if (b.t === 'table') {
+      out.push({ ...b, rows: b.rows.map((r) => r.map((c) => tidy.text(c))) });
+    } else if (b.t === 'h' && prices) {
+      out.push({ ...b, text: b.text.replace(/\s*\(\s*\$\s?\d[\d,]*(?:\.\d{1,2})?\s*\)/g, '') });
+    } else {
+      out.push(b);
+    }
+  }
+  return out;
+}
+
+function textsOf(blocks: Block[]): string[] {
+  return blocks.flatMap((b) => (b.t === 'p' ? [b.text] : b.t === 'ul' || b.t === 'ol' ? b.items : b.t === 'table' ? b.rows.flat() : []));
+}
 
 interface Ctx {
   products: ImportedProduct[];
@@ -434,6 +465,7 @@ function fromTitle(title: string): string {
 export function importArticle(markdown: string, options: { keyword: string; category: string; hidePrices: boolean }): ImportResult {
   const errors: string[] = [];
   const warnings: string[] = [];
+  const info: string[] = [];
   const blocks = parseMarkdown(markdown);
 
   // H1 is the page title; the page template prints it, so it leaves the body.
@@ -463,16 +495,24 @@ export function importArticle(markdown: string, options: { keyword: string; cate
   const title = plain(h1?.text ?? '') || metaTitle;
   const keyword = (options.keyword.trim() || fromTitle(title)).toLowerCase();
   const nouns = nounsFor(keyword);
+  const nounSets = [nouns, nounsFor(fromTitle(title))];
 
   const products: ImportedProduct[] = [];
   const productOf = new Map<Section, ImportedProduct>();
   for (const s of sections.slice(1)) {
-    const p = takeProduct(s, nouns);
+    const p = takeProduct(s, nounSets);
     if (p) {
       products.push(p);
       productOf.set(s, p);
     }
   }
+
+  // Notes meant for the editor, and prices when they are to be left out, come out of the text.
+  const tidy = makeTidier({ prices: options.hidePrices, productPrices: products.map((p) => p.price), plural: nouns.plural });
+  for (const s of sections) s.blocks = tidyBlocks(s.blocks, tidy, options.hidePrices);
+  for (const p of products) p.verdict = tidy.text(p.verdict);
+  const leftovers = [...new Set(sections.flatMap((s) => textsOf(s.blocks)).flatMap((x) => tidy.leftovers(x)))];
+
   const ctx: Ctx = { products, hidePrices: options.hidePrices };
 
   const out: string[] = [];
@@ -498,29 +538,33 @@ export function importArticle(markdown: string, options: { keyword: string; cate
   // What the editor should know before publishing.
   if (!title) errors.push('No title found. Add a line starting with "# " at the top, or a Meta Title row in the SEO table.');
   if (!products.length) errors.push('No products found. Each product section needs its store link and its image near the top.');
-  if (!h1 && metaTitle) warnings.push('The article has no H1, so the meta title is used as the page title.');
+  if (options.keyword.trim() && title) {
+    const own = (s: string) => [...words(s)].filter((w) => !STOP_WORDS.has(w) && !/^\d+$/.test(w)).map((w) => w.replace(/(?:es|s)$/, ''));
+    const inTitle = new Set(own(title));
+    if (!own(options.keyword).some((w) => inTitle.has(w))) {
+      warnings.push(`The keyword “${options.keyword.trim()}” has nothing in common with the title. Is it left over from another post? Clear the box to use “${fromTitle(title)}”.`);
+    }
+  }
+  if (!h1 && metaTitle) info.push('The page title comes from the meta title, since the article has no “# ” title line.');
   if (!metaDescription) warnings.push('No meta description found; the start of the article will be used.');
   for (const p of products) if (!p.badge) warnings.push(`"${p.shortName}" has no badge; its section heading has no "Best …:" label.`);
-  const prose = markdown.replace(/^##\s*SEO[\s\S]*$/im, '');
-  const notes = NOTES_FOR_EDITOR.map((re) => (prose.match(new RegExp(re.source, 'gi')) ?? []).length).reduce((a, b) => a + b, 0);
-  if (notes) {
-    const example = prose.split(/\n/).find((l) => NOTES_FOR_EDITOR.some((re) => re.test(l)))?.trim().slice(0, 120);
-    warnings.push(`ChatGPT left ${notes} note${notes === 1 ? '' : 's'} meant for you, not readers (e.g. “${example}”). Edit them out, or ask ChatGPT to rewrite without words like “supplied”.`);
-  }
-  if (products.some((p) => p.price)) {
-    const prices = [...new Set(products.map((p) => p.price.replace(/^\$?/, '$')).filter((p) => p.length > 1))];
-    const mentions = prices.reduce((n, price) => n + (prose.split(price).length - 1), 0);
-    if (mentions) {
-      warnings.push(
-        `Product prices appear ${mentions} times in the text. Amazon’s Associates rules don’t allow hand-written prices, which go out of date; edit them out or ask ChatGPT for a version without prices.${
-          options.hidePrices ? ' The price lines and price columns have already been removed.' : ''
-        }`,
-      );
-    }
+  const done = [
+    tidy.report.notes ? `${tidy.report.notes} note${tidy.report.notes === 1 ? '' : 's'} ChatGPT wrote for you, not readers (“supplied listing” and the like)` : '',
+    tidy.report.prices ? `${tidy.report.prices} price${tidy.report.prices === 1 ? '' : 's'} from the text, as Amazon’s Associates rules don’t allow hand-written prices` : '',
+  ].filter(Boolean);
+  if (done.length) info.push(`Cleaned up for you: took out ${done.join(', and ')}.`);
+  if (options.hidePrices && products.some((p) => p.price)) info.push('Price lines and price columns are left out.');
+  if (leftovers.length) {
+    warnings.push(
+      `Check ${leftovers.length === 1 ? 'this sentence' : `these ${leftovers.length} sentences`} in the editor after building: ${leftovers
+        .slice(0, 4)
+        .map((s) => `“${s.length > 110 ? `${s.slice(0, 110)}…` : s}”`)
+        .join(' ')}${leftovers.length > 4 ? ' …' : ''}`,
+    );
   }
 
   const summary: ImportSummary = { title, products, tables, faqs, metaTitle, metaDescription, keyword };
-  if (errors.length) return { article: null, summary, errors, warnings };
+  if (errors.length) return { article: null, summary, errors, warnings, info };
   return {
     article: {
       title,
@@ -536,5 +580,6 @@ export function importArticle(markdown: string, options: { keyword: string; cate
     summary,
     errors,
     warnings,
+    info,
   };
 }

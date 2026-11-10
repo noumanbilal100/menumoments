@@ -47,6 +47,9 @@ interface Saved {
   mode?: Mode;
   source?: Source;
   importText?: string;
+  /** The import's own keyword and category, so nothing carries over from a post made with the prompts. */
+  importKeyword?: string;
+  importCategory?: string;
   hidePrices?: boolean;
 }
 
@@ -76,6 +79,8 @@ export function AffiliateGenerator() {
   const [mode, setMode] = useState<Mode>('master');
   const [source, setSource] = useState<Source>('prompts');
   const [importText, setImportText] = useState('');
+  const [importKeyword, setImportKeyword] = useState('');
+  const [importCategory, setImportCategory] = useState('');
   const [hidePrices, setHidePrices] = useState(true);
   const [loaded, setLoaded] = useState(false);
   const [bulk, setBulk] = useState('');
@@ -94,6 +99,8 @@ export function AffiliateGenerator() {
         setMode(saved.mode ?? 'master');
         setSource(saved.source ?? 'prompts');
         setImportText(saved.importText ?? '');
+        setImportKeyword(saved.importKeyword ?? '');
+        setImportCategory(saved.importCategory ?? '');
         setHidePrices(saved.hidePrices ?? true);
       }
     } catch {
@@ -105,11 +112,11 @@ export function AffiliateGenerator() {
   useEffect(() => {
     if (!loaded) return;
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ setup, answers, touched, mode, source, importText, hidePrices } satisfies Saved));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ setup, answers, touched, mode, source, importText, importKeyword, importCategory, hidePrices } satisfies Saved));
     } catch {
       // Storage full or blocked; the work just isn't kept across reloads.
     }
-  }, [setup, answers, touched, mode, source, importText, hidePrices, loaded]);
+  }, [setup, answers, touched, mode, source, importText, importKeyword, importCategory, hidePrices, loaded]);
 
   const sections = useMemo(() => sectionsFor(setup), [setup]);
   const masterReply = answers.master ?? '';
@@ -222,9 +229,9 @@ export function AffiliateGenerator() {
   const importResult = useMemo(
     () =>
       importText.trim()
-        ? importArticle(importText, { keyword: setup.keyword, category: touched.category ? setup.category : '', hidePrices })
+        ? importArticle(importText, { keyword: importKeyword, category: importCategory, hidePrices })
         : null,
-    [importText, setup.keyword, setup.category, touched.category, hidePrices],
+    [importText, importKeyword, importCategory, hidePrices],
   );
 
   function buildImport() {
@@ -635,6 +642,8 @@ export function AffiliateGenerator() {
               onClick={() => {
                 if (!window.confirm('Clear the pasted article?')) return;
                 setImportText('');
+                setImportKeyword('');
+                setImportCategory('');
                 setBuilt(null);
               }}
               className={smallButton}
@@ -649,8 +658,8 @@ export function AffiliateGenerator() {
               </label>
               <input
                 id="imp-keyword"
-                value={setup.keyword}
-                onChange={(e) => setKeyword(e.target.value)}
+                value={importKeyword}
+                onChange={(e) => setImportKeyword(e.target.value)}
                 placeholder={importResult?.summary.keyword || 'Read from the title'}
                 className={inputClass}
               />
@@ -661,11 +670,8 @@ export function AffiliateGenerator() {
               </label>
               <select
                 id="imp-category"
-                value={touched.category ? setup.category : ''}
-                onChange={(e) => {
-                  setTouched((t) => ({ ...t, category: Boolean(e.target.value) }));
-                  update({ category: e.target.value });
-                }}
+                value={importCategory}
+                onChange={(e) => setImportCategory(e.target.value)}
                 className={inputClass}
               >
                 <option value="">Automatic</option>
@@ -683,7 +689,7 @@ export function AffiliateGenerator() {
           />
           <label className="flex items-start gap-2 text-xs text-char-300 dark:text-bone-100">
             <input type="checkbox" checked={hidePrices} onChange={(e) => setHidePrices(e.target.checked)} className="mt-0.5 h-4 w-4 accent-ember-500" />
-            Leave out price lines and price columns. Amazon’s Associates rules don’t allow hand-written prices.
+            Take prices out: price lines, price columns and prices inside sentences. Amazon’s Associates rules don’t allow hand-written prices.
           </label>
           {importResult && <ImportReport result={importResult} />}
           <button type="button" onClick={buildImport} disabled={!importResult?.article} className={primaryButton}>
@@ -811,6 +817,13 @@ function ImportReport({ result }: { result: ImportResult }) {
                 {p.shortName}
               </span>
             </li>
+          ))}
+        </ul>
+      )}
+      {result.info.length > 0 && (
+        <ul className="list-disc space-y-0.5 pl-5 text-[11px] text-emerald-700 dark:text-emerald-300">
+          {result.info.map((line) => (
+            <li key={line}>{line}</li>
           ))}
         </ul>
       )}
