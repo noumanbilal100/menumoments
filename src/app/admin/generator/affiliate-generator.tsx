@@ -5,6 +5,8 @@ import { CATEGORIES, SECTIONS, type SectionKey } from '@/data/taxonomy';
 import { savePostAction } from '@/app/admin/actions';
 import { ContentForm } from '@/components/admin/content-form';
 import { cardClass, inputClass, labelClass } from '@/components/admin/ui';
+import { enhanceAffiliateHtml } from '@/lib/affiliate';
+import { importArticle, type ImportResult } from '@/lib/affiliate-generator/import';
 import { buildArticle, type BuiltArticle } from '@/lib/affiliate-generator/render';
 import {
   masterPromptFor,
@@ -35,12 +37,17 @@ const MAX_PRODUCTS = 20;
 
 /** One prompt for the whole article, or one per section for long line-ups. */
 type Mode = 'master' | 'sections';
+/** Write the article through the generator's prompts, or bring one ChatGPT wrote from the editor's own prompt. */
+type Source = 'prompts' | 'import';
 
 interface Saved {
   setup: GenSetup;
   answers: Record<string, string>;
   touched: { nouns: boolean; category: boolean };
   mode?: Mode;
+  source?: Source;
+  importText?: string;
+  hidePrices?: boolean;
 }
 
 const smallButton =
@@ -67,6 +74,9 @@ export function AffiliateGenerator() {
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [touched, setTouched] = useState({ nouns: false, category: false });
   const [mode, setMode] = useState<Mode>('master');
+  const [source, setSource] = useState<Source>('prompts');
+  const [importText, setImportText] = useState('');
+  const [hidePrices, setHidePrices] = useState(true);
   const [loaded, setLoaded] = useState(false);
   const [bulk, setBulk] = useState('');
   const [copied, setCopied] = useState<string | null>(null);
@@ -82,6 +92,9 @@ export function AffiliateGenerator() {
         setAnswers(saved.answers ?? {});
         setTouched(saved.touched ?? { nouns: true, category: true });
         setMode(saved.mode ?? 'master');
+        setSource(saved.source ?? 'prompts');
+        setImportText(saved.importText ?? '');
+        setHidePrices(saved.hidePrices ?? true);
       }
     } catch {
       // Nothing usable saved.
@@ -92,11 +105,11 @@ export function AffiliateGenerator() {
   useEffect(() => {
     if (!loaded) return;
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ setup, answers, touched, mode } satisfies Saved));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ setup, answers, touched, mode, source, importText, hidePrices } satisfies Saved));
     } catch {
       // Storage full or blocked; the work just isn't kept across reloads.
     }
-  }, [setup, answers, touched, mode, loaded]);
+  }, [setup, answers, touched, mode, source, importText, hidePrices, loaded]);
 
   const sections = useMemo(() => sectionsFor(setup), [setup]);
   const masterReply = answers.master ?? '';
@@ -206,6 +219,20 @@ export function AffiliateGenerator() {
     setTimeout(() => editorAnchor.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
   }
 
+  const importResult = useMemo(
+    () =>
+      importText.trim()
+        ? importArticle(importText, { keyword: setup.keyword, category: touched.category ? setup.category : '', hidePrices })
+        : null,
+    [importText, setup.keyword, setup.category, touched.category, hidePrices],
+  );
+
+  function buildImport() {
+    if (!importResult?.article) return;
+    setBuilt({ article: importResult.article, key: Date.now() });
+    setTimeout(() => editorAnchor.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+  }
+
   function startOver() {
     if (!window.confirm('Clear the products and every pasted reply, and start a new article?')) return;
     setSetup(EMPTY_SETUP);
@@ -214,375 +241,461 @@ export function AffiliateGenerator() {
     setBuilt(null);
   }
 
-  const sectionKeys = Object.keys(SECTIONS) as SectionKey[];
-
   return (
     <div className="space-y-6">
-      {/* 1. Topic ---------------------------------------------------------- */}
-      <section className={`${cardClass} space-y-4 p-5`}>
-        <div className="flex items-center justify-between gap-3">
-          <h2 className="text-sm font-semibold">1. Topic</h2>
-          <button type="button" onClick={startOver} className={smallButton}>
-            Start a new article
+      <div className="flex flex-wrap rounded-xl border border-bone-200 bg-bone-50 p-1 dark:border-char-400 dark:bg-char-500" role="group" aria-label="How to make the article">
+        {(['prompts', 'import'] as const).map((s) => (
+          <button
+            key={s}
+            type="button"
+            onClick={() => {
+              setSource(s);
+              setBuilt(null);
+            }}
+            aria-pressed={source === s}
+            className={`flex-1 rounded-lg px-4 py-2 text-sm font-medium ${
+              source === s ? 'bg-ember-500 text-white' : 'text-char-300 hover:text-char-500 dark:text-bone-100'
+            }`}
+          >
+            {s === 'prompts' ? 'Write it with our prompts' : 'Import an article ChatGPT wrote'}
           </button>
-        </div>
-        <div className="grid gap-4 md:grid-cols-2">
-          <div className="md:col-span-2">
-            <label htmlFor="gen-keyword" className={labelClass}>
-              Main keyword
-            </label>
-            <input
-              id="gen-keyword"
-              value={setup.keyword}
-              onChange={(e) => setKeyword(e.target.value)}
-              placeholder="e.g. best sushi making kits"
-              className={inputClass}
-            />
-          </div>
-          <div>
-            <label htmlFor="gen-plural" className={labelClass}>
-              What is being compared (plural)
-            </label>
-            <input
-              id="gen-plural"
-              value={setup.plural}
-              onChange={(e) => {
-                setTouched((t) => ({ ...t, nouns: true }));
-                update({ plural: e.target.value });
-              }}
-              placeholder="sushi making kits"
-              className={inputClass}
-            />
-          </div>
-          <div>
-            <label htmlFor="gen-singular" className={labelClass}>
-              One of them (singular)
-            </label>
-            <input
-              id="gen-singular"
-              value={setup.singular}
-              onChange={(e) => {
-                setTouched((t) => ({ ...t, nouns: true }));
-                update({ singular: e.target.value });
-              }}
-              placeholder="sushi making kit"
-              className={inputClass}
-            />
-          </div>
-          <div>
-            <label htmlFor="gen-category" className={labelClass}>
-              Topic category
-            </label>
-            <select
-              id="gen-category"
-              value={setup.category}
-              onChange={(e) => {
-                setTouched((t) => ({ ...t, category: true }));
-                update({ category: e.target.value });
-              }}
-              className={inputClass}
-            >
-              <option value="">None</option>
-              {sectionKeys.map((key) => (
-                <optgroup key={key} label={SECTIONS[key].name}>
-                  {CATEGORIES.filter((c) => c.section === key).map((c) => (
-                    <option key={c.slug} value={c.slug}>
-                      {c.name}
-                    </option>
-                  ))}
-                </optgroup>
-              ))}
-            </select>
-            <p className="mt-1 text-[11px] text-char-200">Buying guides and Best kitchen products are added automatically.</p>
-          </div>
-          <div>
-            <label htmlFor="gen-notes" className={labelClass}>
-              Notes for ChatGPT (optional)
-            </label>
-            <textarea
-              id="gen-notes"
-              rows={2}
-              value={setup.notes}
-              onChange={(e) => update({ notes: e.target.value })}
-              placeholder="e.g. Readers are beginners. Mention that kits with ingredients make good gifts."
-              className={inputClass}
-            />
-          </div>
-        </div>
-      </section>
+        ))}
+      </div>
 
-      {/* 2. Products ------------------------------------------------------- */}
-      <section className={`${cardClass} space-y-4 p-5`}>
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 className="text-sm font-semibold">2. Products, best first</h2>
-          <p className="text-xs text-char-200">
-            Only the link and image are needed; ChatGPT fills in missing names. Product 1 is your top pick.
-          </p>
-        </div>
-
-        <details className="rounded-lg border border-dashed border-bone-300 p-3 dark:border-char-400">
-          <summary className="cursor-pointer text-xs font-medium text-ember-500">Paste a whole list at once</summary>
-          <p className="mt-2 text-[11px] leading-relaxed text-char-200">
-            One product per line, or name, link and image on separate lines, in any order. Spreadsheet rows work too. Links
-            and image addresses are told apart automatically.
-          </p>
-          <textarea
-            rows={5}
-            value={bulk}
-            onChange={(e) => setBulk(e.target.value)}
-            placeholder={'DELAMU 20-in-1 Sushi Making Kit | https://amzn.to/... | https://m.media-amazon.com/images/I/....jpg'}
-            className={`${inputClass} font-mono text-xs`}
-          />
-          <button type="button" onClick={addFromList} disabled={!bulk.trim()} className={`${smallButton} mt-2`}>
-            Add these products
-          </button>
-        </details>
-
-        <ol className="space-y-3">
-          {setup.products.map((p, i) => (
-            <li key={i} className="rounded-lg border border-bone-200 p-3 dark:border-char-400">
-              <div className="flex gap-3">
-                <div className="flex w-20 shrink-0 flex-col items-center gap-2">
-                  <span className="grid h-7 w-7 place-items-center rounded-full bg-ember-500 text-xs font-semibold text-white">{i + 1}</span>
-                  {p.image.trim() ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={p.image} alt="" className="h-16 w-16 rounded-md bg-white object-contain ring-1 ring-bone-200" />
-                  ) : (
-                    <span className="grid h-16 w-16 place-items-center rounded-md border border-dashed border-bone-300 text-[10px] text-char-200">
-                      No image
-                    </span>
-                  )}
-                </div>
-                <div className="grid min-w-0 flex-1 gap-2 md:grid-cols-2">
-                  <input
-                    aria-label={`Product ${i + 1} link`}
-                    value={p.url}
-                    onChange={(e) => setProduct(i, { url: e.target.value.trim() })}
-                    placeholder="Affiliate link (https://amzn.to/...)"
-                    className={`${inputClass} mt-0`}
-                  />
-                  <input
-                    aria-label={`Product ${i + 1} image address`}
-                    value={p.image}
-                    onChange={(e) => setProduct(i, { image: e.target.value.trim() })}
-                    placeholder="Image address (https://m.media-amazon.com/...)"
-                    className={`${inputClass} mt-0`}
-                  />
-                  <input
-                    aria-label={`Product ${i + 1} name`}
-                    value={p.name}
-                    onChange={(e) => setProduct(i, { name: e.target.value })}
-                    placeholder="Product name (optional: ChatGPT fills it in from the link)"
-                    className={`${inputClass} mt-0 md:col-span-2`}
-                  />
-                  <textarea
-                    aria-label={`Product ${i + 1} known facts`}
-                    rows={1}
-                    value={p.facts}
-                    onChange={(e) => setProduct(i, { facts: e.target.value })}
-                    placeholder="Known facts for ChatGPT (optional): what's included, size, material…"
-                    className={`${inputClass} mt-0 md:col-span-2`}
-                  />
-                  {productIssues[i].length > 0 && (p.url || p.image || p.name) && (
-                    <p className="text-[11px] text-amber-600 md:col-span-2">Needs a {productIssues[i].join(', ')}.</p>
-                  )}
-                </div>
-                <div className="flex shrink-0 flex-col gap-1">
-                  <button type="button" aria-label="Move up" onClick={() => moveProduct(i, -1)} disabled={i === 0} className={smallButton}>
-                    ↑
-                  </button>
-                  <button
-                    type="button"
-                    aria-label="Move down"
-                    onClick={() => moveProduct(i, 1)}
-                    disabled={i === setup.products.length - 1}
-                    className={smallButton}
-                  >
-                    ↓
-                  </button>
-                  <button
-                    type="button"
-                    aria-label="Remove"
-                    onClick={() => update({ products: setup.products.filter((_, j) => j !== i) })}
-                    className={smallButton}
-                  >
-                    ✕
-                  </button>
-                </div>
-              </div>
-            </li>
-          ))}
-        </ol>
-        <button
-          type="button"
-          onClick={() => update({ products: [...setup.products, { ...EMPTY_PRODUCT }] })}
-          disabled={setup.products.length >= MAX_PRODUCTS}
-          className={smallButton}
-        >
-          + Add product
-        </button>
-      </section>
-
-      {/* 3. Prompts -------------------------------------------------------- */}
-      <section className={`${cardClass} space-y-4 p-5`}>
-        <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
-            <h2 className="text-sm font-semibold">3. Write it with ChatGPT</h2>
-            <p className="mt-1 max-w-2xl text-xs leading-relaxed text-char-200">
-              {mode === 'master'
-                ? 'Copy the master prompt into a new ChatGPT chat with web search on, then paste its whole reply below. If ChatGPT stops halfway, type “continue” in ChatGPT and paste that reply underneath the first one in the same box.'
-                : 'Start with part 1. For each part: copy the prompt, paste it into a new ChatGPT chat with web search on, then paste ChatGPT’s whole reply in the box.'}{' '}
-              If you change the products later, copy the prompt again.
-            </p>
-          </div>
-          <div className="flex rounded-lg border border-bone-200 p-0.5 dark:border-char-400" role="group" aria-label="Prompt style">
-            {(['master', 'sections'] as const).map((m) => (
-              <button
-                key={m}
-                type="button"
-                onClick={() => setMode(m)}
-                aria-pressed={mode === m}
-                className={`rounded-md px-3 py-1.5 text-xs font-medium ${
-                  mode === m ? 'bg-char-500 text-white dark:bg-bone-50 dark:text-char-600' : 'text-char-300 dark:text-bone-100'
-                }`}
-              >
-                {m === 'master' ? 'One master prompt' : 'Section by section'}
-              </button>
-            ))}
-          </div>
-        </div>
-        {setupProblems.length > 0 && (
-          <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800 dark:border-amber-800 dark:bg-amber-900/30 dark:text-amber-200">
-            Finish steps 1 and 2 first: {setupProblems.slice(0, 3).join(' ')}
-            {setupProblems.length > 3 ? ` (+${setupProblems.length - 3} more)` : ''}
-          </div>
-        )}
-        {mode === 'master' ? (
-          <div className="space-y-3 rounded-lg border border-bone-200 p-4 dark:border-char-400">
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <p className="text-sm font-semibold">Master prompt</p>
-                <p className="mt-0.5 text-xs text-char-200">The whole article in one go: intro, quick picks, buying guide, every review, FAQs and verdict.</p>
-              </div>
-              <button
-                type="button"
-                onClick={() => void copyPrompt('master', masterPromptFor(setup))}
-                disabled={setupProblems.length > 0}
-                className={primaryButton}
-              >
-                {copied === 'master' ? 'Copied ✓' : 'Copy master prompt'}
+      {source === 'prompts' && (
+        <>
+          {/* 1. Topic ---------------------------------------------------------- */}
+          <section className={`${cardClass} space-y-4 p-5`}>
+            <div className="flex items-center justify-between gap-3">
+              <h2 className="text-sm font-semibold">1. Topic</h2>
+              <button type="button" onClick={startOver} className={smallButton}>
+                Start a new article
               </button>
             </div>
-            <textarea
-              aria-label="ChatGPT reply to the master prompt"
-              rows={masterReply ? 10 : 4}
-              value={masterReply}
-              onChange={(e) => setAnswers((a) => ({ ...a, master: e.target.value }))}
-              placeholder="Paste ChatGPT’s whole reply here, and any “continue” replies underneath it"
-              className={`${inputClass} font-mono text-xs`}
-            />
-            {masterReply.trim() && !Object.keys(masterParts).length && (
-              <p className="text-[11px] text-red-700 dark:text-red-300">
-                No === parts found. Paste ChatGPT’s whole reply, including lines such as === OVERVIEW ===.
+            <div className="grid gap-4 md:grid-cols-2">
+              <div className="md:col-span-2">
+                <label htmlFor="gen-keyword" className={labelClass}>
+                  Main keyword
+                </label>
+                <input
+                  id="gen-keyword"
+                  value={setup.keyword}
+                  onChange={(e) => setKeyword(e.target.value)}
+                  placeholder="e.g. best sushi making kits"
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <label htmlFor="gen-plural" className={labelClass}>
+                  What is being compared (plural)
+                </label>
+                <input
+                  id="gen-plural"
+                  value={setup.plural}
+                  onChange={(e) => {
+                    setTouched((t) => ({ ...t, nouns: true }));
+                    update({ plural: e.target.value });
+                  }}
+                  placeholder="sushi making kits"
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <label htmlFor="gen-singular" className={labelClass}>
+                  One of them (singular)
+                </label>
+                <input
+                  id="gen-singular"
+                  value={setup.singular}
+                  onChange={(e) => {
+                    setTouched((t) => ({ ...t, nouns: true }));
+                    update({ singular: e.target.value });
+                  }}
+                  placeholder="sushi making kit"
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <label htmlFor="gen-category" className={labelClass}>
+                  Topic category
+                </label>
+                <select
+                  id="gen-category"
+                  value={setup.category}
+                  onChange={(e) => {
+                    setTouched((t) => ({ ...t, category: true }));
+                    update({ category: e.target.value });
+                  }}
+                  className={inputClass}
+                >
+                  <option value="">None</option>
+                  <CategoryOptions />
+                </select>
+                <p className="mt-1 text-[11px] text-char-200">Buying guides and Best kitchen products are added automatically.</p>
+              </div>
+              <div>
+                <label htmlFor="gen-notes" className={labelClass}>
+                  Notes for ChatGPT (optional)
+                </label>
+                <textarea
+                  id="gen-notes"
+                  rows={2}
+                  value={setup.notes}
+                  onChange={(e) => update({ notes: e.target.value })}
+                  placeholder="e.g. Readers are beginners. Mention that kits with ingredients make good gifts."
+                  className={inputClass}
+                />
+              </div>
+            </div>
+          </section>
+
+          {/* 2. Products ------------------------------------------------------- */}
+          <section className={`${cardClass} space-y-4 p-5`}>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <h2 className="text-sm font-semibold">2. Products, best first</h2>
+              <p className="text-xs text-char-200">
+                Only the link and image are needed; ChatGPT fills in missing names. Product 1 is your top pick.
               </p>
-            )}
-            {masterReply.trim() && Object.keys(masterParts).length > 0 && (
-              <ul className="space-y-2">
-                {sections.map((s) => (
-                  <li key={s.id} className="rounded-md bg-bone-100/70 px-3 py-2 dark:bg-char-400/40">
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="text-xs font-medium">
-                        {s.title}
-                        {!s.required && <span className="ml-1.5 font-normal text-char-200">optional</span>}
-                      </span>
-                      <StatusChip result={results[s.id]} hasText={Boolean(masterParts[s.kind]?.trim())} />
+            </div>
+
+            <details className="rounded-lg border border-dashed border-bone-300 p-3 dark:border-char-400">
+              <summary className="cursor-pointer text-xs font-medium text-ember-500">Paste a whole list at once</summary>
+              <p className="mt-2 text-[11px] leading-relaxed text-char-200">
+                One product per line, or name, link and image on separate lines, in any order. Spreadsheet rows work too. Links
+                and image addresses are told apart automatically.
+              </p>
+              <textarea
+                rows={5}
+                value={bulk}
+                onChange={(e) => setBulk(e.target.value)}
+                placeholder={'DELAMU 20-in-1 Sushi Making Kit | https://amzn.to/... | https://m.media-amazon.com/images/I/....jpg'}
+                className={`${inputClass} font-mono text-xs`}
+              />
+              <button type="button" onClick={addFromList} disabled={!bulk.trim()} className={`${smallButton} mt-2`}>
+                Add these products
+              </button>
+            </details>
+
+            <ol className="space-y-3">
+              {setup.products.map((p, i) => (
+                <li key={i} className="rounded-lg border border-bone-200 p-3 dark:border-char-400">
+                  <div className="flex gap-3">
+                    <div className="flex w-20 shrink-0 flex-col items-center gap-2">
+                      <span className="grid h-7 w-7 place-items-center rounded-full bg-ember-500 text-xs font-semibold text-white">{i + 1}</span>
+                      {p.image.trim() ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={p.image} alt="" className="h-16 w-16 rounded-md bg-white object-contain ring-1 ring-bone-200" />
+                      ) : (
+                        <span className="grid h-16 w-16 place-items-center rounded-md border border-dashed border-bone-300 text-[10px] text-char-200">
+                          No image
+                        </span>
+                      )}
                     </div>
-                    {!masterParts[s.kind]?.trim() && s.required && (
-                      <p className="mt-1 text-[11px] text-amber-700 dark:text-amber-300">
-                        Not in the reply yet. If ChatGPT stopped early, type “continue” and paste its next reply underneath.
-                      </p>
-                    )}
-                    <Messages result={results[s.id]} />
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        ) : (
-          <ol className="space-y-4">
-            {sections.map((s, i) => {
-              const r = results[s.id];
-              const answer = answers[s.id] ?? '';
-              const needsNames = s.kind !== 'overview' && unnamed;
-              return (
-                <li key={s.id} className="rounded-lg border border-bone-200 p-4 dark:border-char-400">
-                  <div className="flex flex-wrap items-start justify-between gap-3">
-                    <div>
-                      <p className="text-sm font-semibold">
-                        {i + 1}. {s.title}
-                        {!s.required && <span className="ml-2 text-[11px] font-normal text-char-200">optional</span>}
-                      </p>
-                      <p className="mt-0.5 text-xs text-char-200">{s.description}</p>
+                    <div className="grid min-w-0 flex-1 gap-2 md:grid-cols-2">
+                      <input
+                        aria-label={`Product ${i + 1} link`}
+                        value={p.url}
+                        onChange={(e) => setProduct(i, { url: e.target.value.trim() })}
+                        placeholder="Affiliate link (https://amzn.to/...)"
+                        className={`${inputClass} mt-0`}
+                      />
+                      <input
+                        aria-label={`Product ${i + 1} image address`}
+                        value={p.image}
+                        onChange={(e) => setProduct(i, { image: e.target.value.trim() })}
+                        placeholder="Image address (https://m.media-amazon.com/...)"
+                        className={`${inputClass} mt-0`}
+                      />
+                      <input
+                        aria-label={`Product ${i + 1} name`}
+                        value={p.name}
+                        onChange={(e) => setProduct(i, { name: e.target.value })}
+                        placeholder="Product name (optional: ChatGPT fills it in from the link)"
+                        className={`${inputClass} mt-0 md:col-span-2`}
+                      />
+                      <textarea
+                        aria-label={`Product ${i + 1} known facts`}
+                        rows={1}
+                        value={p.facts}
+                        onChange={(e) => setProduct(i, { facts: e.target.value })}
+                        placeholder="Known facts for ChatGPT (optional): what's included, size, material…"
+                        className={`${inputClass} mt-0 md:col-span-2`}
+                      />
+                      {productIssues[i].length > 0 && (p.url || p.image || p.name) && (
+                        <p className="text-[11px] text-amber-600 md:col-span-2">Needs a {productIssues[i].join(', ')}.</p>
+                      )}
                     </div>
-                    <div className="flex items-center gap-2">
-                      <StatusChip result={r} hasText={Boolean(answer.trim())} />
+                    <div className="flex shrink-0 flex-col gap-1">
+                      <button type="button" aria-label="Move up" onClick={() => moveProduct(i, -1)} disabled={i === 0} className={smallButton}>
+                        ↑
+                      </button>
                       <button
                         type="button"
-                        onClick={() => void copyPrompt(s.id, promptFor(s, setup))}
-                        disabled={setupProblems.length > 0 || needsNames}
-                        className={primaryButton}
+                        aria-label="Move down"
+                        onClick={() => moveProduct(i, 1)}
+                        disabled={i === setup.products.length - 1}
+                        className={smallButton}
                       >
-                        {copied === s.id ? 'Copied ✓' : 'Copy prompt'}
+                        ↓
+                      </button>
+                      <button
+                        type="button"
+                        aria-label="Remove"
+                        onClick={() => update({ products: setup.products.filter((_, j) => j !== i) })}
+                        className={smallButton}
+                      >
+                        ✕
                       </button>
                     </div>
                   </div>
-                  {needsNames && !setupProblems.length && (
-                    <p className="mt-2 text-[11px] text-char-200">
-                      Paste the reply to part 1 first. It fills in the product names this prompt needs.
-                    </p>
-                  )}
-                  <textarea
-                    aria-label={`ChatGPT reply for ${s.title}`}
-                    rows={answer ? 6 : 3}
-                    value={answer}
-                    onChange={(e) => setAnswers((a) => ({ ...a, [s.id]: e.target.value }))}
-                    placeholder="Paste ChatGPT’s reply here"
-                    className={`${inputClass} mt-3 font-mono text-xs`}
-                  />
-                  <Messages result={r} />
                 </li>
-              );
-            })}
-          </ol>
-        )}
-      </section>
+              ))}
+            </ol>
+            <button
+              type="button"
+              onClick={() => update({ products: [...setup.products, { ...EMPTY_PRODUCT }] })}
+              disabled={setup.products.length >= MAX_PRODUCTS}
+              className={smallButton}
+            >
+              + Add product
+            </button>
+          </section>
 
-      {/* 4. Build ---------------------------------------------------------- */}
-      <section className={`${cardClass} space-y-3 p-5`}>
-        <h2 className="text-sm font-semibold">4. Build the post</h2>
-        {canBuild ? (
-          <p className="text-xs text-char-200">
-            Everything needed is in.
-            {sections.some((s) => !s.required && !results[s.id]?.value) &&
-              ' The optional parts you skipped will simply be left out of the article.'}
-          </p>
-        ) : (
-          <p className="text-xs text-char-200">
-            {setupProblems.length
-              ? 'Finish the topic and products first.'
-              : missingRequired.length
-                ? `Still needed: ${missingRequired.map((s) => s.title).join(', ')}.`
-                : 'Some products still have no name. Type them in step 2.'}
-          </p>
-        )}
-        <button type="button" onClick={build} disabled={!canBuild} className={primaryButton}>
-          {built ? 'Rebuild the post' : 'Build the post'}
-        </button>
-      </section>
+          {/* 3. Prompts -------------------------------------------------------- */}
+          <section className={`${cardClass} space-y-4 p-5`}>
+            <div className="flex flex-wrap items-start justify-between gap-3">
+              <div>
+                <h2 className="text-sm font-semibold">3. Write it with ChatGPT</h2>
+                <p className="mt-1 max-w-2xl text-xs leading-relaxed text-char-200">
+                  {mode === 'master'
+                    ? 'Copy the master prompt into a new ChatGPT chat with web search on, then paste its whole reply below. If ChatGPT stops halfway, type “continue” in ChatGPT and paste that reply underneath the first one in the same box.'
+                    : 'Start with part 1. For each part: copy the prompt, paste it into a new ChatGPT chat with web search on, then paste ChatGPT’s whole reply in the box.'}{' '}
+                  If you change the products later, copy the prompt again.
+                </p>
+              </div>
+              <div className="flex rounded-lg border border-bone-200 p-0.5 dark:border-char-400" role="group" aria-label="Prompt style">
+                {(['master', 'sections'] as const).map((m) => (
+                  <button
+                    key={m}
+                    type="button"
+                    onClick={() => setMode(m)}
+                    aria-pressed={mode === m}
+                    className={`rounded-md px-3 py-1.5 text-xs font-medium ${
+                      mode === m ? 'bg-char-500 text-white dark:bg-bone-50 dark:text-char-600' : 'text-char-300 dark:text-bone-100'
+                    }`}
+                  >
+                    {m === 'master' ? 'One master prompt' : 'Section by section'}
+                  </button>
+                ))}
+              </div>
+            </div>
+            {setupProblems.length > 0 && (
+              <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800 dark:border-amber-800 dark:bg-amber-900/30 dark:text-amber-200">
+                Finish steps 1 and 2 first: {setupProblems.slice(0, 3).join(' ')}
+                {setupProblems.length > 3 ? ` (+${setupProblems.length - 3} more)` : ''}
+              </div>
+            )}
+            {mode === 'master' ? (
+              <div className="space-y-3 rounded-lg border border-bone-200 p-4 dark:border-char-400">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <p className="text-sm font-semibold">Master prompt</p>
+                    <p className="mt-0.5 text-xs text-char-200">The whole article in one go: intro, quick picks, buying guide, every review, FAQs and verdict.</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => void copyPrompt('master', masterPromptFor(setup))}
+                    disabled={setupProblems.length > 0}
+                    className={primaryButton}
+                  >
+                    {copied === 'master' ? 'Copied ✓' : 'Copy master prompt'}
+                  </button>
+                </div>
+                <textarea
+                  aria-label="ChatGPT reply to the master prompt"
+                  rows={masterReply ? 10 : 4}
+                  value={masterReply}
+                  onChange={(e) => setAnswers((a) => ({ ...a, master: e.target.value }))}
+                  placeholder="Paste ChatGPT’s whole reply here, and any “continue” replies underneath it"
+                  className={`${inputClass} font-mono text-xs`}
+                />
+                {masterReply.trim() && !Object.keys(masterParts).length && (
+                  <p className="text-[11px] text-red-700 dark:text-red-300">
+                    No === parts found. Paste ChatGPT’s whole reply, including lines such as === OVERVIEW ===.
+                  </p>
+                )}
+                {masterReply.trim() && Object.keys(masterParts).length > 0 && (
+                  <ul className="space-y-2">
+                    {sections.map((s) => (
+                      <li key={s.id} className="rounded-md bg-bone-100/70 px-3 py-2 dark:bg-char-400/40">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="text-xs font-medium">
+                            {s.title}
+                            {!s.required && <span className="ml-1.5 font-normal text-char-200">optional</span>}
+                          </span>
+                          <StatusChip result={results[s.id]} hasText={Boolean(masterParts[s.kind]?.trim())} />
+                        </div>
+                        {!masterParts[s.kind]?.trim() && s.required && (
+                          <p className="mt-1 text-[11px] text-amber-700 dark:text-amber-300">
+                            Not in the reply yet. If ChatGPT stopped early, type “continue” and paste its next reply underneath.
+                          </p>
+                        )}
+                        <Messages result={results[s.id]} />
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ) : (
+              <ol className="space-y-4">
+                {sections.map((s, i) => {
+                  const r = results[s.id];
+                  const answer = answers[s.id] ?? '';
+                  const needsNames = s.kind !== 'overview' && unnamed;
+                  return (
+                    <li key={s.id} className="rounded-lg border border-bone-200 p-4 dark:border-char-400">
+                      <div className="flex flex-wrap items-start justify-between gap-3">
+                        <div>
+                          <p className="text-sm font-semibold">
+                            {i + 1}. {s.title}
+                            {!s.required && <span className="ml-2 text-[11px] font-normal text-char-200">optional</span>}
+                          </p>
+                          <p className="mt-0.5 text-xs text-char-200">{s.description}</p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <StatusChip result={r} hasText={Boolean(answer.trim())} />
+                          <button
+                            type="button"
+                            onClick={() => void copyPrompt(s.id, promptFor(s, setup))}
+                            disabled={setupProblems.length > 0 || needsNames}
+                            className={primaryButton}
+                          >
+                            {copied === s.id ? 'Copied ✓' : 'Copy prompt'}
+                          </button>
+                        </div>
+                      </div>
+                      {needsNames && !setupProblems.length && (
+                        <p className="mt-2 text-[11px] text-char-200">
+                          Paste the reply to part 1 first. It fills in the product names this prompt needs.
+                        </p>
+                      )}
+                      <textarea
+                        aria-label={`ChatGPT reply for ${s.title}`}
+                        rows={answer ? 6 : 3}
+                        value={answer}
+                        onChange={(e) => setAnswers((a) => ({ ...a, [s.id]: e.target.value }))}
+                        placeholder="Paste ChatGPT’s reply here"
+                        className={`${inputClass} mt-3 font-mono text-xs`}
+                      />
+                      <Messages result={r} />
+                    </li>
+                  );
+                })}
+              </ol>
+            )}
+          </section>
+
+          {/* 4. Build ---------------------------------------------------------- */}
+          <section className={`${cardClass} space-y-3 p-5`}>
+            <h2 className="text-sm font-semibold">4. Build the post</h2>
+            {canBuild ? (
+              <p className="text-xs text-char-200">
+                Everything needed is in.
+                {sections.some((s) => !s.required && !results[s.id]?.value) &&
+                  ' The optional parts you skipped will simply be left out of the article.'}
+              </p>
+            ) : (
+              <p className="text-xs text-char-200">
+                {setupProblems.length
+                  ? 'Finish the topic and products first.'
+                  : missingRequired.length
+                    ? `Still needed: ${missingRequired.map((s) => s.title).join(', ')}.`
+                    : 'Some products still have no name. Type them in step 2.'}
+              </p>
+            )}
+            <button type="button" onClick={build} disabled={!canBuild} className={primaryButton}>
+              {built ? 'Rebuild the post' : 'Build the post'}
+            </button>
+          </section>
+        </>
+      )}
+
+      {source === 'import' && (
+        <section className={`${cardClass} space-y-4 p-5`}>
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <h2 className="text-sm font-semibold">Paste the article</h2>
+              <p className="mt-1 max-w-2xl text-xs leading-relaxed text-char-200">
+                Use the Copy button under ChatGPT’s reply, then paste it here. Each product section needs its store link and
+                image near the top; headings, tables, pros and cons, verdicts and FAQs are styled automatically.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                if (!window.confirm('Clear the pasted article?')) return;
+                setImportText('');
+                setBuilt(null);
+              }}
+              className={smallButton}
+            >
+              Clear
+            </button>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            <div>
+              <label htmlFor="imp-keyword" className={labelClass}>
+                Main keyword (optional)
+              </label>
+              <input
+                id="imp-keyword"
+                value={setup.keyword}
+                onChange={(e) => setKeyword(e.target.value)}
+                placeholder={importResult?.summary.keyword || 'Read from the title'}
+                className={inputClass}
+              />
+            </div>
+            <div>
+              <label htmlFor="imp-category" className={labelClass}>
+                Topic category
+              </label>
+              <select
+                id="imp-category"
+                value={touched.category ? setup.category : ''}
+                onChange={(e) => {
+                  setTouched((t) => ({ ...t, category: Boolean(e.target.value) }));
+                  update({ category: e.target.value });
+                }}
+                className={inputClass}
+              >
+                <option value="">Automatic</option>
+                <CategoryOptions />
+              </select>
+            </div>
+          </div>
+          <textarea
+            aria-label="Article from ChatGPT"
+            rows={importText ? 14 : 8}
+            value={importText}
+            onChange={(e) => setImportText(e.target.value)}
+            placeholder="Paste the whole article here, Markdown and all: ## headings, | tables |, ![image](…) lines"
+            className={`${inputClass} font-mono text-xs`}
+          />
+          <label className="flex items-start gap-2 text-xs text-char-300 dark:text-bone-100">
+            <input type="checkbox" checked={hidePrices} onChange={(e) => setHidePrices(e.target.checked)} className="mt-0.5 h-4 w-4 accent-ember-500" />
+            Leave out price lines and price columns. Amazon’s Associates rules don’t allow hand-written prices.
+          </label>
+          {importResult && <ImportReport result={importResult} />}
+          <button type="button" onClick={buildImport} disabled={!importResult?.article} className={primaryButton}>
+            {built ? 'Rebuild the post' : 'Build the post'}
+          </button>
+        </section>
+      )}
 
       <div ref={editorAnchor} />
       {built && (
         <section className="space-y-3">
+          <ArticlePreview title={built.article.title} html={built.article.html} />
           <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800 dark:border-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-200">
             The post is ready below. Add a featured image, check the content and categories, then press Create post.
           </div>
@@ -648,5 +761,92 @@ function Messages({ result }: { result: ReadResult | undefined }) {
         </ul>
       ) : null}
     </>
+  );
+}
+
+function CategoryOptions() {
+  return (
+    <>
+      {(Object.keys(SECTIONS) as SectionKey[]).map((key) => (
+        <optgroup key={key} label={SECTIONS[key].name}>
+          {CATEGORIES.filter((c) => c.section === key).map((c) => (
+            <option key={c.slug} value={c.slug}>
+              {c.name}
+            </option>
+          ))}
+        </optgroup>
+      ))}
+    </>
+  );
+}
+
+function ImportReport({ result }: { result: ImportResult }) {
+  const s = result.summary;
+  const facts = [
+    ['Title', s.title || '—'],
+    ['Products', String(s.products.length)],
+    ['Tables', String(s.tables)],
+    ['FAQs', String(s.faqs)],
+    ['Meta title', s.metaTitle ? '✓' : '—'],
+    ['Meta description', s.metaDescription ? '✓' : '—'],
+  ];
+  return (
+    <div className="space-y-3 rounded-lg bg-bone-100/70 p-3 text-xs dark:bg-char-400/40">
+      <dl className="grid gap-x-6 gap-y-1 sm:grid-cols-3">
+        {facts.map(([k, v]) => (
+          <div key={k} className="flex gap-1.5">
+            <dt className="text-char-200">{k}:</dt>
+            <dd className="truncate font-medium">{v}</dd>
+          </div>
+        ))}
+      </dl>
+      {s.products.length > 0 && (
+        <ul className="flex flex-wrap gap-2">
+          {s.products.map((p) => (
+            <li key={p.url} className="flex items-center gap-2 rounded-md bg-white px-2 py-1 ring-1 ring-bone-200 dark:bg-char-500 dark:ring-char-400">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={p.image} alt="" className="h-8 w-8 object-contain" />
+              <span>
+                {p.badge && <strong>{p.badge}: </strong>}
+                {p.shortName}
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+      <Messages result={{ value: null, errors: result.errors, warnings: result.warnings }} />
+    </div>
+  );
+}
+
+/** The article as the live buying-guide layout shows it: title, body and the "In this guide" list. */
+function ArticlePreview({ title, html }: { title: string; html: string }) {
+  const { html: body, headings } = useMemo(() => enhanceAffiliateHtml(html), [html]);
+  return (
+    <details open className={`${cardClass} overflow-hidden`}>
+      <summary className="cursor-pointer px-5 py-3 text-sm font-semibold">Preview: how the page will look</summary>
+      <div className="border-t border-bone-200 bg-white px-6 py-10 dark:border-char-400 dark:bg-char-600">
+        <h1 className="max-w-4xl font-display text-display-lg text-char-500 dark:text-bone-50">{title}</h1>
+        <div className="mt-10 grid gap-12 xl:grid-cols-[minmax(0,1fr)_220px]">
+          <div className="prose-article prose-affiliate min-w-0" dangerouslySetInnerHTML={{ __html: body }} />
+          <aside className="hidden xl:block">
+            <div className="sticky top-20 rounded-xl border border-bone-200 p-4 text-xs dark:border-char-400">
+              <p className="mb-2 font-semibold uppercase tracking-wider text-char-200">In this guide</p>
+              <ol className="space-y-1.5">
+                {headings
+                  .filter((h) => h.level === 2)
+                  .map((h) => (
+                    <li key={h.id}>
+                      <a href={`#${h.id}`} className="text-char-300 hover:text-ember-500 dark:text-bone-100">
+                        {h.text}
+                      </a>
+                    </li>
+                  ))}
+              </ol>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </details>
   );
 }

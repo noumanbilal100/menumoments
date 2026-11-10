@@ -57,7 +57,7 @@ export function categoryFor(keyword: string): string {
   if (/\bpan|pans|pot|pots|skillet|wok|cookware|dutch oven|griddle/.test(k)) return 'cookware';
   if (/\bbak(e|ing)|sheet|tin|mold|mould|ramekin/.test(k)) return 'bakeware';
   if (/\bcontainer|storage|jar|wrap|vacuum seal/.test(k)) return 'food-storage';
-  if (/mixer|blender|fryer|microwave|maker|oven|toaster|fridge|refrigerator|kettle|cooker|dishwasher|processor|grill|juicer/.test(k)) {
+  if (/mixer|blender|fryer|microwave|maker|machine|espresso|oven|toaster|fridge|refrigerator|kettle|cooker|dishwasher|processor|grill|juicer/.test(k)) {
     return 'kitchen-appliances';
   }
   return 'kitchen-gadgets';
@@ -125,7 +125,7 @@ export function parseProductList(text: string): GenProduct[] {
 
 /** The store named on buttons: "Amazon" for Amazon links, otherwise the site's own name. */
 export function storeFor(url: string): string {
-  if (/amzn\.to|amazon\./i.test(url)) return 'Amazon';
+  if (/amzn\.to|amazon\.|link\.amazon|\/\/a\.co\//i.test(url)) return 'Amazon';
   try {
     const host = new URL(url).hostname.replace(/^www\./, '').split('.')[0];
     return host.charAt(0).toUpperCase() + host.slice(1);

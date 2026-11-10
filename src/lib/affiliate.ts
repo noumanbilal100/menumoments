@@ -54,7 +54,7 @@ function ensureUniqueId(taken: Set<string>, base: string): string {
 }
 
 const AFFILIATE_RE =
-  /(amzn\.to|amazon\.[a-z.]+\/(?:dp|gp\/product|exec\/obidos)|amazon\.[a-z.]+\/[^"'\s]*[?&]tag=|shareasale(-analytics)?\.com|awin\d?\.com|linksynergy\.com|impact\.com|pxf\.io|anrdoezrs\.net|dpbolvw\.net|kqzyfj\.com|jdoqocy\.com|tkqlhce\.com)/i;
+  /(amzn\.to|link\.amazon\/|\ba\.co\/|amazon\.[a-z.]+\/(?:dp|gp\/product|exec\/obidos)|amazon\.[a-z.]+\/[^"'\s]*[?&]tag=|shareasale(-analytics)?\.com|awin\d?\.com|linksynergy\.com|impact\.com|pxf\.io|anrdoezrs\.net|dpbolvw\.net|kqzyfj\.com|jdoqocy\.com|tkqlhce\.com)/i;
 
 /**
  * Server-side HTML post-processor for affiliate articles.
@@ -96,7 +96,7 @@ export function enhanceAffiliateHtml(rawHtml: string): EnhancedArticle {
       return `<a ${before}href=${q}${href}${q}${after}>`;
     }
     affiliateCount++;
-    const network = /amzn\.to|amazon\.[a-z.]+/i.test(href) ? 'amazon' : 'partner';
+    const network = /amzn\.to|link\.amazon|\ba\.co\/|amazon\.[a-z.]+/i.test(href) ? 'amazon' : 'partner';
     const stripped = (before + after)
       .replace(/\srel=(["']).*?\1/gi, '')
       .replace(/\starget=(["']).*?\1/gi, '')

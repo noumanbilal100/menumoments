@@ -16,7 +16,7 @@ const CONTENT_CLASS = /^(wp-|wp_|align|size-|attachment|mmm-tools-|mm-|product-|
 const ASIN_RE = /amazon\.[a-z.]+\/(?:[^"']*\/)?(?:dp|gp\/product)\/([A-Z0-9]{10})/i;
 const PLACEHOLDER_SRC = /(<img\b[^>]*\bsrc=)(["'])\/img\/products\/[^"']+\2/i;
 
-const AFFILIATE_LINK = /^https?:\/\/(?:[\w-]+\.)*(?:amazon\.[a-z.]+|amzn\.to)\//i;
+const AFFILIATE_LINK = /^https?:\/\/(?:[\w-]+\.)*(?:amazon\.[a-z.]+|amzn\.to|link\.amazon|a\.co)\//i;
 
 /** Google requires paid links to be marked, or it can treat them as link spam. */
 function markAffiliateLinks(html: string): string {
