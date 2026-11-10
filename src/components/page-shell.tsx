@@ -4,10 +4,12 @@ interface Props {
   eyebrow?: string;
   title: string;
   lede?: string;
+  /** The page's featured image, shown between the header and the text. */
+  hero?: React.ReactNode;
   children: React.ReactNode;
 }
 
-export function PageShell({ eyebrow, title, lede, children }: Props) {
+export function PageShell({ eyebrow, title, lede, hero, children }: Props) {
   return (
     <div>
       <header className="border-b border-cream-200 bg-cream-50 dark:border-ink-500 dark:bg-ink-600">
@@ -21,6 +23,7 @@ export function PageShell({ eyebrow, title, lede, children }: Props) {
           {lede && <p className="mt-6 max-w-prose text-lg text-ink-300">{lede}</p>}
         </div>
       </header>
+      {hero}
       <div className="mx-auto max-w-3xl px-6 py-16">
         <div className="prose-article">{children}</div>
       </div>

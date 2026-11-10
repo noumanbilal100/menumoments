@@ -29,6 +29,18 @@ export interface SeoFields {
   focusKeyword?: string;
 }
 
+/** The featured image, with what search engines read about it. */
+export interface HeroImage {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  /** Shown as a tooltip; optional. */
+  title?: string;
+  /** Shown under the image, which Google reads as part of the image's context. */
+  caption?: string;
+}
+
 /** On-disk shape of a post, identical to what the migration writes. */
 export interface PostRecord {
   slug: string;
@@ -36,7 +48,7 @@ export interface PostRecord {
   excerpt: string;
   html: string;
   wpCategorySlugs: string[];
-  heroImage: { src: string; alt: string; width?: number; height?: number } | null;
+  heroImage: HeroImage | null;
   publishedAt: string;
   updatedAt?: string;
   readingMinutes: number;
@@ -49,6 +61,7 @@ export interface PageRecord {
   title: string;
   lede?: string;
   html: string;
+  heroImage?: HeroImage | null;
   status: Status;
   publishedAt: string;
   updatedAt?: string;
@@ -211,32 +224,59 @@ const IMAGE_TYPES: Record<string, string> = {
 };
 const MAX_IMAGE_BYTES = 3 * 1024 * 1024;
 
-/** Turns an uploaded File into a repository change plus its public URL. */
-async function uploadChange(file: File, baseName: string): Promise<{ change: FileChange; url: string }> {
-  const ext = IMAGE_TYPES[file.type];
-  if (!ext) throw new ValidationError(`${file.name || 'Image'}: only WebP, JPEG, PNG, GIF or AVIF images can be uploaded.`);
-  if (file.size > MAX_IMAGE_BYTES) throw new ValidationError(`${file.name || 'Image'} is larger than 3 MB.`);
+/** Names cameras and phones give photos; they say nothing about the picture. */
+const CAMERA_NAME = /^(?:img|image|dsc|dscn|pxl|photo|screenshot|screen-shot|whatsapp-image|pexels|unsplash|untitled|file|download)(?:-|$)|^\d+$/;
+
+/** "Crockpot Chicken Soup &amp; Herbs" → "crockpot-chicken-soup-and-herbs", short enough for a file name. */
+function fileBase(text: string): string {
+  const decoded = text.replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#0?39;|&apos;/g, "'").replace(/&[a-z]+;/gi, ' ');
+  const full = slugify(decoded);
+  // Cut at a whole word.
+  return full.length <= 70 ? full : full.slice(0, 71).replace(/-[^-]*$/, '');
+}
+
+/**
+ * Turns uploaded Files into repository changes. Each image is named for what
+ * it shows (the editor's file name, else its alt text or the page's slug),
+ * since Google reads image file names; a clash gets "-2", "-3" and so on.
+ */
+function uploader() {
   const now = new Date();
   const folder = `${now.getFullYear()}/${String(now.getMonth() + 1).padStart(2, '0')}`;
-  const name = `${slugify(baseName) || 'image'}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
-  return {
-    change: { path: `${UPLOADS_DIR}/${folder}/${name}`, content: Buffer.from(await file.arrayBuffer()) },
-    url: `/img/uploads/${folder}/${name}`,
+  let taken: Set<string> | null = null;
+  return async (file: File, fallbackName: string): Promise<{ change: FileChange; url: string }> => {
+    const ext = IMAGE_TYPES[file.type];
+    if (!ext) throw new ValidationError(`${file.name || 'Image'}: only WebP, JPEG, PNG, GIF or AVIF images can be uploaded.`);
+    if (file.size > MAX_IMAGE_BYTES) throw new ValidationError(`${file.name || 'Image'} is larger than 3 MB.`);
+    taken ??= new Set(await listRepoDir(`${UPLOADS_DIR}/${folder}`));
+    const own = fileBase(file.name.replace(/\.[a-z0-9]+$/i, ''));
+    const base = (own && !CAMERA_NAME.test(own) ? own : fileBase(fallbackName)) || 'image';
+    let name = `${base}.${ext}`;
+    for (let n = 2; taken.has(name); n++) name = `${base}-${n}.${ext}`;
+    taken.add(name);
+    return {
+      change: { path: `${UPLOADS_DIR}/${folder}/${name}`, content: Buffer.from(await file.arrayBuffer()) },
+      url: `/img/uploads/${folder}/${name}`,
+    };
   };
 }
+
+type Upload = ReturnType<typeof uploader>;
 
 /**
  * Body images added in the editor arrive as files named `image:<id>` and are
  * referenced in the HTML as `src="pending:<id>"` until they have a path.
  */
-async function resolvePendingImages(html: string, form: FormData, slug: string): Promise<{ html: string; changes: FileChange[] }> {
+async function resolvePendingImages(html: string, form: FormData, slug: string, upload: Upload): Promise<{ html: string; changes: FileChange[] }> {
   const changes: FileChange[] = [];
   let out = html;
   for (const [key, value] of form.entries()) {
     if (!key.startsWith('image:') || !(value instanceof File) || value.size === 0) continue;
     const id = key.slice(6);
-    if (!out.includes(`pending:${id}`)) continue;
-    const { change, url } = await uploadChange(value, slug);
+    if (!/^[a-z0-9-]+$/i.test(id) || !out.includes(`pending:${id}`)) continue;
+    const tag = out.match(new RegExp(`<img\\b[^>]*pending:${id}[^>]*>`, 'i'))?.[0] ?? '';
+    const alt = tag.match(/\balt=(["'])([\s\S]*?)\1/i)?.[2] ?? '';
+    const { change, url } = await upload(value, alt || slug);
     changes.push(change);
     out = out.split(`pending:${id}`).join(url);
   }
@@ -244,23 +284,24 @@ async function resolvePendingImages(html: string, form: FormData, slug: string):
   return { html: out, changes };
 }
 
-async function heroFrom(
-  form: FormData,
-  slug: string,
-  title: string,
-): Promise<{ hero: PostRecord['heroImage']; changes: FileChange[] }> {
+async function heroFrom(form: FormData, slug: string, title: string, upload: Upload): Promise<{ hero: HeroImage | null; changes: FileChange[] }> {
   const alt = clean(form.get('heroAlt')) || title;
+  const details = {
+    ...(clean(form.get('heroTitle')) ? { title: clean(form.get('heroTitle')) } : {}),
+    ...(clean(form.get('heroCaption')) ? { caption: clean(form.get('heroCaption')) } : {}),
+  };
+  const width = Number(form.get('heroWidth')) || undefined;
+  const height = Number(form.get('heroHeight')) || undefined;
+  const size = { ...(width ? { width } : {}), ...(height ? { height } : {}) };
   const file = form.get('heroFile');
   if (file instanceof File && file.size > 0) {
-    const { change, url } = await uploadChange(file, `${slug}-hero`);
-    return { hero: { src: url, alt }, changes: [change] };
+    const { change, url } = await upload(file, alt === title ? slug : alt);
+    return { hero: { src: url, alt, ...size, ...details }, changes: [change] };
   }
   const src = clean(form.get('heroSrc'));
   if (!src) return { hero: null, changes: [] };
-  if (!src.startsWith('/img/')) throw new ValidationError('Hero image must be an uploaded image or a site path starting with /img/.');
-  const width = Number(form.get('heroWidth')) || undefined;
-  const height = Number(form.get('heroHeight')) || undefined;
-  return { hero: { src, alt, ...(width ? { width } : {}), ...(height ? { height } : {}) }, changes: [] };
+  if (!src.startsWith('/img/')) throw new ValidationError('The featured image must be an uploaded image or a site path starting with /img/.');
+  return { hero: { src, alt, ...size, ...details }, changes: [] };
 }
 
 // ---------------------------------------------------------------------------
@@ -306,8 +347,9 @@ export async function savePost(form: FormData, existing: LoadedPost | null): Pro
   const rawHtml = clean(form.get('html'));
   if (!plainText(rawHtml) && !/<img\b/i.test(rawHtml)) throw new ValidationError('Content is empty.');
 
-  const body = await resolvePendingImages(sanitizeHtml(rawHtml), form, slug);
-  const hero = await heroFrom(form, slug, title);
+  const upload = uploader();
+  const body = await resolvePendingImages(sanitizeHtml(rawHtml), form, slug, upload);
+  const hero = await heroFrom(form, slug, title, upload);
 
   const categories = form
     .getAll('categories')
@@ -392,20 +434,23 @@ export async function savePage(form: FormData, existing: PageRecord | null): Pro
   }
   const rawHtml = clean(form.get('html'));
   if (!plainText(rawHtml) && !/<img\b/i.test(rawHtml)) throw new ValidationError('Content is empty.');
-  const body = await resolvePendingImages(sanitizeHtml(rawHtml), form, slug);
+  const upload = uploader();
+  const body = await resolvePendingImages(sanitizeHtml(rawHtml), form, slug, upload);
+  const hero = await heroFrom(form, slug, title, upload);
 
   const record: PageRecord = {
     slug,
     title,
     ...(clean(form.get('lede')) ? { lede: clean(form.get('lede')) } : {}),
     html: body.html,
+    ...(hero.hero ? { heroImage: hero.hero } : {}),
     status: form.get('status') === 'draft' ? 'draft' : 'published',
     publishedAt: existing?.publishedAt ?? nowStamp(),
     ...(existing ? { updatedAt: nowStamp() } : {}),
     ...(seoFrom(form) ? { seo: seoFrom(form) } : {}),
   };
   await commitChanges(
-    [...body.changes, { path: `${PAGES_DIR}/${slug}.json`, content: json(record) }],
+    [...body.changes, ...hero.changes, { path: `${PAGES_DIR}/${slug}.json`, content: json(record) }],
     `Admin: ${existing ? 'Update' : 'Add'} page "${title}"`,
   );
   return { slug };

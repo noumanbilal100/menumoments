@@ -43,7 +43,7 @@ export interface Post {
   excerpt: string;
   html: string;
   categories: string[];
-  heroImage?: { src: string; alt: string; width?: number; height?: number };
+  heroImage?: { src: string; alt: string; width?: number; height?: number; title?: string; caption?: string };
   publishedAt: string;
   updatedAt?: string;
   readingMinutes: number;

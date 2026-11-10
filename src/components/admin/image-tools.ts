@@ -29,6 +29,28 @@ export async function compressImage(
   return { file: new File([blob], name, { type: 'image/webp' }), width, height };
 }
 
+/** A file name Google can read: "Crockpot Chicken Soup" → "crockpot-chicken-soup", cut at a whole word. */
+export function seoFileName(text: string): string {
+  const full = text
+    .normalize('NFKD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .replace(/&/g, ' and ')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+  return full.length <= 70 ? full : full.slice(0, 71).replace(/-[^-]*$/, '');
+}
+
+/** The same picture under the editor's chosen name; the upload is saved under it. */
+export function renameFile(file: File, base: string): File {
+  const ext = file.name.match(/\.[a-z0-9]+$/i)?.[0] ?? '';
+  return new File([file], `${seoFileName(base) || 'image'}${ext}`, { type: file.type });
+}
+
+export function extensionOf(file: File): string {
+  return file.name.match(/\.[a-z0-9]+$/i)?.[0] ?? '';
+}
+
 export function formatBytes(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
   if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`;

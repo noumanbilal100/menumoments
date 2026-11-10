@@ -3,6 +3,7 @@ import { categoriesFor, categoriesWithPosts, isIndexableCategory } from './categ
 import { COLLECTIONS } from '@/data/collections';
 import { SITE_URL } from './env';
 import { listSitePages } from './site-pages';
+import { readContentFile } from './content-files';
 
 /**
  * Yoast-compatible sitemap set.
@@ -54,9 +55,13 @@ function escapeXml(s: string): string {
 export interface SitemapEntry {
   loc: string;
   lastmod?: string;
+  /** Absolute URLs of the page's own photos, for Google Images. */
+  images?: string[];
 }
 
 const lastmodTag = (e: SitemapEntry) => (e.lastmod ? `\n    <lastmod>${e.lastmod}</lastmod>` : '');
+const imageTags = (e: SitemapEntry) =>
+  (e.images ?? []).map((src) => `\n    <image:image>\n      <image:loc>${escapeXml(src)}</image:loc>\n    </image:image>`).join('');
 
 export function newestLastmod(entries: SitemapEntry[]): string | undefined {
   return newest(entries.map((e) => e.lastmod));
@@ -64,9 +69,44 @@ export function newestLastmod(entries: SitemapEntry[]): string | undefined {
 
 export function renderUrlSet(entries: SitemapEntry[]): string {
   const body = entries
-    .map((e) => `  <url>\n    <loc>${escapeXml(e.loc)}</loc>${lastmodTag(e)}\n  </url>`)
+    .map((e) => `  <url>\n    <loc>${escapeXml(e.loc)}</loc>${lastmodTag(e)}${imageTags(e)}\n  </url>`)
     .join('\n');
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</urlset>\n`;
+  const imageNs = entries.some((e) => e.images?.length) ? ' xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"' : '';
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"${imageNs}>\n${body}\n</urlset>\n`;
+}
+
+let imagesCache: Promise<Record<string, string[]>> | null = null;
+
+/** Each page's own photos, gathered from the content before the build by scripts/export-content.mjs. */
+function sitemapImages(): Promise<Record<string, string[]>> {
+  imagesCache ??= readContentFile('.generated/sitemap-images.json').then((raw) => {
+    try {
+      return raw ? (JSON.parse(raw) as Record<string, string[]>) : {};
+    } catch {
+      return {};
+    }
+  });
+  return imagesCache;
+}
+
+function imagesFor(map: Record<string, string[]>, slug: string): string[] | undefined {
+  const own = map[slug];
+  return own?.length ? own.map((src) => `${SITE_URL}${encodePath(src)}`) : undefined;
+}
+
+/** Spaces and other unsafe characters escaped once, whether or not the stored path already was. */
+function encodePath(src: string): string {
+  try {
+    return encodeURI(decodeURI(src));
+  } catch {
+    return encodeURI(src);
+  }
+}
+
+/** Posts for one page of the split, each with its photos. */
+export async function postEntriesWithImages(page: number): Promise<SitemapEntry[]> {
+  const map = await sitemapImages();
+  return postEntries(page).map((e) => ({ ...e, images: imagesFor(map, e.loc.slice(SITE_URL.length + 1, -1)) }));
 }
 
 export function renderSitemapIndex(entries: SitemapEntry[]): string {
@@ -112,9 +152,11 @@ export async function pageEntries(): Promise<SitemapEntry[]> {
     lastmod: newest(posts.filter((p) => c.postSlugs.includes(p.slug)).map(postDate)),
   }));
 
+  const images = await sitemapImages();
   const sitePages = (await listSitePages()).map((p) => ({
     loc: url(`/${p.slug}`),
     lastmod: iso(p.updatedAt ?? p.publishedAt),
+    images: imagesFor(images, p.slug),
   }));
 
   return [...statics, ...sitePages, ...collections];

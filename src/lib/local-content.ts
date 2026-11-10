@@ -54,7 +54,7 @@ export async function readLocalPost(slug: string): Promise<Post | null> {
       excerpt: string;
       html: string;
       wpCategorySlugs: string[];
-      heroImage: { src: string; alt: string; width?: number; height?: number } | null;
+      heroImage: { src: string; alt: string; width?: number; height?: number; title?: string; caption?: string } | null;
       publishedAt: string;
       updatedAt?: string;
       readingMinutes: number;
@@ -77,6 +77,8 @@ export async function readLocalPost(slug: string): Promise<Post | null> {
             alt: data.heroImage.alt,
             width: data.heroImage.width,
             height: data.heroImage.height,
+            title: data.heroImage.title,
+            caption: data.heroImage.caption,
           }
         : undefined,
       publishedAt: data.publishedAt,

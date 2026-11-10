@@ -32,6 +32,29 @@ fs.mkdirSync(generatedDir, { recursive: true });
 
 const ANCHOR_IMG = /<a\b[^>]*\bhref=["']([^"']+)["'][^>]*>\s*<img\b[^>]*\bsrc=["']\/img\/products\/[^"']+["'][^>]*>/gi;
 
+/**
+ * The site's own photos on a page, featured image first, for the image
+ * entries in the sitemaps. Pictures hosted elsewhere (store photos) are left
+ * out: a sitemap only lists files on its own site.
+ */
+function ownImages(record) {
+  const srcs = [record.heroImage?.src, ...[...String(record.html ?? '').matchAll(/<img\b[^>]*\bsrc=["']([^"']+)["']/gi)].map((m) => m[1])];
+  const own = srcs
+    .filter(Boolean)
+    .map((s) => s.replace(/^https?:\/\/(?:www\.)?menumoments\.com/i, ''))
+    .filter((s) => s.startsWith('/') && !s.startsWith('//') && !/\.svg(?:$|\?)/i.test(s))
+    // Only files that are really there; a broken image has no place in a sitemap.
+    .filter((s) => {
+      try {
+        return fs.existsSync(path.join(root, 'public', decodeURI(s.split(/[?#]/)[0])));
+      } catch {
+        return false;
+      }
+    });
+  return [...new Set(own)].slice(0, 1000);
+}
+const sitemapImages = {};
+
 const meta = [];
 for (const name of fs.readdirSync(postsDir).filter((n) => n.endsWith('.json'))) {
   const raw = fs.readFileSync(path.join(postsDir, name), 'utf8');
@@ -51,6 +74,8 @@ for (const name of fs.readdirSync(postsDir).filter((n) => n.endsWith('.json'))) 
   }
 
   meta.push({ slug: post.slug, hasSeo: Boolean(post.seo), productPhotoGaps: gaps });
+  const images = ownImages(post);
+  if (images.length) sitemapImages[post.slug] = images;
 }
 
 const sitePagesDir = path.join(root, 'src', 'content', 'site-pages');
@@ -65,9 +90,19 @@ const sitePagesOut = `${JSON.stringify(sitePages, null, 2)}\n`;
 fs.writeFileSync(path.join(generatedDir, 'site-pages.json'), sitePagesOut);
 fs.writeFileSync(path.join(mirrorDir, '.generated', 'site-pages.json'), sitePagesOut);
 
+for (const page of sitePages) {
+  const images = ownImages(page);
+  if (images.length) sitemapImages[page.slug] = images;
+}
+const imagesOut = `${JSON.stringify(sitemapImages)}\n`;
+fs.writeFileSync(path.join(generatedDir, 'sitemap-images.json'), imagesOut);
+fs.writeFileSync(path.join(mirrorDir, '.generated', 'sitemap-images.json'), imagesOut);
+
 const pageCount = fs.existsSync(pagesDir) ? fs.readdirSync(pagesDir).filter((n) => n.endsWith('.json')).length : 0;
 const out = `${JSON.stringify({ pageCount, posts: meta }, null, 2)}\n`;
 fs.writeFileSync(path.join(generatedDir, 'post-meta.json'), out);
 fs.writeFileSync(path.join(mirrorDir, '.generated', 'post-meta.json'), out);
 
-console.log(`export-content: mirrored ${meta.length} posts, ${sitePages.length} site pages, ${meta.reduce((n, p) => n + p.productPhotoGaps.length, 0)} photo gaps, ${pageCount} legacy pages`);
+console.log(
+  `export-content: mirrored ${meta.length} posts, ${sitePages.length} site pages, ${meta.reduce((n, p) => n + p.productPhotoGaps.length, 0)} photo gaps, ${pageCount} legacy pages, ${Object.values(sitemapImages).flat().length} sitemap images`,
+);

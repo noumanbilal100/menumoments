@@ -45,6 +45,7 @@ export default async function EditSitePage({
           title: page.title,
           html: page.html,
           lede: page.lede,
+          heroImage: page.heroImage ?? null,
           status: page.status,
           seoTitle: page.seo?.seoTitle,
           metaDescription: page.seo?.metaDescription,

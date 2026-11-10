@@ -4,8 +4,9 @@ import Link from 'next/link';
 import { startTransition, useActionState, useEffect, useRef, useState } from 'react';
 import { CATEGORIES, SECTIONS, type SectionKey } from '@/data/taxonomy';
 import type { ActionState } from '@/app/admin/actions';
+import type { HeroImage } from '@/lib/cms/content';
 import { RichEditor, type RichEditorHandle } from './rich-editor';
-import { compressImage, formatBytes } from './image-tools';
+import { compressImage, extensionOf, formatBytes, renameFile, seoFileName } from './image-tools';
 import { cardClass, inputClass as input, labelClass as label } from './ui';
 
 /** Vercel rejects request bodies above 4.5 MB; leave room for the form. */
@@ -21,7 +22,7 @@ export interface ContentFormValues {
   publishedAt?: string;
   author?: string;
   categories?: string[];
-  heroImage?: { src: string; alt: string; width?: number; height?: number } | null;
+  heroImage?: HeroImage | null;
   /** Alt text to start with when there is no hero image yet. */
   heroAlt?: string;
   seoTitle?: string;
@@ -38,6 +39,33 @@ function slugify(s: string): string {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '')
     .slice(0, 100);
+}
+
+/** Words of a keyword that should show up in alt text; "best" and "for" don't count. */
+function keywordWords(keyword: string): string[] {
+  const skip = new Set(['best', 'top', 'the', 'a', 'an', 'for', 'and', 'of', 'in', 'on', 'to', 'with', 'under', 'vs']);
+  return keyword
+    .toLowerCase()
+    .split(/[^a-z0-9]+/)
+    .filter((w) => w.length > 1 && !skip.has(w) && !/^\d+$/.test(w));
+}
+
+function mentions(text: string, keyword: string): boolean {
+  const have = text.toLowerCase();
+  const want = keywordWords(keyword);
+  // "espresso machines" is found in "espresso machine": the last word may be singular.
+  return want.length > 0 && want.every((w) => have.includes(w.replace(/(?:es|s)$/, '')));
+}
+
+function Check({ ok, children }: { ok: boolean; children: React.ReactNode }) {
+  return (
+    <li className="flex gap-2">
+      <span aria-hidden className={ok ? 'text-emerald-600' : 'text-amber-600'}>
+        {ok ? '✓' : '!'}
+      </span>
+      <span className={ok ? 'text-char-300 dark:text-bone-100' : 'text-amber-800 dark:text-amber-200'}>{children}</span>
+    </li>
+  );
 }
 
 function Counter({ value, max }: { value: string; max: number }) {
@@ -72,10 +100,30 @@ export function ContentForm({
   const [slugTouched, setSlugTouched] = useState(!isNew);
   const [seoTitle, setSeoTitle] = useState(values.seoTitle ?? '');
   const [metaDescription, setMetaDescription] = useState(values.metaDescription ?? '');
+  const [focusKeyword, setFocusKeyword] = useState(values.focusKeyword ?? '');
   const [hero, setHero] = useState(values.heroImage ?? null);
   const [heroFile, setHeroFile] = useState<{ file: File; url: string; width?: number; height?: number } | null>(null);
+  const [heroAlt, setHeroAlt] = useState(values.heroImage?.alt ?? values.heroAlt ?? '');
+  const [heroFileName, setHeroFileName] = useState<string | null>(null);
+  const [bodyImages, setBodyImages] = useState({ total: 0, missingAlt: 0 });
+  const [bodyTick, setBodyTick] = useState(0);
   const [dirty, setDirty] = useState(false);
   const [clientError, setClientError] = useState('');
+
+  // Alt text of the images in the content, recounted shortly after each edit.
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const tags = (editor.current?.getHtml() ?? values.html).match(/<img\b[^>]*>/gi) ?? [];
+      const missingAlt = tags.filter((t) => {
+        const m = t.match(/\balt=(?:"([^"]*)"|'([^']*)')/i);
+        return !(m?.[1] ?? m?.[2] ?? '').trim();
+      }).length;
+      setBodyImages({ total: tags.length, missingAlt });
+    }, 400);
+    return () => clearTimeout(timer);
+  }, [bodyTick, values.html]);
+
+  const heroName = heroFileName ?? seoFileName(heroAlt.trim() || focusKeyword || title);
 
   useEffect(() => {
     if (state?.ok) setDirty(false);
@@ -110,7 +158,10 @@ export function ContentForm({
       bytes += file.size;
     }
     if (heroFile) {
-      form.set('heroFile', heroFile.file);
+      // Saved under the SEO file name shown in the form.
+      form.set('heroFile', renameFile(heroFile.file, heroName));
+      if (heroFile.width) form.set('heroWidth', String(heroFile.width));
+      if (heroFile.height) form.set('heroHeight', String(heroFile.height));
       bytes += heroFile.file.size;
     }
     if (bytes > MAX_UPLOAD_BYTES) {
@@ -126,6 +177,7 @@ export function ContentForm({
     if (!file) return;
     const small = await compressImage(file);
     setHeroFile({ ...small, url: URL.createObjectURL(small.file) });
+    setHeroFileName(null);
     setDirty(true);
   }
 
@@ -210,7 +262,14 @@ export function ContentForm({
           <div>
             <p className={label}>Content</p>
             <div className="mt-1">
-              <RichEditor initialHtml={values.html} handleRef={editor} onChange={() => setDirty(true)} />
+              <RichEditor
+                initialHtml={values.html}
+                handleRef={editor}
+                onChange={() => {
+                  setDirty(true);
+                  setBodyTick((n) => n + 1);
+                }}
+              />
             </div>
           </div>
 
@@ -272,7 +331,48 @@ export function ContentForm({
               <label htmlFor="focusKeyword" className={label}>
                 Focus keyword
               </label>
-              <input id="focusKeyword" name="focusKeyword" defaultValue={values.focusKeyword} className={input} />
+              <input
+                id="focusKeyword"
+                name="focusKeyword"
+                value={focusKeyword}
+                onChange={(e) => setFocusKeyword(e.target.value)}
+                className={input}
+              />
+            </div>
+            <div>
+              <p className={label}>Image SEO</p>
+              <ul className="mt-1.5 space-y-1 text-xs">
+                <Check ok={Boolean(heroPreview)}>
+                  {heroPreview ? 'Featured image added' : 'Add a featured image: it shows in Google, Discover and when the page is shared'}
+                </Check>
+                {heroPreview && (
+                  <Check ok={heroAlt.trim().length >= 10 && heroAlt.trim() !== title.trim()}>
+                    {heroAlt.trim().length >= 10 && heroAlt.trim() !== title.trim()
+                      ? 'Featured image has its own alt text'
+                      : 'Describe the featured image in its alt text, rather than repeating the title'}
+                  </Check>
+                )}
+                {heroPreview && focusKeyword.trim() && (
+                  <Check ok={mentions(heroAlt, focusKeyword)}>
+                    {mentions(heroAlt, focusKeyword)
+                      ? 'Focus keyword is in the featured image alt text'
+                      : `Work “${focusKeyword.trim()}” into the featured image alt text, if it fits`}
+                  </Check>
+                )}
+                {heroFile && (
+                  <Check ok={heroName.length > 3}>
+                    File name: {heroName || 'image'}
+                    {extensionOf(heroFile.file)}
+                  </Check>
+                )}
+                {bodyImages.total > 0 && (
+                  <Check ok={bodyImages.missingAlt === 0}>
+                    {bodyImages.missingAlt === 0
+                      ? `All ${bodyImages.total} image${bodyImages.total === 1 ? '' : 's'} in the content have alt text`
+                      : `${bodyImages.missingAlt} of ${bodyImages.total} images in the content have no alt text. Click one in the editor to add it.`}
+                  </Check>
+                )}
+              </ul>
             </div>
             <div className="rounded-lg border border-bone-200 bg-white p-3 dark:border-char-400 dark:bg-char-600">
               <p className="text-[11px] text-char-200">Google preview</p>
@@ -334,60 +434,109 @@ export function ContentForm({
             )}
           </div>
 
-          {kind === 'post' && (
-            <div className={`${cardClass} space-y-3 p-5`}>
-              <p className="text-sm font-semibold">Hero image</p>
-              {heroPreview ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={heroPreview} alt="" className="aspect-[16/9] w-full rounded-lg bg-bone-100 object-cover" />
-              ) : (
-                <div className="flex aspect-[16/9] items-center justify-center rounded-lg border border-dashed border-bone-300 text-xs text-char-200 dark:border-char-400">
-                  No hero image
-                </div>
-              )}
-              {!heroFile && hero && (
-                <>
-                  <input type="hidden" name="heroSrc" value={hero.src} />
-                  {hero.width && <input type="hidden" name="heroWidth" value={hero.width} />}
-                  {hero.height && <input type="hidden" name="heroHeight" value={hero.height} />}
-                </>
-              )}
-              <div className="flex gap-2">
-                <label className="flex-1 cursor-pointer rounded-lg border border-bone-200 px-3 py-2 text-center text-xs font-medium text-char-300 hover:border-ember-500 hover:text-ember-500 dark:border-char-400 dark:text-bone-100">
-                  {heroPreview ? 'Replace' : 'Upload image'}
-                  <input
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={(e) => {
-                      void pickHero(e.target.files?.[0]);
-                      e.target.value = '';
-                    }}
-                  />
-                </label>
-                {heroPreview && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setHero(null);
-                      setHeroFile(null);
-                      setDirty(true);
-                    }}
-                    className="rounded-lg border border-bone-200 px-3 py-2 text-xs text-char-300 hover:border-amber-500 hover:text-amber-600 dark:border-char-400 dark:text-bone-100"
-                  >
-                    Remove
-                  </button>
-                )}
-              </div>
-              {heroFile && <p className="text-[11px] text-char-200">{formatBytes(heroFile.file.size)} · uploads when you save</p>}
-              <div>
-                <label htmlFor="heroAlt" className={label}>
-                  Image description (alt text)
-                </label>
-                <input id="heroAlt" name="heroAlt" defaultValue={values.heroImage?.alt ?? values.heroAlt} className={input} />
-              </div>
+          <div className={`${cardClass} space-y-3 p-5`}>
+            <div>
+              <p className="text-sm font-semibold">Featured image</p>
+              <p className="mt-0.5 text-[11px] leading-relaxed text-char-200">
+                Shown at the top of the {kind}, in Google results and Discover, and when it is shared.
+              </p>
             </div>
-          )}
+            {heroPreview ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={heroPreview} alt="" className="aspect-[16/9] w-full rounded-lg bg-bone-100 object-cover" />
+            ) : (
+              <div className="flex aspect-[16/9] items-center justify-center rounded-lg border border-dashed border-bone-300 text-xs text-char-200 dark:border-char-400">
+                No featured image
+              </div>
+            )}
+            {!heroFile && hero && (
+              <>
+                <input type="hidden" name="heroSrc" value={hero.src} />
+                {hero.width && <input type="hidden" name="heroWidth" value={hero.width} />}
+                {hero.height && <input type="hidden" name="heroHeight" value={hero.height} />}
+              </>
+            )}
+            <div className="flex gap-2">
+              <label className="flex-1 cursor-pointer rounded-lg border border-bone-200 px-3 py-2 text-center text-xs font-medium text-char-300 hover:border-ember-500 hover:text-ember-500 dark:border-char-400 dark:text-bone-100">
+                {heroPreview ? 'Replace' : 'Upload image'}
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => {
+                    void pickHero(e.target.files?.[0]);
+                    e.target.value = '';
+                  }}
+                />
+              </label>
+              {heroPreview && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setHero(null);
+                    setHeroFile(null);
+                    setDirty(true);
+                  }}
+                  className="rounded-lg border border-bone-200 px-3 py-2 text-xs text-char-300 hover:border-amber-500 hover:text-amber-600 dark:border-char-400 dark:text-bone-100"
+                >
+                  Remove
+                </button>
+              )}
+            </div>
+            {heroFile && (
+              <p className="text-[11px] text-char-200">
+                {formatBytes(heroFile.file.size)}
+                {heroFile.width && heroFile.height ? ` · ${heroFile.width}×${heroFile.height}px` : ''} · uploads when you save
+                {heroFile.width && heroFile.width < 1200 ? '. Google Discover prefers images at least 1200px wide.' : ''}
+              </p>
+            )}
+            <div>
+              <div className="flex items-center justify-between">
+                <label htmlFor="heroAlt" className={label}>
+                  Alt text
+                </label>
+                <Counter value={heroAlt} max={125} />
+              </div>
+              <textarea
+                id="heroAlt"
+                name="heroAlt"
+                rows={2}
+                value={heroAlt}
+                onChange={(e) => setHeroAlt(e.target.value)}
+                placeholder="What the picture shows, e.g. Three espresso machines on a kitchen counter"
+                className={input}
+              />
+            </div>
+            <div>
+              <label htmlFor="heroTitle" className={label}>
+                Title (optional, shown on hover)
+              </label>
+              <input id="heroTitle" name="heroTitle" defaultValue={values.heroImage?.title} className={input} />
+            </div>
+            <div>
+              <label htmlFor="heroCaption" className={label}>
+                Caption (optional, shown under the image)
+              </label>
+              <input id="heroCaption" name="heroCaption" defaultValue={values.heroImage?.caption} className={input} />
+            </div>
+            {heroFile && (
+              <div>
+                <label htmlFor="heroFileName" className={label}>
+                  File name
+                </label>
+                <div className="mt-1 flex items-center overflow-hidden rounded-lg border border-bone-200 bg-bone-100 text-sm dark:border-char-400 dark:bg-char-400">
+                  <input
+                    id="heroFileName"
+                    value={heroName}
+                    onChange={(e) => setHeroFileName(e.target.value.toLowerCase().replace(/[^a-z0-9-]+/g, '-'))}
+                    className="min-w-0 flex-1 bg-bone-50 px-3 py-2 text-char-500 outline-none dark:bg-char-600 dark:text-bone-50"
+                  />
+                  <span className="px-2 text-char-200">{extensionOf(heroFile.file) || '.webp'}</span>
+                </div>
+                <p className="mt-1 text-[11px] text-char-200">Made from the alt text unless you change it.</p>
+              </div>
+            )}
+          </div>
 
           {kind === 'post' && (
             <div className={`${cardClass} p-5`}>

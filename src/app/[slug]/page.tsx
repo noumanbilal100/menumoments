@@ -19,11 +19,12 @@ import { hasAffiliateLinks, isAffiliateArticle } from '@/lib/affiliate';
 import { AdSlot } from '@/components/ad-slot';
 import { ProductRecommendations } from '@/components/product-recommendations';
 import { PageShell } from '@/components/page-shell';
+import { HeroFigure } from '@/components/hero-figure';
 import { cleanPostHtml } from '@/lib/clean-html';
 import { getSitePage, listSitePages } from '@/lib/site-pages';
 import { blockForPost, splitBeforeHeading } from '@/data/post-products';
 import { shouldShowAds } from '@/lib/ads';
-import { imageFor, postBreadcrumbJsonLd, postJsonLd } from '@/lib/structured-data';
+import { absoluteUrl, imageFor, postBreadcrumbJsonLd, postJsonLd, sitePageJsonLd } from '@/lib/structured-data';
 import { JsonLd } from '@/components/json-ld';
 import { NewsletterForm } from '@/components/newsletter-form';
 import { pageMeta } from '@/lib/seo';
@@ -52,6 +53,7 @@ export async function generateMetadata({
         title: page.seo?.seoTitle || page.title,
         description: page.seo?.metaDescription || page.lede || page.title,
         path: `/${slug}/`,
+        image: page.heroImage?.src ? absoluteUrl(page.heroImage.src) : undefined,
       }),
       keywords: page.seo?.focusKeyword ? [page.seo.focusKeyword] : undefined,
     };
@@ -144,9 +146,12 @@ export default async function PostPage({
     const page = await getSitePage(slug);
     if (!page) notFound();
     return (
-      <PageShell title={page.title} lede={page.lede}>
-        <div dangerouslySetInnerHTML={{ __html: cleanPostHtml(page.html, page.title) }} />
-      </PageShell>
+      <>
+        <JsonLd data={sitePageJsonLd(page)} />
+        <PageShell title={page.title} lede={page.lede} hero={page.heroImage ? <HeroFigure image={page.heroImage} /> : undefined}>
+          <div dangerouslySetInnerHTML={{ __html: cleanPostHtml(page.html, page.title) }} />
+        </PageShell>
+      </>
     );
   }
 
@@ -297,22 +302,7 @@ export default async function PostPage({
       </header>
 
       {/* Hero image -------------------------------------------------- */}
-      {post.heroImage && (
-        <div className="mx-auto max-w-5xl px-6 pt-8">
-          <div>
-            <div className="zoom-parent relative aspect-[16/9] overflow-hidden rounded-3xl bg-bone-100 shadow-cardHover">
-              <Image
-                src={post.heroImage.src}
-                alt={post.heroImage.alt}
-                fill
-                sizes="(min-width: 1024px) 1000px, 100vw"
-                className="object-cover"
-                priority
-              />
-            </div>
-          </div>
-        </div>
-      )}
+      {post.heroImage && <HeroFigure image={post.heroImage} />}
 
       {/* Body + right rail ------------------------------------------ */}
       <div className="mx-auto max-w-wide px-6 py-14">

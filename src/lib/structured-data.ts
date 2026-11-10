@@ -17,6 +17,8 @@ function absolute(url: string): string {
   return /^https?:\/\//i.test(url) ? url : `${SITE_URL}${url.startsWith('/') ? '' : '/'}${url}`;
 }
 
+export const absoluteUrl = absolute;
+
 /** Stored stamps carry no zone, and Google assumes its own when one is missing. */
 function withZone(iso?: string): string | undefined {
   if (!iso) return undefined;
@@ -133,6 +135,38 @@ export function webPageJsonLd(
     description: page.description,
     isPartOf: { '@id': `${SITE_URL}/#website` },
     publisher: { '@id': ORGANIZATION_ID },
+  };
+}
+
+/** A page made in the admin; its featured image is named as the page's main picture. */
+export function sitePageJsonLd(page: {
+  slug: string;
+  title: string;
+  lede?: string;
+  seo?: { metaDescription?: string };
+  heroImage?: { src: string; alt: string; width?: number; height?: number; caption?: string } | null;
+}): Record<string, unknown> {
+  const url = `${SITE_URL}/${page.slug}/`;
+  const hero = page.heroImage;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': url,
+    url,
+    name: decodeEntities(page.title),
+    description: page.seo?.metaDescription || page.lede || undefined,
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+    publisher: { '@id': ORGANIZATION_ID },
+    primaryImageOfPage: hero?.src
+      ? {
+          '@type': 'ImageObject',
+          url: absolute(hero.src),
+          contentUrl: absolute(hero.src),
+          width: hero.width,
+          height: hero.height,
+          caption: hero.caption || hero.alt,
+        }
+      : undefined,
   };
 }
 

@@ -13,6 +13,7 @@ import { ReadingProgress } from '@/components/reading-progress';
 import { Sparkle, Fork, Squiggle, DrawArrow } from '@/components/doodles';
 import { PostCard } from '@/components/post-card';
 import { SectionHeading } from '@/components/section-heading';
+import { HeroFigure } from '@/components/hero-figure';
 
 /**
  * The "professional affiliate article" layout — Wirecutter/Strategist vibe.
@@ -150,23 +151,7 @@ export function AffiliateArticle({
       </header>
 
       {/* HERO IMAGE ---------------------------------------------------- */}
-      {post.heroImage && (
-        <div className="mx-auto max-w-5xl px-6 pt-8">
-          <div
-            className="zoom-parent relative overflow-hidden rounded-3xl bg-bone-100 shadow-cardHover"
-            style={{ aspectRatio: heroAspect(post.heroImage) }}
-          >
-              <Image
-                src={post.heroImage.src}
-                alt={post.heroImage.alt}
-                fill
-                sizes="(min-width: 1024px) 1000px, 100vw"
-                className="object-cover"
-                priority
-              />
-          </div>
-        </div>
-      )}
+      {post.heroImage && <HeroFigure image={post.heroImage} aspectRatio={heroAspect(post.heroImage)} />}
 
       {/* AT-A-GLANCE STRIP — truthful numbers only ------------------- */}
       <section className="border-y border-bone-200 bg-bone-100 py-6 dark:border-char-500 dark:bg-char-400">
