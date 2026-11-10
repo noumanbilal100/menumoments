@@ -3,6 +3,7 @@ import { categoriesFor, categoriesWithPosts, isIndexableCategory } from './categ
 import { COLLECTIONS } from '@/data/collections';
 import { SITE_URL } from './env';
 import { listSitePages } from './site-pages';
+import { SECTION_HUBS, getCategory } from '@/data/taxonomy';
 import { readContentFile } from './content-files';
 
 /**
@@ -164,7 +165,7 @@ export async function pageEntries(): Promise<SitemapEntry[]> {
 
 export function categoryEntries(): SitemapEntry[] {
   const posts = localIndex();
-  return categoriesWithPosts()
+  const categories = categoriesWithPosts()
     .filter((c) => isIndexableCategory(c.slug))
     .map((c) => ({
       loc: url(`/category/${c.slug}`),
@@ -172,6 +173,18 @@ export function categoryEntries(): SitemapEntry[] {
         posts.filter((p) => categoriesFor(p.slug, p.title, p.wpCategorySlugs ?? []).includes(c.slug)).map(postDate),
       ),
     }));
+  // Section hubs that are not a category of their own (Recipes and Kitchen tips are, and are listed above).
+  const hubs = Object.values(SECTION_HUBS)
+    .filter((h) => !getCategory(h.slug))
+    .map((h) => {
+      const inSection = posts.filter((p) =>
+        categoriesFor(p.slug, p.title, p.wpCategorySlugs ?? []).some((c) => getCategory(c)?.section === h.section),
+      );
+      return { loc: url(`/category/${h.slug}`), lastmod: newest(inSection.map(postDate)), count: inSection.length };
+    })
+    .filter((h) => h.count >= 3)
+    .map(({ loc, lastmod }) => ({ loc, lastmod }));
+  return [...hubs, ...categories];
 }
 
 export const XML_HEADERS = {

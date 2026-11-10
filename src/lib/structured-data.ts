@@ -2,6 +2,7 @@ import type { Post } from './content';
 import { getCategory } from '@/data/taxonomy';
 import { SITE, SITE_URL } from './env';
 import { decodeEntities, extractRecipe } from './recipe-extract';
+import { postTrail } from './silo';
 
 /**
  * Schema.org markup for a post, following Google's structured data rules:
@@ -83,13 +84,9 @@ export function breadcrumbJsonLd(items: { name: string; path: string }[]): Recor
   };
 }
 
+/** Home › section hub › category › post, the same trail the page shows. */
 export function postBreadcrumbJsonLd(post: Post): Record<string, unknown> {
-  const category = post.categories[0] ? getCategory(post.categories[0]) : undefined;
-  return breadcrumbJsonLd([
-    { name: 'Home', path: '/' },
-    ...(category ? [{ name: category.name, path: `/category/${category.slug}/` }] : []),
-    { name: post.title, path: `/${post.slug}/` },
-  ]);
+  return breadcrumbJsonLd(postTrail(post));
 }
 
 /** A page whose job is to list other pages: a category, collection or the archive. */

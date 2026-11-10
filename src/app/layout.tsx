@@ -8,7 +8,12 @@ import { AdSenseLoader } from '@/components/adsense';
 import { ConsentBanner } from '@/components/consent-banner';
 import { SiteChrome } from '@/components/site-chrome';
 import { DEFAULT_SOCIAL_IMAGE, HOME_TITLE, TITLE_TEMPLATE } from '@/lib/seo';
+import { AD_FREE_PAGES, isAdFreePost } from '@/lib/ads';
+import { allListedPosts } from '@/lib/content';
 import './globals.css';
+
+/** Buying guides and the pages with nothing to read: AdSense never loads there. */
+const AD_FREE_PATHS = [...AD_FREE_PAGES, ...allListedPosts().filter(isAdFreePost).map((p) => `/${p.slug}/`)];
 
 const display = Fraunces({
   subsets: ['latin'],
@@ -81,7 +86,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           bottom={
             <>
               <SiteFooter />
-              <AdSenseLoader />
+              <AdSenseLoader adFreePaths={AD_FREE_PATHS} />
               <ConsentBanner />
             </>
           }

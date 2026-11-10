@@ -42,7 +42,7 @@ const RULES: Rule[] = [
   ['kitchen-tips', /\b(kitchen.tip|hack|trick|substitute|conversion|how.many|how.much)\b/],
 
   // ---- Gear --------------------------------------------------------
-  ['kitchen-appliances', /\b(appliance|mixer|blender|air.fryer|microwave|dishwasher|instant.pot|slow.cooker|coffee.maker|refrigerator|fridge|oven|toaster|ice.cream.maker|thermomix|food.processor|juicer)\b/],
+  ['kitchen-appliances', /\b(appliance|mixer|blender|air.fryer|microwave|dishwasher|instant.pot|slow.cooker|coffee.maker|espresso.machine|espresso.maker|coffee.machine|coffee.grinder|grinder|kettle|rice.cooker|pressure.cooker|waffle.maker|bread.machine|refrigerator|fridge|oven|toaster|ice.cream.maker|thermomix|food.processor|juicer)s?\b/],
   ['cookware', /\b(pan\b|pans\b|pot\b|pots\b|skillet|cast.iron|dutch.oven|cookware|saucepan|wok|griddle|stockpot)\b/],
   ['bakeware', /\b(bakeware|baking.sheet|popover.pan|baking.dish|cake.tin|loaf.pan|muffin.tin|ramekin|mold)\b/],
   ['knives-and-cutting-tools', /\b(knife|knives|cutting.board|mandoline|shears|cleaver|sharpen)\b/],

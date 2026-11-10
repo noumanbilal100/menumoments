@@ -14,6 +14,8 @@ import { Sparkle, Fork, Squiggle, DrawArrow } from '@/components/doodles';
 import { PostCard } from '@/components/post-card';
 import { SectionHeading } from '@/components/section-heading';
 import { HeroFigure } from '@/components/hero-figure';
+import { Breadcrumbs } from '@/components/breadcrumbs';
+import { postTrail } from '@/lib/silo';
 
 /**
  * The "professional affiliate article" layout — Wirecutter/Strategist vibe.
@@ -51,27 +53,7 @@ export function AffiliateArticle({
           <Sparkle size={100} className="animate-float" />
         </div>
         <div className="mx-auto max-w-wide px-6 pt-12 pb-10 lg:pt-16">
-          <nav aria-label="Breadcrumb" className="mb-5 text-xs text-char-200">
-            <ol className="flex flex-wrap items-center gap-1.5">
-              <li>
-                <Link href="/" className="hover:text-ember-500">
-                  Home
-                </Link>
-              </li>
-              <li aria-hidden>/</li>
-              {primaryCat && (
-                <>
-                  <li>
-                    <Link href={`/category/${primaryCat.slug}`} className="hover:text-ember-500">
-                      {primaryCat.name}
-                    </Link>
-                  </li>
-                  <li aria-hidden>/</li>
-                </>
-              )}
-              <li className="max-w-[40ch] truncate">{post.title}</li>
-            </ol>
-          </nav>
+          <Breadcrumbs trail={postTrail(post)} className="mb-5 text-xs text-char-200" />
 
           <div>
             <div className="mb-4 flex flex-wrap items-center gap-3">

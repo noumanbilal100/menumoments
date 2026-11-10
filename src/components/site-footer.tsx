@@ -1,12 +1,12 @@
 import Link from 'next/link';
 import { Logo } from './logo';
 import { NewsletterForm } from './newsletter-form';
-import { SECTIONS, SectionKey } from '@/data/taxonomy';
-import { liveCategoriesInSection } from '@/lib/category-map';
+import { SECTIONS, SectionKey, hubForSection } from '@/data/taxonomy';
+import { isIndexableCategory, liveCategoriesInSection } from '@/lib/category-map';
 import { SITE } from '@/lib/env';
 import { Squiggle, Whisk, CoffeeBean, Sparkle } from './doodles';
 
-const FOOTER_SECTIONS: SectionKey[] = ['recipes', 'lifestyle', 'gear', 'reviews'];
+const FOOTER_SECTIONS: SectionKey[] = ['recipes', 'lifestyle', 'kitchen-tips', 'gear', 'planning', 'reviews'];
 
 export function SiteFooter() {
   return (
@@ -44,14 +44,18 @@ export function SiteFooter() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+          <div className="grid grid-cols-2 gap-8 md:grid-cols-3">
             {FOOTER_SECTIONS.map((s) => (
               <div key={s}>
                 <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.25em] text-ember-300">
-                  {SECTIONS[s].name}
+                  <Link href={`/category/${hubForSection(s).slug}/`} className="hover:text-ember-200">
+                    {SECTIONS[s].name}
+                  </Link>
                 </p>
                 <ul className="space-y-2 text-sm">
                   {liveCategoriesInSection(s)
+                    // Thin categories are noindex; every page linking to them would waste the link.
+                    .filter((c) => c.slug !== hubForSection(s).slug && isIndexableCategory(c.slug))
                     .slice(0, 6)
                     .map((c) => (
                       <li key={c.slug}>

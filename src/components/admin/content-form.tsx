@@ -563,8 +563,10 @@ export function ContentForm({
                 ))}
               </div>
               <p className="mt-3 text-[11px] leading-relaxed text-char-200">
-                The highest ticked category in this list is the post&apos;s main one. If you tick
-                none, the site files the post from words in its title.
+                The highest ticked category in this list is the post&apos;s main one, and sets its
+                breadcrumb. Tick a specific one (Dinner, Desserts) as well as Recipes or Kitchen tips:
+                the specific one then leads. If you tick none, the site files the post from words in
+                its title.
               </p>
             </div>
           )}

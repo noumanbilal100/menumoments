@@ -7,7 +7,7 @@
  */
 
 import indexData from '@/content/index.json';
-import { CATEGORIES, getCategory, type Category } from '@/data/taxonomy';
+import { CATEGORIES, getCategory, isGeneralCategory, type Category } from '@/data/taxonomy';
 import { legacyCategoriesFor } from '@/data/legacy-posts';
 import { isProductReview, PRODUCT_REVIEW_CATEGORY } from '@/data/product-reviews';
 import { deriveCategories } from './derive-categories';
@@ -40,7 +40,14 @@ export function categoriesFor(
   }
   // Hand-listed buying guides always file under product-reviews.
   if (isProductReview(slug)) mapped.add(PRODUCT_REVIEW_CATEGORY);
-  return CATEGORIES.filter((c) => mapped.has(c.slug)).map((c) => c.slug);
+  // Taxonomy order, except that a catch-all category ("Recipes") goes after
+  // the specific ones of its own section ("Dinner"), which then lead.
+  const ordered = CATEGORIES.filter((c) => mapped.has(c.slug));
+  const sectionOrder = [...new Set(CATEGORIES.map((c) => c.section))];
+  return ordered
+    .map((c, i) => ({ c, key: sectionOrder.indexOf(c.section) * 2 + (isGeneralCategory(c.slug) ? 1 : 0), i }))
+    .sort((a, b) => a.key - b.key || a.i - b.i)
+    .map(({ c }) => c.slug);
 }
 
 let populatedCache: Set<string> | null = null;

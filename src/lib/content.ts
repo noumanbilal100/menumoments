@@ -103,12 +103,24 @@ function pairHash(a: string, b: string): number {
  * per pair rather than by date, so older posts get linked too instead of every
  * page in a category pointing at the same few new ones.
  */
+function sectionOf(categorySlug: string | undefined): string | undefined {
+  return categorySlug ? getCategory(categorySlug)?.section : undefined;
+}
+
+/**
+ * Posts to read next, kept inside the post's silo: posts from its own section
+ * come first (its own category ahead of the rest), and other sections only
+ * fill the list when the silo runs short. Shared title words rank within that.
+ */
 export function relatedPosts(post: Post, limit = 6): Post[] {
   const words = titleWords(post.title);
+  const section = sectionOf(post.categories[0]);
   return allListedPosts()
     .filter((p) => p.slug !== post.slug)
     .map((p) => {
-      let score = p.categories[0] === post.categories[0] ? 2 : 0;
+      const sameSilo = section !== undefined && sectionOf(p.categories[0]) === section;
+      let score = sameSilo ? 100 : 0;
+      if (p.categories[0] === post.categories[0]) score += 6;
       for (const c of p.categories) if (post.categories.includes(c)) score += 1;
       for (const w of titleWords(p.title)) if (words.has(w)) score += 3;
       return { p, score, tie: pairHash(post.slug, p.slug) };
@@ -131,6 +143,13 @@ export async function listRecentPosts(limit = 12): Promise<Post[]> {
 export async function listPostsInCategory(categorySlug: string, limit = 24): Promise<Post[]> {
   return allListedPosts()
     .filter((p) => p.categories.includes(categorySlug))
+    .slice(0, limit);
+}
+
+/** Every post filed anywhere in a section, newest first: what its hub page lists. */
+export function listPostsInSection(section: string, limit = Infinity): Post[] {
+  return allListedPosts()
+    .filter((p) => p.categories.some((c) => sectionOf(c) === section))
     .slice(0, limit);
 }
 

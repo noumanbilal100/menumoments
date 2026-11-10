@@ -355,6 +355,10 @@ export async function savePost(form: FormData, existing: LoadedPost | null): Pro
     .getAll('categories')
     .map(String)
     .filter((c) => CATEGORIES.some((cat) => cat.slug === c));
+  // The main category places the post in its silo: breadcrumb, related posts, section page.
+  if (status === 'published' && !categories.length) {
+    throw new ValidationError('Tick at least one category before publishing, so the post lands in the right section of the site.');
+  }
 
   const previousSeo = existing?.record.seo ?? {};
   const seoInput = seoFrom(form);

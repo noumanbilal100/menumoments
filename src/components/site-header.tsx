@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { Logo } from './logo';
-import { SECTIONS, SectionKey } from '@/data/taxonomy';
+import { SECTIONS, SectionKey, hubForSection } from '@/data/taxonomy';
 import { liveCategoriesInSection } from '@/lib/category-map';
 
 const NAV_SECTIONS: SectionKey[] = [
@@ -33,13 +33,17 @@ export function SiteHeader() {
                 onMouseLeave={() => setOpen(null)}
                 className="relative"
               >
-                <button
+                {/* A real link to the section hub, so every page links the top of each silo. */}
+                <Link
+                  href={`/category/${hubForSection(key).slug}/`}
                   className="nav-link py-2 text-ink-500 hover:text-clay-500 dark:text-cream-50"
-                  onClick={() => setOpen(open === key ? null : key)}
+                  onFocus={() => setOpen(key)}
+                  onClick={() => setOpen(null)}
+                  aria-haspopup="true"
                   aria-expanded={open === key}
                 >
                   {SECTIONS[key].name}
-                </button>
+                </Link>
                 {open === key && <MegaMenu section={key} onNavigate={() => setOpen(null)} />}
               </li>
             ))}
@@ -112,7 +116,16 @@ export function SiteHeader() {
                   <span className="text-clay-500">+</span>
                 </summary>
                 <ul className="mt-3 grid grid-cols-2 gap-2 text-sm">
-                  {liveCategoriesInSection(key).map((c) => (
+                  <li className="col-span-2">
+                    <Link
+                      onClick={() => setMobileOpen(false)}
+                      href={`/category/${hubForSection(key).slug}/`}
+                      className="block rounded-md px-2 py-1.5 font-medium text-clay-500 hover:bg-cream-100 dark:hover:bg-ink-500"
+                    >
+                      All {SECTIONS[key].name.toLowerCase()} →
+                    </Link>
+                  </li>
+                  {liveCategoriesInSection(key).filter((c) => c.slug !== hubForSection(key).slug).map((c) => (
                     <li key={c.slug}>
                       <Link
                         onClick={() => setMobileOpen(false)}
@@ -146,7 +159,8 @@ export function SiteHeader() {
 }
 
 function MegaMenu({ section, onNavigate }: { section: SectionKey; onNavigate: () => void }) {
-  const cats = liveCategoriesInSection(section);
+  const hub = hubForSection(section);
+  const cats = liveCategoriesInSection(section).filter((c) => c.slug !== hub.slug);
   return (
     <div className="absolute left-1/2 top-full z-50 -translate-x-1/2 pt-2">
       <div className="w-[680px] rounded-2xl border border-cream-200 bg-bone-100 p-6 shadow-cardHover dark:border-ink-500 dark:bg-ink-600">
@@ -156,11 +170,11 @@ function MegaMenu({ section, onNavigate }: { section: SectionKey; onNavigate: ()
             <p className="mt-0.5 text-xs text-ink-300">{SECTIONS[section].tagline}</p>
           </div>
           <Link
-            href={`/category/${cats[0].slug}`}
+            href={`/category/${hub.slug}/`}
             onClick={onNavigate}
             className="text-xs font-medium text-clay-500 hover:text-clay-600"
           >
-            See all {cats.length} →
+            All {SECTIONS[section].name.toLowerCase()} →
           </Link>
         </div>
         <ul className="grid grid-cols-2 gap-x-6 gap-y-2">

@@ -3,6 +3,8 @@ import Link from 'next/link';
 export default function NotFound() {
   return (
     <div className="mx-auto flex min-h-[60vh] max-w-2xl flex-col items-center justify-center px-6 py-24 text-center">
+      {/* Error pages carry no ads (AdSense policy). */}
+      <span data-no-ads hidden />
       <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-clay-500">404</p>
       <h1 className="font-display text-display-lg text-ink-500 dark:text-cream-50">
         This page didn't rise.

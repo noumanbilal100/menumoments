@@ -149,6 +149,91 @@ export function categoriesInSection(section: SectionKey): Category[] {
   return CATEGORIES.filter((c) => c.section === section);
 }
 
+/**
+ * The silo: every section has one hub page at /category/<hub>/, which links
+ * down to each category in the section and every post in it; categories link
+ * up to their hub and across to their siblings; posts link up through their
+ * breadcrumb and across to posts in the same silo. URLs stay flat (/<post>/),
+ * so nothing that already ranks moves.
+ *
+ * Recipes and Kitchen tips already had a catch-all category, which doubles as
+ * the hub. The other sections get a hub of their own.
+ */
+export interface SectionHub {
+  slug: string;
+  section: SectionKey;
+  /** The H1 and the start of the title tag. */
+  title: string;
+  /** Lead paragraph under the H1. */
+  intro: string;
+}
+
+export const SECTION_HUBS: Record<SectionKey, SectionHub> = {
+  recipes: {
+    slug: 'recipes',
+    section: 'recipes',
+    title: 'Recipes',
+    intro:
+      'Every Menu Moments recipe in one place: weeknight dinners, breakfasts, desserts, bakes, snacks and drinks, each written so you can cook it the first time. Start with a meal below, or pick a category to narrow it down.',
+  },
+  lifestyle: {
+    slug: 'eat-well',
+    section: 'lifestyle',
+    title: 'Eat Well',
+    intro:
+      'Healthy, quick, plant-based and international cooking: recipes and guides for eating well through a busy week, without rules you won’t keep.',
+  },
+  'kitchen-tips': {
+    slug: 'kitchen-tips',
+    section: 'kitchen-tips',
+    title: 'Kitchen Tips',
+    intro:
+      'Practical how-tos for the kitchen: cooking technique, baking basics, cleaning, organizing and the small habits that make cooking easier every day.',
+  },
+  gear: {
+    slug: 'kitchen-gear',
+    section: 'gear',
+    title: 'Kitchen Gear',
+    intro:
+      'Guides to the tools that do the work: appliances, cookware, bakeware, gadgets, knives and storage, with what to look for and how to look after them.',
+  },
+  planning: {
+    slug: 'plan-and-shop',
+    section: 'planning',
+    title: 'Plan & Shop',
+    intro: 'Ingredient guides, meal planning and grocery know-how, so you buy the right things and use them well.',
+  },
+  reviews: {
+    slug: 'reviews',
+    section: 'reviews',
+    title: 'Reviews & Buying Guides',
+    intro:
+      'Restaurant menus and what to order, plus our buying guides and comparisons for kitchen products, so you know what is worth your money before you spend it.',
+  },
+};
+
+const hubBySlug = new Map(Object.values(SECTION_HUBS).map((h) => [h.slug, h]));
+
+/** The section hub at /category/<slug>/, if the slug is one. */
+export function getSectionHub(slug: string): SectionHub | undefined {
+  return hubBySlug.get(slug);
+}
+
+export function hubForSection(section: SectionKey): SectionHub {
+  return SECTION_HUBS[section];
+}
+
+/**
+ * Catch-all categories that stand for their whole section. A post filed in
+ * one and in a more specific category of the same section ("Recipes" and
+ * "Dinner") has the specific one as its main category, so its breadcrumb runs
+ * Home › Recipes › Dinner › post.
+ */
+export function isGeneralCategory(slug: string): boolean {
+  const hub = hubBySlug.get(slug);
+  return Boolean(hub && bySlug.has(slug as CategorySlug));
+}
+
 export function isLegacyCategorySlug(slug: string): boolean {
   return byLegacy.has(slug) && !bySlug.has(slug as CategorySlug);
 }

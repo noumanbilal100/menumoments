@@ -1025,3 +1025,8 @@ body {
   .prose-article { font-size: 12pt; line-height: 1.5; }
   a::after { content: ' (' attr(href) ')'; font-size: 9pt; color: #555; }
 }
+
+/* A manual ad unit that came back empty gives its reserved space back (see components/ad-slot.tsx). */
+.ad-slot:has(ins.adsbygoogle[data-ad-status="unfilled"]) {
+  display: none;
+}

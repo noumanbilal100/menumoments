@@ -62,9 +62,10 @@ export function AdSlot({
           {label}
         </p>
       )}
+      {/* Space is held for the ad before it arrives, so the article doesn't jump when it fills. */}
       <ins
         className="adsbygoogle"
-        style={{ display: 'block' }}
+        style={{ display: 'block', minHeight: format === 'auto' || format === 'rectangle' ? 280 : 90 }}
         data-ad-client={ADSENSE_CLIENT}
         data-ad-slot={slot}
         data-ad-format={format}

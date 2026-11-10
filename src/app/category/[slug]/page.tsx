@@ -8,18 +8,22 @@ import { SectionHeading } from '@/components/section-heading';
 import {
   CATEGORIES,
   SECTIONS,
+  SECTION_HUBS,
   getCategory,
+  getSectionHub,
   isLegacyCategorySlug,
   type Category,
   type SectionKey,
 } from '@/data/taxonomy';
 import { COLLECTIONS } from '@/data/collections';
 import { isIndexableCategory, liveCategoriesInSection } from '@/lib/category-map';
-import { listPostsInCategory, getPost } from '@/lib/content';
+import { listPostsInCategory, listPostsInSection, getPost } from '@/lib/content';
 import { SITE } from '@/lib/env';
 import { pageMeta } from '@/lib/seo';
 import { breadcrumbJsonLd, collectionJsonLd } from '@/lib/structured-data';
+import { categoryTrail } from '@/lib/silo';
 import { JsonLd } from '@/components/json-ld';
+import { Breadcrumbs } from '@/components/breadcrumbs';
 
 export const revalidate = 3600;
 
@@ -35,15 +39,52 @@ const SECTION_TITLE: Record<SectionKey, string> = {
   reviews: 'Guides & Honest Takes',
 };
 
+/** Title tags of the section hubs; Recipes keeps the one it already ranks with. */
+const HUB_TITLE: Record<SectionKey, string> = {
+  recipes: 'All Recipes: Dinners, Desserts & More',
+  lifestyle: 'Eat Well: Healthy, Quick & Plant-Based Recipes',
+  'kitchen-tips': 'Kitchen Tips: Practical Guides & How-Tos',
+  gear: 'Kitchen Gear: Appliance, Cookware & Tool Guides',
+  planning: 'Plan & Shop: Ingredient and Meal Planning Guides',
+  reviews: 'Reviews & Buying Guides: Menus and Kitchen Picks',
+};
+
 function categoryTitle(cat: Category): string {
-  if (cat.slug === 'recipes') return 'All Recipes: Dinners, Desserts & More';
   if (cat.slug === 'affiliate-product-guides') return 'Buying Guides: Top Kitchen Product Picks';
   if (/recipes/i.test(cat.name)) return `${cat.name} & Meal Ideas`;
   return `${cat.name}: ${SECTION_TITLE[cat.section]}`;
 }
 
+/**
+ * What a /category/ address lists: one category, or a section hub, the top of
+ * a silo, which lists every post in its section and links to each category.
+ */
+interface Listing {
+  slug: string;
+  name: string;
+  section: SectionKey;
+  description: string;
+  hub: boolean;
+  title: string;
+}
+
+function listingFor(slug: string): Listing | undefined {
+  const hub = getSectionHub(slug);
+  if (hub) {
+    return { slug: hub.slug, name: hub.title, section: hub.section, description: hub.intro, hub: true, title: HUB_TITLE[hub.section] };
+  }
+  const cat = getCategory(slug);
+  if (!cat) return undefined;
+  return { slug: cat.slug, name: cat.name, section: cat.section, description: cat.description, hub: false, title: categoryTitle(cat) };
+}
+
+async function postsFor(listing: Listing) {
+  return listing.hub ? listPostsInSection(listing.section) : listPostsInCategory(listing.slug, Infinity);
+}
+
 export async function generateStaticParams() {
-  return CATEGORIES.map((c) => ({ slug: c.slug }));
+  const hubs = Object.values(SECTION_HUBS).map((h) => h.slug);
+  return [...new Set([...CATEGORIES.map((c) => c.slug), ...hubs])].map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -52,15 +93,17 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const cat = getCategory(slug);
-  if (!cat) return {};
-  const [latest] = await listPostsInCategory(cat.slug, 1);
+  const listing = listingFor(slug);
+  if (!listing) return {};
+  const posts = await postsFor(listing);
   return pageMeta({
-    title: categoryTitle(cat),
-    description: `${cat.description} Browse our latest ${cat.name.toLowerCase()} on ${SITE.name}.`,
-    path: `/category/${cat.slug}/`,
-    image: latest?.heroImage?.src,
-    noindex: !isIndexableCategory(cat.slug),
+    title: listing.title,
+    description: listing.hub
+      ? listing.description
+      : `${listing.description} Browse our latest ${listing.name.toLowerCase()} on ${SITE.name}.`,
+    path: `/category/${listing.slug}/`,
+    image: posts[0]?.heroImage?.src,
+    noindex: listing.hub ? posts.length < 3 : !isIndexableCategory(listing.slug),
   });
 }
 
@@ -71,16 +114,26 @@ export default async function CategoryPage({
 }) {
   const { slug } = await params;
 
-  const cat = getCategory(slug);
-  if (!cat) notFound();
-  if (isLegacyCategorySlug(slug)) permanentRedirect(`/category/${cat.slug}/`);
+  const listing = listingFor(slug);
+  if (!listing) notFound();
+  if (!listing.hub && isLegacyCategorySlug(slug)) permanentRedirect(`/category/${listing.slug}/`);
+  const cat = listing;
 
-  const everyPost = await listPostsInCategory(cat.slug, Infinity);
+  const everyPost = await postsFor(listing);
   const posts = everyPost.slice(0, CARD_LIMIT);
   const morePosts = everyPost.slice(CARD_LIMIT);
   const [featured, second, ...rest] = posts;
   const trending = posts.slice(0, 6).filter((p) => p.slug !== featured?.slug).slice(0, 5);
-  const siblings = liveCategoriesInSection(cat.section).filter((c) => c.slug !== cat.slug);
+  const sectionCategories = liveCategoriesInSection(cat.section).filter((c) => c.slug !== cat.slug);
+  const siblings = listing.hub ? [] : sectionCategories;
+  // A hub links down to every category in its section, with how much is in each.
+  const children = listing.hub
+    ? await Promise.all(
+        sectionCategories
+          .filter((c) => isIndexableCategory(c.slug))
+          .map(async (c) => ({ category: c, count: (await listPostsInCategory(c.slug, Infinity)).length })),
+      )
+    : [];
   const relatedCollections = COLLECTIONS.filter(
     (c) => c.categorySlug === cat.slug || c.postSlugs.some((s) => posts.find((p) => p.slug === s)),
   ).slice(0, 3);
@@ -106,31 +159,15 @@ export default async function CategoryPage({
           posts: everyPost,
         })}
       />
-      <JsonLd
-        data={breadcrumbJsonLd([
-          { name: 'Home', path: '/' },
-          { name: cat.name, path: `/category/${cat.slug}/` },
-        ])}
-      />
+      <JsonLd data={breadcrumbJsonLd(categoryTrail(cat))} />
       {/* Category header -------------------------------------------- */}
       <header className="border-b border-cream-200 bg-cream-50 dark:border-ink-500 dark:bg-ink-600">
         <div className="mx-auto max-w-wide px-6 pt-16 pb-12 lg:pt-24">
-          <nav aria-label="Breadcrumb" className="mb-6 text-xs text-ink-300">
-            <ol className="flex flex-wrap items-center gap-1.5">
-              <li><Link href="/" className="hover:text-clay-500">Home</Link></li>
-              <li aria-hidden>/</li>
-              <li>
-                <Link href="/blog" className="hover:text-clay-500">
-                  {SECTIONS[cat.section].name}
-                </Link>
-              </li>
-              <li aria-hidden>/</li>
-              <li className="text-ink-500 dark:text-cream-100">{cat.name}</li>
-            </ol>
-          </nav>
+          <Breadcrumbs trail={categoryTrail(cat)} className="mb-6 text-xs text-ink-300" linkClassName="hover:text-clay-500" />
 
           <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-clay-500">
-            {SECTIONS[cat.section].name} · {everyPost.length} {everyPost.length === 1 ? 'post' : 'posts'}
+            {listing.hub ? 'All of' : SECTIONS[cat.section].name} {listing.hub ? SECTIONS[cat.section].name.toLowerCase() : ''} ·{' '}
+            {everyPost.length} {everyPost.length === 1 ? 'post' : 'posts'}
           </p>
           <h1 className="font-display text-display-xl text-ink-500 dark:text-cream-50">
             {cat.name}
@@ -152,6 +189,30 @@ export default async function CategoryPage({
           )}
         </div>
       </header>
+
+      {children.length > 0 && (
+        <section className="mx-auto max-w-wide px-6 pt-14" aria-labelledby="hub-categories">
+          <h2 id="hub-categories" className="font-display text-2xl text-ink-500 dark:text-cream-50">
+            Browse {cat.name.toLowerCase()} by category
+          </h2>
+          <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {children.map(({ category: c, count }) => (
+              <li key={c.slug}>
+                <Link
+                  href={`/category/${c.slug}`}
+                  className="flex h-full flex-col rounded-2xl border border-cream-200 bg-bone-100 p-5 transition hover:border-clay-500 dark:border-ink-500 dark:bg-ink-500"
+                >
+                  <span className="font-display text-lg text-ink-500 dark:text-cream-50">{c.name}</span>
+                  <span className="mt-1 text-sm text-ink-300">{c.description}</span>
+                  <span className="mt-3 text-xs font-semibold uppercase tracking-wider text-clay-500">
+                    {count} {count === 1 ? 'post' : 'posts'} →
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {posts.length === 0 ? (
         <section className="mx-auto max-w-2xl px-6 py-24 text-center">

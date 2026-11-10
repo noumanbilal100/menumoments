@@ -21,11 +21,13 @@ import { AdSlot } from '@/components/ad-slot';
 import { ProductRecommendations } from '@/components/product-recommendations';
 import { PageShell } from '@/components/page-shell';
 import { HeroFigure } from '@/components/hero-figure';
+import { Breadcrumbs } from '@/components/breadcrumbs';
+import { postTrail } from '@/lib/silo';
 import { cleanPostHtml } from '@/lib/clean-html';
 import { getSitePage, listSitePages } from '@/lib/site-pages';
 import { getFreshPost, getFreshSitePage } from '@/lib/fresh-content';
 import { blockForPost, splitBeforeHeading } from '@/data/post-products';
-import { shouldShowAds } from '@/lib/ads';
+import { isAdFreePost, shouldShowAds } from '@/lib/ads';
 import { absoluteUrl, imageFor, postBreadcrumbJsonLd, postJsonLd, sitePageJsonLd } from '@/lib/structured-data';
 import { JsonLd } from '@/components/json-ld';
 import { NewsletterForm } from '@/components/newsletter-form';
@@ -167,6 +169,7 @@ export default async function PostPage({
     return (
       <>
         <JsonLd data={sitePageJsonLd(page)} />
+        <span data-no-ads hidden />
         <PageShell title={page.title} lede={page.lede} hero={page.heroImage ? <HeroFigure image={page.heroImage} /> : undefined}>
           <div dangerouslySetInnerHTML={{ __html: cleanPostHtml(page.html, page.title) }} />
         </PageShell>
@@ -187,7 +190,12 @@ export default async function PostPage({
 
   // Buying guides / reviews get a dedicated Wirecutter-style layout.
   if (isAffiliateArticle(post)) {
-    return <AffiliateArticle post={post} related={relatedFiltered} />;
+    return (
+      <>
+        <span data-no-ads hidden />
+        <AffiliateArticle post={post} related={relatedFiltered} />
+      </>
+    );
   }
 
   const relatedCollections = COLLECTIONS.filter((c) => c.postSlugs.includes(post.slug)).slice(0, 2);
@@ -199,6 +207,7 @@ export default async function PostPage({
 
   return (
     <article>
+      {isAdFreePost(post) && <span data-no-ads hidden />}
       <ReadingProgress />
       <JsonLd data={postJsonLd(post)} />
       <JsonLd data={postBreadcrumbJsonLd(post)} />
@@ -209,27 +218,7 @@ export default async function PostPage({
           <Fork size={90} className="animate-float" />
         </div>
         <div className="mx-auto max-w-4xl px-6 pt-14 pb-10 lg:pt-20">
-          <nav aria-label="Breadcrumb" className="mb-6 text-xs text-char-200">
-            <ol className="flex flex-wrap items-center gap-1.5">
-              <li>
-                <Link href="/" className="hover:text-ember-500">
-                  Home
-                </Link>
-              </li>
-              <li aria-hidden>/</li>
-              {primaryCat && (
-                <>
-                  <li>
-                    <Link href={`/category/${primaryCat.slug}`} className="hover:text-ember-500">
-                      {primaryCat.name}
-                    </Link>
-                  </li>
-                  <li aria-hidden>/</li>
-                </>
-              )}
-              <li className="truncate">{post.title}</li>
-            </ol>
-          </nav>
+          <Breadcrumbs trail={postTrail(post)} />
 
           {/* Single friendly kind chip + primary category — no more
               redundant repeat of the breadcrumb category. */}
