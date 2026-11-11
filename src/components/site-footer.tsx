@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Logo } from './logo';
 import { NewsletterForm } from './newsletter-form';
 import { SECTIONS, SectionKey, hubForSection } from '@/data/taxonomy';
+import { KITCHEN_TOOLS } from '@/data/tools';
 import { isIndexableCategory, liveCategoriesInSection } from '@/lib/category-map';
 import { SITE } from '@/lib/env';
 import { Squiggle, Whisk, CoffeeBean, Sparkle } from './doodles';
@@ -70,6 +71,23 @@ export function SiteFooter() {
                 </ul>
               </div>
             ))}
+            {/* The tools are single pages, so they are listed by name. */}
+            <div>
+              <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.25em] text-ember-300">
+                <Link href={`/category/${hubForSection('tools').slug}/`} className="hover:text-ember-200">
+                  {SECTIONS.tools.name}
+                </Link>
+              </p>
+              <ul className="space-y-2 text-sm">
+                {KITCHEN_TOOLS.map((t) => (
+                  <li key={t.slug}>
+                    <Link href={`/${t.slug}/`} className="cta-underline text-bone-100/80 hover:text-ember-200">
+                      {t.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
 

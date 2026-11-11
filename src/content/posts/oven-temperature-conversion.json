@@ -1,0 +1,27 @@
+{
+  "slug": "oven-temperature-conversion",
+  "title": "Oven Temperature Conversion: Fahrenheit, Celsius and Gas Mark",
+  "excerpt": "350°F is 177°C, or gas mark 4. Convert oven temperatures between Fahrenheit, Celsius and gas marks, with fan oven settings and a full chart.",
+  "html": "<p>American recipes give oven temperatures in Fahrenheit, European and Australian ones in Celsius, and older British recipes in gas marks. Here is how they line up, with the adjustment for fan ovens.</p>\n<div class=\"mm-callout\"><p><strong>Quick answer:</strong> 350°F = 177°C (usually printed as 180°C) = gas mark 4. In a fan oven, use about 160°C.</p></div>\n<h2>Oven temperature converter</h2>\n<p>Enter a temperature, choose its unit, and tick the box if your oven has a fan.</p>\n<div data-mm-tool=\"oven-temperature\"></div>\n<h2>Oven temperature chart</h2>\n<p>The temperatures recipes use, as they are usually printed. The fan column is 20°C lower.</p>\n<div class=\"mm-scroll\"><table><thead><tr><th>Gas mark</th><th>°F</th><th>°C</th><th>Fan oven °C</th><th>Oven</th></tr></thead><tbody><tr><td>¼</td><td>225°F</td><td>110°C</td><td>90°C</td><td>Very cool</td></tr><tr><td>½</td><td>250°F</td><td>120°C</td><td>100°C</td><td>Very cool</td></tr><tr><td>1</td><td>275°F</td><td>140°C</td><td>120°C</td><td>Cool</td></tr><tr><td>2</td><td>300°F</td><td>150°C</td><td>130°C</td><td>Cool</td></tr><tr><td>3</td><td>325°F</td><td>170°C</td><td>150°C</td><td>Warm</td></tr><tr><td>4</td><td>350°F</td><td>180°C</td><td>160°C</td><td>Moderate</td></tr><tr><td>5</td><td>375°F</td><td>190°C</td><td>170°C</td><td>Moderately hot</td></tr><tr><td>6</td><td>400°F</td><td>200°C</td><td>180°C</td><td>Hot</td></tr><tr><td>7</td><td>425°F</td><td>220°C</td><td>200°C</td><td>Hot</td></tr><tr><td>8</td><td>450°F</td><td>230°C</td><td>210°C</td><td>Very hot</td></tr><tr><td>9</td><td>475°F</td><td>240°C</td><td>220°C</td><td>Very hot</td></tr></tbody></table></div>\n<h2>Exact conversions for common temperatures</h2>\n<p>Charts round to the nearest 10 degrees. The exact figures:</p>\n<div class=\"mm-scroll\"><table><thead><tr><th>Fahrenheit</th><th>Celsius</th><th></th><th>Celsius</th><th>Fahrenheit</th></tr></thead><tbody><tr><td>325°F</td><td>163°C</td><td></td><td>160°C</td><td>320°F</td></tr><tr><td>350°F</td><td>177°C</td><td></td><td>180°C</td><td>356°F</td></tr><tr><td>375°F</td><td>191°C</td><td></td><td>190°C</td><td>374°F</td></tr><tr><td>400°F</td><td>204°C</td><td></td><td>200°C</td><td>392°F</td></tr><tr><td>425°F</td><td>218°C</td><td></td><td>220°C</td><td>428°F</td></tr><tr><td>450°F</td><td>232°C</td><td></td><td>230°C</td><td>446°F</td></tr></tbody></table></div>\n<h2>The formulas</h2>\n<p>To turn Fahrenheit into Celsius, subtract 32 and multiply by 5/9: (400 − 32) × 5/9 = 204°C. To turn Celsius into Fahrenheit, multiply by 9/5 and add 32: 200 × 9/5 + 32 = 392°F.</p>\n<h2>Fan and convection ovens</h2>\n<p>A fan moves hot air around the food, so it cooks faster and browns more. Unless the recipe was written for a fan oven, lower the temperature by about 20°C (25°F), or keep it and start checking 10 minutes early. Some ovens make the adjustment for you; your manual will say.</p>\n<h2>When your oven runs hot or cold</h2>\n<p>Many home ovens sit 10 to 25 degrees away from the dial. An inexpensive oven thermometer on the middle rack shows the real temperature; set the dial to match. Let the oven preheat fully, usually 15 to 20 minutes, before baking.</p>\n<h2>Oven temperature FAQ</h2>\n<h3>What is 350°F in Celsius?</h3><p>177°C. Most recipes round it to 180°C, or 160°C for a fan oven.</p>\n<h3>What is 180°C in Fahrenheit?</h3><p>356°F. American recipes use 350°F for the same setting.</p>\n<h3>What gas mark is 200°C?</h3><p>Gas mark 6, which is 400°F.</p>\n<h3>Is 180°C fan the same as 200°C conventional?</h3><p>Roughly, yes: a fan oven at 180°C cooks about like a conventional oven at 200°C.</p>\n<h3>What is 400°F in Celsius?</h3><p>204°C, usually written as 200°C.</p>\n<p>Converting the ingredients too? Use the <a href=\"/cups-to-grams-converter/\">cups to grams converter</a> and the <a href=\"/butter-conversion-how-many-sticks-in-1-cup-measure-butter-in-grams/\">butter calculator</a>.</p>",
+  "wpCategorySlugs": [
+    "kitchen-calculators",
+    "baking-tips"
+  ],
+  "heroImage": {
+    "src": "/img/uploads/2026/11/oven-temperature-conversion-fahrenheit-celsius-gas-mark.webp",
+    "alt": "Oven temperature converter: 350°F = 177°C = gas mark 4; fan ovens about 20°C lower",
+    "width": 1600,
+    "height": 900
+  },
+  "publishedAt": "2026-11-10T13:07:03",
+  "readingMinutes": 2,
+  "author": {
+    "name": "Menu Moments",
+    "avatar": null
+  },
+  "seo": {
+    "seoTitle": "Oven Temperature Conversion: °F to °C and Gas Mark",
+    "metaDescription": "350°F is 177°C, or gas mark 4. Convert any oven temperature between Fahrenheit, Celsius and gas marks, with fan oven settings and a full chart.",
+    "focusKeyword": "oven temperature conversion"
+  }
+}

@@ -61,7 +61,7 @@ const RULES: Rule[] = [
   ['amazon-kitchen-finds', /\b(amazon)\b/],
   ['kitchen-gift-guides', /\b(gift|present|holiday.guide)\b/],
   ['product-reviews', /\b(review|tested|hands.on)\b/],
-  ['recipe-tools', /\b(converter|calculator|recipe.app|timer)\b/],
+  ['kitchen-calculators', /\b(converter|calculator|recipe.app|timer|scaler)\b/],
 ];
 
 /** Caps how many derived categories one post can pick up. */

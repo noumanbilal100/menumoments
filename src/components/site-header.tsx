@@ -25,7 +25,7 @@ export function SiteHeader() {
         <Logo />
 
         <nav aria-label="Primary" className="hidden lg:block">
-          <ul className="flex items-center gap-6 text-sm font-medium">
+          <ul className="flex items-center gap-4 whitespace-nowrap text-sm font-medium xl:gap-6">
             {NAV_SECTIONS.map((key) => (
               <li
                 key={key}
@@ -47,6 +47,11 @@ export function SiteHeader() {
                 {open === key && <MegaMenu section={key} onNavigate={() => setOpen(null)} />}
               </li>
             ))}
+            <li>
+              <Link href="/category/kitchen-calculators/" className="nav-link py-2 text-clay-500 hover:text-clay-600">
+                Tools
+              </Link>
+            </li>
             <li>
               <Link
                 href="/collections"
@@ -76,7 +81,7 @@ export function SiteHeader() {
           </Link>
           <Link
             href="/write-for-us"
-            className="hidden rounded-full border border-ink-500/20 px-4 py-2 text-sm font-medium text-ink-500 transition hover:border-clay-500 hover:text-clay-500 dark:border-cream-50/20 dark:text-cream-50 lg:inline-flex"
+            className="hidden rounded-full border border-ink-500/20 px-4 py-2 text-sm font-medium text-ink-500 transition hover:border-clay-500 hover:text-clay-500 dark:border-cream-50/20 dark:text-cream-50 xl:inline-flex"
           >
             Write for us
           </Link>
@@ -140,6 +145,9 @@ export function SiteHeader() {
               </details>
             ))}
             <div className="mt-6 flex flex-col gap-2 text-sm">
+              <Link onClick={() => setMobileOpen(false)} href="/category/kitchen-calculators/" className="rounded-md px-2 py-2 text-clay-500">
+                ★ Kitchen tools &amp; calculators
+              </Link>
               <Link onClick={() => setMobileOpen(false)} href="/best-kitchen-gear/" className="rounded-md px-2 py-2 text-clay-500">
                 ★ Shop
               </Link>

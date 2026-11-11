@@ -31,6 +31,7 @@ export const revalidate = 3600;
 const CARD_LIMIT = 60;
 
 const SECTION_TITLE: Record<SectionKey, string> = {
+  tools: 'Free Kitchen Calculators',
   recipes: 'Recipes & Ideas',
   lifestyle: 'Recipes & Ideas',
   'kitchen-tips': 'Practical Guides & How-Tos',
@@ -41,6 +42,7 @@ const SECTION_TITLE: Record<SectionKey, string> = {
 
 /** Title tags of the section hubs; Recipes keeps the one it already ranks with. */
 const HUB_TITLE: Record<SectionKey, string> = {
+  tools: 'Kitchen Calculators & Converters: Free Cooking Tools',
   recipes: 'All Recipes: Dinners, Desserts & More',
   lifestyle: 'Eat Well: Healthy, Quick & Plant-Based Recipes',
   'kitchen-tips': 'Kitchen Tips: Practical Guides & How-Tos',

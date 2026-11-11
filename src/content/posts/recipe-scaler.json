@@ -1,0 +1,27 @@
+{
+  "slug": "recipe-scaler",
+  "title": "Recipe Scaler: Double, Halve or Resize Any Recipe",
+  "excerpt": "Paste an ingredient list, enter the servings you need and get every amount scaled, in fractions, with tips on eggs, pan sizes and baking times.",
+  "html": "<p>Cooking for two from a recipe that feeds six, or doubling a favourite for a crowd? Paste the ingredients below, set the servings, and every amount is recalculated and written as a kitchen-friendly fraction.</p>\n<div class=\"mm-callout\"><p><strong>How it works:</strong> divide the servings you need by the servings the recipe makes, then multiply every amount by that number. Going from 4 servings to 6 means multiplying by 1½.</p></div>\n<h2>Recipe scaler</h2>\n<p>Paste one ingredient per line, exactly as the recipe writes it. Amounts like 2, 1½, 1 1/2, ¾ and 2-3 are all understood.</p>\n<div data-mm-tool=\"recipe-scaler\"></div>\n<h2>How to scale a recipe by hand</h2>\n<div class=\"mm-scroll\"><table><thead><tr><th>To make</th><th>Multiply every amount by</th></tr></thead><tbody><tr><td>Half the recipe</td><td>0.5</td></tr><tr><td>One and a half times</td><td>1.5</td></tr><tr><td>Twice as much</td><td>2</td></tr><tr><td>Three times as much</td><td>3</td></tr><tr><td>4 servings from a recipe for 6</td><td>⅔ (4 ÷ 6)</td></tr><tr><td>10 servings from a recipe for 4</td><td>2½ (10 ÷ 4)</td></tr></tbody></table></div>\n<h2>Halving awkward amounts</h2>\n<div class=\"mm-scroll\"><table><thead><tr><th>Recipe says</th><th>Half is</th></tr></thead><tbody><tr><td>1 cup</td><td>½ cup</td></tr><tr><td>¾ cup</td><td>6 tablespoons</td></tr><tr><td>⅓ cup</td><td>2 tablespoons + 2 teaspoons</td></tr><tr><td>¼ cup</td><td>2 tablespoons</td></tr><tr><td>1 tablespoon</td><td>1½ teaspoons</td></tr><tr><td>1 teaspoon</td><td>½ teaspoon</td></tr><tr><td>1 large egg</td><td>About 1½ tablespoons of beaten egg</td></tr></tbody></table></div>\n<h2>What doesn't scale in a straight line</h2>\n<ul><li><strong>Eggs.</strong> Round to whole eggs where you can. For half an egg, beat one and measure out half: a large egg is about 3 tablespoons.</li><li><strong>Pan size.</strong> A doubled batter needs twice the pan area, not a deeper pan. An 8-inch square pan holds 64 square inches; a 9×13 pan holds 117, close to two of them.</li><li><strong>Baking time and temperature.</strong> Keep the oven temperature the same and start checking at the original time; a bigger or deeper pan takes longer.</li><li><strong>Salt, spices and leaveners.</strong> When tripling or more, add a little less than the maths says, then taste and adjust.</li><li><strong>Cooking on the stove.</strong> A doubled pot of soup takes longer to come to a boil, and a crowded pan steams instead of browning, so cook in batches.</li></ul>\n<h2>Recipe scaling FAQ</h2>\n<h3>How do I double a recipe?</h3><p>Multiply every ingredient amount by 2, keep the oven temperature the same, use a pan twice the size (or two pans), and check for doneness from the original time.</p>\n<h3>How do I cut a recipe in half?</h3><p>Multiply every amount by 0.5. Use the table above for awkward amounts like ⅓ cup and one egg.</p>\n<h3>Do I double the baking time when I double a recipe?</h3><p>No. In two pans the time stays about the same; in one larger, deeper pan it takes longer, but rarely twice as long. Check early and often.</p>\n<h3>Can I scale baking recipes?</h3><p>Yes, but weigh ingredients if you can: grams scale exactly, while cups and spoons add up rounding errors. The <a href=\"/cups-to-grams-converter/\">cups to grams converter</a> helps.</p>\n<p>Converting butter for a scaled recipe? The <a href=\"/butter-conversion-how-many-sticks-in-1-cup-measure-butter-in-grams/\">butter calculator</a> turns sticks into cups, tablespoons and grams.</p>",
+  "wpCategorySlugs": [
+    "kitchen-calculators",
+    "cooking-tips"
+  ],
+  "heroImage": {
+    "src": "/img/uploads/2026/11/recipe-scaler-double-or-halve-any-recipe.webp",
+    "alt": "Recipe scaler: serves 4 becomes serves 8, 2 cups becomes 4 cups, 1½ tsp becomes 3 tsp",
+    "width": 1600,
+    "height": 900
+  },
+  "publishedAt": "2026-11-10T13:07:03",
+  "readingMinutes": 2,
+  "author": {
+    "name": "Menu Moments",
+    "avatar": null
+  },
+  "seo": {
+    "seoTitle": "Recipe Scaler: Double, Halve or Resize Any Recipe",
+    "metaDescription": "Paste your ingredient list, enter the servings you need and get every amount scaled, in fractions. Plus how to handle eggs, pan sizes and baking times.",
+    "focusKeyword": "recipe scaler"
+  }
+}

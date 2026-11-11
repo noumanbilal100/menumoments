@@ -9,6 +9,8 @@
  */
 
 export type CategorySlug =
+  // Tools
+  | 'kitchen-calculators'
   // Recipes
   | 'recipes'
   | 'breakfast'
@@ -66,6 +68,7 @@ export interface Category {
 }
 
 export type SectionKey =
+  | 'tools'
   | 'recipes'
   | 'lifestyle'
   | 'kitchen-tips'
@@ -74,6 +77,7 @@ export type SectionKey =
   | 'reviews';
 
 export const SECTIONS: Record<SectionKey, { name: string; tagline: string }> = {
+  tools: { name: 'Tools', tagline: 'Calculators and converters' },
   recipes: { name: 'Recipes', tagline: 'From breakfast to dessert' },
   lifestyle: { name: 'Eat well', tagline: 'How to eat through the week' },
   'kitchen-tips': { name: 'Kitchen tips', tagline: 'Skills, cleaning, order' },
@@ -83,6 +87,9 @@ export const SECTIONS: Record<SectionKey, { name: string; tagline: string }> = {
 };
 
 export const CATEGORIES: Category[] = [
+  // Tools. First, so a tool's page always files under Tools however else it is tagged.
+  { slug: 'kitchen-calculators', name: 'Kitchen calculators', section: 'tools', description: 'Free converters and calculators for the kitchen: butter, cups to grams, oven temperatures, meat temperatures and recipe scaling.' },
+
   // Recipes
   { slug: 'recipes', name: 'Recipes', section: 'recipes', description: 'The full recipe library — dinners, desserts, drinks and everything between.', legacySlugs: ['easy-recipes'] },
   { slug: 'breakfast', name: 'Breakfast', section: 'recipes', description: 'Slow weekend breakfasts and 10-minute weekday plates.' },
@@ -169,6 +176,13 @@ export interface SectionHub {
 }
 
 export const SECTION_HUBS: Record<SectionKey, SectionHub> = {
+  tools: {
+    slug: 'kitchen-calculators',
+    section: 'tools',
+    title: 'Kitchen Calculators & Tools',
+    intro:
+      'Free kitchen converters and calculators: butter sticks to grams, cups to grams for flour and sugar, oven temperatures, safe meat temperatures and a recipe scaler. Each one works on your phone, right at the stove.',
+  },
   recipes: {
     slug: 'recipes',
     section: 'recipes',

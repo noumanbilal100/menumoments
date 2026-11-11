@@ -1,4 +1,5 @@
 import { getCategory } from '@/data/taxonomy';
+import { toolForTitle } from '@/data/tools';
 import { isAffiliateArticle } from './affiliate';
 import { allListedPosts, pairHash, titleWords, type Post } from './content';
 import { readContentFile } from './content-files';
@@ -10,7 +11,9 @@ import { readContentFile } from './content-files';
  * - "Read next", a box in the middle of every article with two or three posts
  *   from the same silo. When the post belongs to a buying guide's topic
  *   (a how-to about espresso machines, say), the guide comes first, so the
- *   supporting posts all point at the page that earns. The rest favour posts
+ *   supporting posts all point at the page that earns. A kitchen tool that
+ *   fits the post's title (the butter converter for a butter post) comes
+ *   next, from data/tools.ts. The rest favour posts
  *   few others link to, so none is reachable only through menus.
  * - A buying guide lists every post on its topic, so the guide links down to
  *   its supporting posts as they link up to it.
@@ -98,8 +101,8 @@ function sectionOf(slug: string | undefined): string | undefined {
 
 export interface ReadNextItem {
   post: Post;
-  /** The buying guide the post supports. */
-  pillar: boolean;
+  /** Marks the buying guide the post supports, or a kitchen tool. */
+  tag?: 'Buying guide' | 'Free tool';
 }
 
 /**
@@ -113,12 +116,15 @@ export async function readNextFor(post: Post, exclude: Set<string>, limit = 3): 
 
   const items: ReadNextItem[] = [];
   const pillar = pillarFor(post, counts);
-  if (pillar && !linked.has(pillar.slug)) items.push({ post: pillar, pillar: true });
+  if (pillar && !linked.has(pillar.slug)) items.push({ post: pillar, tag: 'Buying guide' });
+  const tool = toolForTitle(post.title, post.slug);
+  const toolPost = tool && !skip.has(tool.slug) ? allListedPosts().find((p) => p.slug === tool.slug) : undefined;
+  if (toolPost) items.push({ post: toolPost, tag: 'Free tool' });
 
   const section = sectionOf(post.categories[0]);
   const words = titleWords(post.title);
   const picks = allListedPosts()
-    .filter((p) => !skip.has(p.slug) && p.slug !== pillar?.slug && section && sectionOf(p.categories[0]) === section)
+    .filter((p) => !skip.has(p.slug) && !items.some((i) => i.post.slug === p.slug) && section && sectionOf(p.categories[0]) === section)
     .map((p) => {
       const sameCategory = p.categories[0] === post.categories[0];
       let shared = 0;
@@ -130,9 +136,10 @@ export async function readNextFor(post: Post, exclude: Set<string>, limit = 3): 
     .sort((a, b) => b.score - a.score || pairHash(post.slug, a.p.slug) - pairHash(post.slug, b.p.slug));
   for (const { p } of picks) {
     if (items.length >= limit) break;
-    items.push({ post: p, pillar: false });
+    items.push({ post: p });
   }
-  return items.length >= 2 ? items : [];
+  // A lone link is worth a box when it is the guide or tool the post leads to; otherwise two at least.
+  return items.length >= 2 || items[0]?.tag ? items : [];
 }
 
 function escapeHtml(s: string): string {
@@ -144,8 +151,8 @@ export function readNextHtml(items: ReadNextItem[]): string {
   if (!items.length) return '';
   const li = items
     .map(
-      ({ post, pillar }) =>
-        `<li>${pillar ? '<span class="mm-readnext-tag">Buying guide</span>' : ''}<a href="/${post.slug}/">${escapeHtml(post.title)}</a></li>`,
+      ({ post, tag }) =>
+        `<li>${tag ? `<span class="mm-readnext-tag">${tag}</span>` : ''}<a href="/${post.slug}/">${escapeHtml(post.title)}</a></li>`,
     )
     .join('');
   return `<aside class="mm-readnext" aria-label="Read next"><p class="mm-readnext-title">Read next</p><ul>${li}</ul></aside>`;

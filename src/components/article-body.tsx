@@ -1,5 +1,9 @@
 import type { ComponentType } from 'react';
 import { ButterConverter } from './tools/butter-converter';
+import { CupsGramsConverter } from './tools/cups-grams-converter';
+import { MeatTemperature } from './tools/meat-temperature';
+import { OvenTemperature } from './tools/oven-temperature';
+import { RecipeScaler } from './tools/recipe-scaler';
 
 /**
  * An article's HTML, with interactive tools placed where the text asks for
@@ -9,6 +13,10 @@ import { ButterConverter } from './tools/butter-converter';
  */
 const TOOLS: Record<string, ComponentType> = {
   'butter-converter': ButterConverter,
+  'cups-grams-converter': CupsGramsConverter,
+  'meat-temperature': MeatTemperature,
+  'oven-temperature': OvenTemperature,
+  'recipe-scaler': RecipeScaler,
 };
 
 const MARKER = /<div\b[^>]*\bdata-mm-tool=["']([a-z0-9-]+)["'][^>]*>\s*<\/div>/gi;

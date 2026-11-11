@@ -1,5 +1,82 @@
 [
   {
+    "slug": "cups-to-grams-converter",
+    "title": "Cups to Grams Converter: Flour, Sugar, Butter and More",
+    "excerpt": "Convert cups to grams for flour, sugar, butter, milk, oats and more: 1 cup of all-purpose flour is 120 g, 1 cup of sugar 200 g. Free converter and chart.",
+    "publishedAt": "2026-11-10T13:07:03",
+    "readingMinutes": 4,
+    "heroImage": {
+      "src": "/img/uploads/2026/11/cups-to-grams-converter-flour-sugar-butter.webp",
+      "alt": "Cups to grams converter: 1 cup flour = 120 g, 1 cup sugar = 200 g, 1 cup butter = 227 g"
+    },
+    "wpCategorySlugs": [
+      "kitchen-calculators",
+      "baking-tips",
+      "ingredient-guides"
+    ],
+    "author": {
+      "name": "Menu Moments",
+      "avatar": null
+    }
+  },
+  {
+    "slug": "meat-temperature-chart",
+    "title": "Meat Temperature Chart: Safe Internal Temperatures and Doneness",
+    "excerpt": "Safe internal temperatures for chicken (165°F), ground beef (160°F) and steak, pork and fish (145°F), with steak doneness temperatures and a quick finder.",
+    "publishedAt": "2026-11-10T13:07:03",
+    "readingMinutes": 3,
+    "heroImage": {
+      "src": "/img/uploads/2026/11/meat-temperature-chart-safe-internal-temperatures.webp",
+      "alt": "Meat temperature chart: chicken and turkey 165°F, ground beef 160°F, steak, pork and fish 145°F"
+    },
+    "wpCategorySlugs": [
+      "kitchen-calculators",
+      "cooking-tips"
+    ],
+    "author": {
+      "name": "Menu Moments",
+      "avatar": null
+    }
+  },
+  {
+    "slug": "recipe-scaler",
+    "title": "Recipe Scaler: Double, Halve or Resize Any Recipe",
+    "excerpt": "Paste an ingredient list, enter the servings you need and get every amount scaled, in fractions, with tips on eggs, pan sizes and baking times.",
+    "publishedAt": "2026-11-10T13:07:03",
+    "readingMinutes": 2,
+    "heroImage": {
+      "src": "/img/uploads/2026/11/recipe-scaler-double-or-halve-any-recipe.webp",
+      "alt": "Recipe scaler: serves 4 becomes serves 8, 2 cups becomes 4 cups, 1½ tsp becomes 3 tsp"
+    },
+    "wpCategorySlugs": [
+      "kitchen-calculators",
+      "cooking-tips"
+    ],
+    "author": {
+      "name": "Menu Moments",
+      "avatar": null
+    }
+  },
+  {
+    "slug": "oven-temperature-conversion",
+    "title": "Oven Temperature Conversion: Fahrenheit, Celsius and Gas Mark",
+    "excerpt": "350°F is 177°C, or gas mark 4. Convert oven temperatures between Fahrenheit, Celsius and gas marks, with fan oven settings and a full chart.",
+    "publishedAt": "2026-11-10T13:07:03",
+    "readingMinutes": 2,
+    "heroImage": {
+      "src": "/img/uploads/2026/11/oven-temperature-conversion-fahrenheit-celsius-gas-mark.webp",
+      "alt": "Oven temperature converter: 350°F = 177°C = gas mark 4; fan ovens about 20°C lower"
+    },
+    "wpCategorySlugs": [
+      "kitchen-calculators",
+      "baking-tips"
+    ],
+    "author": {
+      "name": "Menu Moments",
+      "avatar": null
+    }
+  },
+  {
     "slug": "how-to-make-coffee-with-an-espresso-machine",
     "title": "How to Make Coffee with an Espresso Machine",
     "excerpt": "How to Make Coffee with an Espresso Machine: A Complete Beginner's Guide Learning how to make coffee with an espresso machine is easier than many beginners expect. Whether you own a manual espresso machine,…",
@@ -1832,6 +1909,7 @@
       "alt": "Butter conversion visual showing sticks of butter, a measuring cup, and a kitchen scale displaying grams on a wooden surface"
     },
     "wpCategorySlugs": [
+      "kitchen-calculators",
       "cooking-tips",
       "kitchen-tips",
       "ingredient-guides"
