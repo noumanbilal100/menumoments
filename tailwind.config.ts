@@ -1,20 +1,19 @@
 import type { Config } from 'tailwindcss';
 
 /**
- * Menu Moments — v8 "Verdigris" palette.
+ * Menu Moments — v10 "Logo" palette.
  *
- * Warm oat cream base. Deep teal as the signature accent (vintage
- * bistro tile, French chef's kitchen). Butter yellow, sage-eucalyptus,
- * and dusty mauve as supporting notes. Zero orange, zero red — a
- * confident, editorial palette that doesn't lean on the food-blog
- * defaults.
+ * Taken straight from the logo: charcoal (#1E2B2A) for the wordmark,
+ * tomato red (#C8412B) for "MENU", the fork, spoon and plate, and the
+ * amber (#F4B860) the footer logo uses on dark. White page, a barely
+ * warm neutral for cards and bands.
  *
- *   bone   → warm oat cream page + crisp white cards
- *   char   → warm charcoal for text and dark surfaces
- *   ember  → DEEP TEAL (buttons, chips, links)
- *   saffron→ butter yellow (highlights)
- *   moss   → sage-eucalyptus (tags)
- *   berry  → dusty mauve rose (rare accent — no red)
+ *   bone   → white page + faint warm-neutral surfaces
+ *   char   → logo charcoal for text and dark surfaces
+ *   ember  → TOMATO RED (buttons, links, chips) — 4.9:1 on white
+ *   saffron→ amber (badges, highlights; dark text on it, never white)
+ *   moss   → sage (tags)
+ *   berry  → dusty mauve (rare accent)
  */
 const config: Config = {
   content: ['./src/**/*.{ts,tsx,mdx}'],
@@ -28,39 +27,39 @@ const config: Config = {
         // cards and banded sections read as separate surfaces.
         bone: {
           50: '#FFFFFF',   // page — clean white
-          100: '#F7F9F9',  // card / banded surface — faint teal-neutral
-          200: '#E3E9E9',  // hairline / border
-          300: '#C7D2D2',  // stronger divider
+          100: '#F8F6F3',  // card / banded surface — faint warm neutral
+          200: '#E8E3DC',  // hairline / border
+          300: '#D3CCC2',  // stronger divider
         },
-        // Warm charcoal for text + dark surfaces ─────────────────────
+        // Logo charcoal for text + dark surfaces ─────────────────────
         char: {
-          50: '#D4CBB8',
-          100: '#A69C8F',
-          200: '#6E655E',  // muted
-          300: '#3A342E',  // body text
-          400: '#231F1B',  // strong text
-          500: '#231F1B',  // headings + dark section bg
-          600: '#0F0D0B',
+          50: '#D5DCDB',
+          100: '#A3AFAD',
+          200: '#5E6B69',  // muted (5.5:1 on white)
+          300: '#34403F',  // body text
+          400: '#1E2B2A',  // strong text
+          500: '#1E2B2A',  // headings + dark section bg (logo charcoal)
+          600: '#121A19',
         },
-        // Signature — DEEP TEAL ──────────────────────────────────────
+        // Signature — TOMATO RED (logo "MENU", fork, plate) ──────────
         ember: {
-          50: '#EEF6F5',
-          100: '#D3E8E6',
-          200: '#A2CDC9',
-          300: '#6FADA8',
-          400: '#458F89',
-          500: '#2E7373',
-          600: '#1F5757',
-          700: '#153E3E',
+          50: '#FEF5EF',
+          100: '#FCE7DB',
+          200: '#F7CBB5',
+          300: '#EC9883',
+          400: '#DD6A51',
+          500: '#C8412B',
+          600: '#A93422',
+          700: '#84291B',
         },
-        // Butter yellow — highlights, ratings ────────────────────────
+        // Amber (footer logo) — badges, highlights ───────────────────
         saffron: {
-          50: '#FCF8E4',
-          100: '#F8EFC5',
-          200: '#F1E094',
-          300: '#E5D268',
-          400: '#D2B944',
-          500: '#A99628',
+          50: '#FEF7EA',
+          100: '#FCEBCB',
+          200: '#F9D699',
+          300: '#F4B860',
+          400: '#E99E3C',
+          500: '#8A5A12',  // amber text on light amber
         },
         // Sage-eucalyptus — tags, freshness ──────────────────────────
         moss: {
@@ -83,7 +82,7 @@ const config: Config = {
 
         // Amazon's buy-button palette. Readers recognise this yellow as
         // "this takes me to a checkout", which is exactly what the
-        // affiliate CTAs do — a teal button reads as site navigation.
+        // affiliate CTAs do — a red button reads as site navigation.
         amazon: {
           DEFAULT: '#FFD814',
           hover: '#F7CA00',
@@ -94,19 +93,19 @@ const config: Config = {
         // Legacy semantic aliases ────────────────────────────────────
         cream: {
           50: '#FFFFFF',
-          100: '#F7F9F9',
-          200: '#E3E9E9',
-          300: '#C7D2D2',
+          100: '#F8F6F3',
+          200: '#E8E3DC',
+          300: '#D3CCC2',
         },
         clay: {
-          50: '#EEF6F5',
-          100: '#D3E8E6',
-          200: '#A2CDC9',
-          300: '#6FADA8',
-          400: '#458F89',
-          500: '#2E7373',
-          600: '#1F5757',
-          700: '#153E3E',
+          50: '#FEF5EF',
+          100: '#FCE7DB',
+          200: '#F7CBB5',
+          300: '#EC9883',
+          400: '#DD6A51',
+          500: '#C8412B',
+          600: '#A93422',
+          700: '#84291B',
         },
         sage: {
           50: '#EDF2E8',
@@ -118,13 +117,13 @@ const config: Config = {
           600: '#3F5638',
         },
         ink: {
-          50: '#D4CBB8',
-          100: '#A69C8F',
-          200: '#6E655E',
-          300: '#3A342E',
-          400: '#231F1B',
-          500: '#231F1B',
-          600: '#0F0D0B',
+          50: '#D5DCDB',
+          100: '#A3AFAD',
+          200: '#5E6B69',
+          300: '#34403F',
+          400: '#1E2B2A',
+          500: '#1E2B2A',
+          600: '#121A19',
         },
       },
       fontFamily: {
@@ -142,10 +141,10 @@ const config: Config = {
         wide: '1280px',
       },
       boxShadow: {
-        card: '0 1px 2px rgba(35, 31, 27, 0.05), 0 8px 24px -12px rgba(35, 31, 27, 0.14)',
-        cardHover: '0 2px 4px rgba(35, 31, 27, 0.08), 0 24px 48px -20px rgba(46, 115, 115, 0.30)',
-        embered: '0 12px 40px -14px rgba(46, 115, 115, 0.50)',
-        buttered: '0 12px 40px -14px rgba(210, 185, 68, 0.45)',
+        card: '0 1px 2px rgba(30, 43, 42, 0.05), 0 8px 24px -12px rgba(30, 43, 42, 0.14)',
+        cardHover: '0 2px 4px rgba(30, 43, 42, 0.08), 0 24px 48px -20px rgba(30, 43, 42, 0.28)',
+        embered: '0 12px 32px -14px rgba(200, 65, 43, 0.45)',
+        buttered: '0 12px 40px -14px rgba(233, 158, 60, 0.45)',
         mauved: '0 12px 40px -14px rgba(150, 107, 126, 0.40)',
       },
       keyframes: {

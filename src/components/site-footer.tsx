@@ -12,7 +12,7 @@ const FOOTER_SECTIONS: SectionKey[] = ['recipes', 'lifestyle', 'kitchen-tips', '
 export function SiteFooter() {
   return (
     <footer className="relative overflow-hidden border-t border-bone-200 bg-char-500 text-bone-100 dark:border-char-500 dark:bg-char-600">
-      <div className="pointer-events-none absolute -right-8 top-8 text-ember-500/20">
+      <div className="pointer-events-none absolute -right-8 top-8 text-saffron-300/20">
         <Whisk size={140} />
       </div>
       <div className="pointer-events-none absolute -left-4 bottom-16 text-saffron-300/20">
@@ -37,7 +37,7 @@ export function SiteFooter() {
             />
             <p className="mt-3 text-xs text-bone-100/50">Weekly. Unsubscribe with one click.</p>
 
-            <div className="mt-8 flex items-center gap-2 text-ember-200">
+            <div className="mt-8 flex items-center gap-2 text-saffron-200">
               <Sparkle size={14} />
               <span className="text-[10px] font-semibold uppercase tracking-[0.3em]">
                 Editorial · Recipes · Reviews
@@ -48,8 +48,8 @@ export function SiteFooter() {
           <div className="grid grid-cols-2 gap-8 md:grid-cols-3">
             {FOOTER_SECTIONS.map((s) => (
               <div key={s}>
-                <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.25em] text-ember-300">
-                  <Link href={`/category/${hubForSection(s).slug}/`} className="hover:text-ember-200">
+                <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.25em] text-saffron-300">
+                  <Link href={`/category/${hubForSection(s).slug}/`} className="hover:text-saffron-200">
                     {SECTIONS[s].name}
                   </Link>
                 </p>
@@ -62,7 +62,7 @@ export function SiteFooter() {
                       <li key={c.slug}>
                         <Link
                           href={`/category/${c.slug}`}
-                          className="cta-underline text-bone-100/80 hover:text-ember-200"
+                          className="cta-underline text-bone-100/80 hover:text-saffron-200"
                         >
                           {c.name}
                         </Link>
@@ -73,15 +73,15 @@ export function SiteFooter() {
             ))}
             {/* The tools are single pages, so they are listed by name. */}
             <div>
-              <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.25em] text-ember-300">
-                <Link href={`/category/${hubForSection('tools').slug}/`} className="hover:text-ember-200">
+              <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.25em] text-saffron-300">
+                <Link href={`/category/${hubForSection('tools').slug}/`} className="hover:text-saffron-200">
                   {SECTIONS.tools.name}
                 </Link>
               </p>
               <ul className="space-y-2 text-sm">
                 {KITCHEN_TOOLS.map((t) => (
                   <li key={t.slug}>
-                    <Link href={`/${t.slug}/`} className="cta-underline text-bone-100/80 hover:text-ember-200">
+                    <Link href={`/${t.slug}/`} className="cta-underline text-bone-100/80 hover:text-saffron-200">
                       {t.name}
                     </Link>
                   </li>
@@ -91,20 +91,20 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-16 flex justify-center text-ember-300/60">
+        <div className="mt-16 flex justify-center text-saffron-300/60">
           <Squiggle />
         </div>
 
         <div className="mt-12 flex flex-col items-start justify-between gap-6 border-t border-bone-100/10 pt-8 text-sm text-bone-100/70 md:flex-row md:items-center">
           <p>&copy; {new Date().getFullYear()} {SITE.name}. Recipes tested. Opinions honest.</p>
           <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">
-            <li><Link href="/about-us" className="cta-underline hover:text-ember-200">About</Link></li>
-            <li><Link href="/contact" className="cta-underline hover:text-ember-200">Contact</Link></li>
-            <li><Link href="/write-for-us" className="cta-underline hover:text-ember-200">Write for us</Link></li>
-            <li><Link href="/collections" className="cta-underline hover:text-ember-200">Collections</Link></li>
-            <li><Link href="/privacy-policy" className="cta-underline hover:text-ember-200">Privacy</Link></li>
-            <li><Link href="/terms-conditions" className="cta-underline hover:text-ember-200">Terms</Link></li>
-            <li><Link href="/disclaimer" className="cta-underline hover:text-ember-200">Disclaimer</Link></li>
+            <li><Link href="/about-us" className="cta-underline hover:text-saffron-200">About</Link></li>
+            <li><Link href="/contact" className="cta-underline hover:text-saffron-200">Contact</Link></li>
+            <li><Link href="/write-for-us" className="cta-underline hover:text-saffron-200">Write for us</Link></li>
+            <li><Link href="/collections" className="cta-underline hover:text-saffron-200">Collections</Link></li>
+            <li><Link href="/privacy-policy" className="cta-underline hover:text-saffron-200">Privacy</Link></li>
+            <li><Link href="/terms-conditions" className="cta-underline hover:text-saffron-200">Terms</Link></li>
+            <li><Link href="/disclaimer" className="cta-underline hover:text-saffron-200">Disclaimer</Link></li>
           </ul>
         </div>
       </div>

@@ -16,8 +16,8 @@ export function Marquee() {
   const row = (
     <div className="marquee-track">
       {ITEMS.map((it, i) => (
-        <span key={i} className="inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.2em] text-char-400 dark:text-bone-100">
-          <span aria-hidden className="text-ember-500">
+        <span key={i} className="inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.2em] text-bone-100/90">
+          <span aria-hidden className="text-saffron-300">
             {it.icon}
           </span>
           {it.text}
@@ -27,7 +27,7 @@ export function Marquee() {
   );
 
   return (
-    <div className="relative overflow-hidden border-b border-ember-200/50 bg-gradient-to-r from-ember-50 via-bone-100 to-ember-100 py-2 text-char-400 dark:from-char-500 dark:via-char-400 dark:to-char-500 dark:text-bone-100">
+    <div className="relative overflow-hidden bg-char-500 py-2 text-bone-100">
       <div className="marquee">
         <div className="animate-marquee flex">
           {row}

@@ -77,15 +77,15 @@ export function ToolShell({
   return (
     <section
       data-mm-tool-shell
-      className="my-5 overflow-hidden rounded-3xl sm:my-8 border border-ember-100 bg-bone-50 shadow-[0_24px_60px_-28px_rgba(31,87,87,0.45)] dark:border-char-400 dark:bg-char-600"
+      className="my-5 overflow-hidden rounded-3xl sm:my-8 border border-bone-200 bg-bone-50 shadow-[0_24px_60px_-28px_rgba(30,43,42,0.40)] dark:border-char-400 dark:bg-char-600"
     >
-      <div className="flex items-center gap-4 bg-gradient-to-r from-ember-600 to-ember-500 px-5 py-4 text-white md:px-7 md:py-5">
-        <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-white/15 ring-1 ring-white/25">
+      <div className="flex items-center gap-4 border-b-4 border-ember-500 bg-char-500 px-5 py-4 text-white md:px-7 md:py-5">
+        <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-saffron-300 text-char-500">
           <ToolIcon name={icon} className="h-7 w-7" />
         </span>
         <div className="min-w-0">
           <p className="font-display text-xl leading-tight md:text-2xl">{title}</p>
-          <p className="mt-0.5 text-sm text-white/80">{subtitle}</p>
+          <p className="mt-0.5 text-sm text-white/75">{subtitle}</p>
         </div>
       </div>
       <div className="space-y-6 p-5 md:p-7">{children}</div>
@@ -144,7 +144,7 @@ export function Segmented<T extends string>({
             onClick={() => onChange(o.value)}
             className={`rounded-xl px-3.5 py-2 text-sm font-semibold transition ${
               active
-                ? 'bg-ember-500 text-white shadow-sm'
+                ? 'bg-char-500 text-white shadow-sm'
                 : 'text-char-300 hover:bg-white hover:text-ember-600 dark:text-bone-100 dark:hover:bg-char-400'
             }`}
           >

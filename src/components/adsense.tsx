@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { ADSENSE_AUTO_ADS, ADSENSE_CLIENT } from '@/lib/env';
+import { ADSENSE_CLIENT } from '@/lib/env';
 
 /**
  * Site-wide AdSense loader, injected once from the root layout.
@@ -38,11 +38,10 @@ function loadAdSense() {
   script.async = true;
   script.crossOrigin = 'anonymous';
   script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`;
+  // The ?client= in the URL turns on Auto ads by itself (as set in the AdSense
+  // dashboard). Pushing enable_page_level_ads as well made the tag throw
+  // "Only one 'enable_page_level_ads' allowed per page" on every page.
   document.head.appendChild(script);
-  if (ADSENSE_AUTO_ADS) {
-    const w = window as unknown as { adsbygoogle?: unknown[] };
-    (w.adsbygoogle = w.adsbygoogle || []).push({ google_ad_client: ADSENSE_CLIENT, enable_page_level_ads: true });
-  }
 }
 
 /** After the load event and once the browser is idle (or two seconds, whichever is first). */

@@ -126,23 +126,25 @@ export default async function HomePage() {
                   ) : (
                     <div className="h-full w-full bg-gradient-to-br from-ember-300 to-ember-600" />
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-char-600 via-char-600/40 to-transparent" />
-                  <div className="absolute right-6 top-6 flex items-center gap-1.5 rounded-full bg-ember-500 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-white">
+                  {/* On phones the text sits under the picture: over it, a long
+                      title and excerpt ran past the top of the card. */}
+                  <div className="absolute inset-0 hidden bg-gradient-to-t from-char-600 via-char-600/40 to-transparent md:block" />
+                  <div className="absolute right-4 top-4 flex items-center gap-1.5 rounded-full bg-ember-500 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-white md:right-6 md:top-6">
                     <Sparkle size={12} /> This week's cover
                   </div>
                 </div>
-                <div className="absolute inset-x-0 bottom-0 p-8 lg:p-10">
-                  <h2 className="max-w-2xl font-display text-3xl leading-[1.05] md:text-4xl lg:text-5xl">
+                <div className="relative p-6 md:absolute md:inset-x-0 md:bottom-0 md:p-8 lg:p-10">
+                  <h2 className="max-w-2xl font-display text-2xl leading-[1.1] md:text-4xl md:leading-[1.05] lg:text-5xl">
                     {feature.title}
                   </h2>
                   {feature.excerpt && (
-                    <p className="mt-4 max-w-xl text-sm text-bone-100/80 md:text-base">
+                    <p className="mt-3 line-clamp-3 max-w-xl text-sm text-bone-100/80 md:mt-4 md:line-clamp-none md:text-base">
                       {feature.excerpt}
                     </p>
                   )}
-                  <span className="mt-6 inline-flex items-center gap-2 text-sm font-medium">
+                  <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium md:mt-6">
                     Read the story
-                    <DrawArrow className="text-ember-300 transition-transform duration-500 group-hover:translate-x-1" />
+                    <DrawArrow className="text-saffron-300 transition-transform duration-500 group-hover:translate-x-1" />
                   </span>
                 </div>
               </Link>

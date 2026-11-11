@@ -2,32 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Design tokens — Menu Moments v9 "Verdigris on White" -------------
-   Clean white page. Surfaces that used to be white now carry a faint
-   warm tint so cards and banded sections still separate from the page.
-   Accent family (teal / butter / sage / mauve) is unchanged. */
+/* Design tokens — Menu Moments v10 "Logo" ---------------------------
+   The logo's three colours: charcoal #1E2B2A, tomato red #C8412B and
+   amber #F4B860. Clean white page; cards and bands carry a faint warm
+   neutral so they still separate from it. */
 :root {
   --bg: #FFFFFF;              /* page — clean white */
-  --bg-elevated: #F7F9F9;     /* cards — faint teal-neutral tint */
-  --bg-paper: #EDF2F2;        /* banded/alternate sections */
-  --fg: #3A342E;              /* body — warm charcoal */
-  --fg-strong: #231F1B;       /* headings — near-black */
-  --fg-muted: #6E655E;
-  --fg-subtle: #A69C8F;
-  --accent: #2E7373;          /* DEEP TEAL — signature */
-  --accent-strong: #1F5757;   /* deeper teal — hover */
-  --accent-soft: #EEF6F5;
-  --border: #E3E9E9;          /* hairline — reads clean on white */
-  --ring: #2E7373;
-  --saffron: #D2B944;
+  --bg-elevated: #F8F6F3;     /* cards — faint warm neutral */
+  --bg-paper: #F3EFEA;        /* banded/alternate sections */
+  --fg: #34403F;              /* body — logo charcoal, softened */
+  --fg-strong: #1E2B2A;       /* headings — logo charcoal */
+  --fg-muted: #5E6B69;
+  --fg-subtle: #A3AFAD;
+  --accent: #C8412B;          /* TOMATO RED — logo */
+  --accent-strong: #A93422;   /* deeper red — hover */
+  --accent-soft: #FEF5EF;
+  --border: #E8E3DC;          /* hairline — reads clean on white */
+  --ring: #C8412B;
+  --saffron: #E99E3C;         /* amber — callout rules, stars */
   --moss: #78976D;
   --berry: #966B7E;
-  /* Page wash. Teal only — the butter and mauve tints that worked over
-     cream turn the white page yellowish, which is the one thing this
-     build is meant to avoid. Saffron and berry stay as accents. */
-  --bg-warm-1: rgba(46, 115, 115, 0.028);   /* teal top-left */
-  --bg-warm-2: rgba(46, 115, 115, 0.020);   /* teal top-right */
-  --bg-warm-3: rgba(46, 115, 115, 0.016);   /* teal bottom */
+  /* Page wash: barely-there warmth so the white never feels flat. Kept
+     well under the point where white starts to read as pink or yellow. */
+  --bg-warm-1: rgba(200, 65, 43, 0.018);    /* red top-left */
+  --bg-warm-2: rgba(244, 184, 96, 0.035);   /* amber top-right */
+  --bg-warm-3: rgba(30, 43, 42, 0.012);     /* charcoal bottom */
 }
 
 html {
@@ -51,9 +50,9 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Editorial gradient text — teal → sage → mauve. */
+/* Editorial gradient text — tomato red → deep amber. */
 .text-gradient-warm {
-  background: linear-gradient(135deg, #2E7373 0%, #78976D 50%, #966B7E 100%);
+  background: linear-gradient(135deg, #C8412B 0%, #D4552B 50%, #C2711C 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -61,7 +60,7 @@ body {
   animation: gradient-shift 14s ease-in-out infinite;
 }
 .text-gradient-mint {
-  background: linear-gradient(135deg, #2E7373 0%, #78976D 100%);
+  background: linear-gradient(135deg, #C8412B 0%, #C2711C 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -251,7 +250,7 @@ body {
   border-top: 1px solid var(--border);
 }
 .prose-article tbody tr:nth-child(even) {
-  background: rgba(46, 115, 115, 0.05); /* whisper teal zebra */
+  background: #F8F6F3; /* warm-neutral zebra */
 }
 
 /* Affiliate anchors — inline "Amazon pill" styling ---------------- */
@@ -665,9 +664,9 @@ body {
   background: var(--accent-soft);
 }
 .prose-article .mm-callout p { margin: 0; max-width: none; }
-.prose-article .mm-callout-note { border-left-color: var(--saffron); background: #FCF8E4; color: #3A342E; }
+.prose-article .mm-callout-note { border-left-color: var(--saffron); background: #FEF7EA; color: #34403F; }
 :root[data-theme='dark'] .prose-article .mm-callout-note,
-.dark .prose-article .mm-callout-note { background: rgba(210, 185, 68, 0.12); color: var(--fg); }
+.dark .prose-article .mm-callout-note { background: rgba(244, 184, 96, 0.12); color: var(--fg); }
 
 /* Card grids: criteria, sushi styles, materials, features, who-should-buy */
 .prose-article .mm-criteria,
