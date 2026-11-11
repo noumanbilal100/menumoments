@@ -11,7 +11,7 @@ import { RecipeScaler } from './tools/recipe-scaler';
  * live converter. The text around a tool stays plain HTML, so search engines
  * read the article as before.
  */
-const TOOLS: Record<string, ComponentType> = {
+export const TOOLS: Record<string, ComponentType> = {
   'butter-converter': ButterConverter,
   'cups-grams-converter': CupsGramsConverter,
   'meat-temperature': MeatTemperature,

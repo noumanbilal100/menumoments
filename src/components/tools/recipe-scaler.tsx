@@ -2,6 +2,7 @@
 
 import { useId, useState } from 'react';
 import { fractionText, parseQuantity } from './format';
+import { Field, Presets, ToolShell } from './ui';
 
 /**
  * Scales an ingredient list: each line's leading amount (2, 1½, 1 1/2, ¾,
@@ -47,15 +48,15 @@ function agree(rest: string, amount: number): string {
   return m[1] + cased + rest.slice(m[0].length);
 }
 
-export function scaleLine(line: string, factor: number): { text: string; scaled: boolean } {
+export function scaleLine(line: string, factor: number): { text: string; scaled: boolean; amount: string; lead: string } {
   const m = line.match(LEADING);
-  if (!m) return { text: line, scaled: false };
+  if (!m) return { text: line, scaled: false, amount: '', lead: '' };
   const first = parseQuantity(m[2]);
-  if (!Number.isFinite(first)) return { text: line, scaled: false };
+  if (!Number.isFinite(first)) return { text: line, scaled: false, amount: '', lead: '' };
   const second = m[4] ? parseQuantity(m[4]) : NaN;
   const amount = fractionText(first * factor, 0.04) + (Number.isFinite(second) ? `${m[3]}${fractionText(second * factor, 0.04)}` : '');
   const largest = Number.isFinite(second) ? second * factor : first * factor;
-  return { text: m[1] + amount + agree(line.slice(m[0].length), largest), scaled: true };
+  return { text: m[1] + amount + agree(line.slice(m[0].length), largest), scaled: true, amount, lead: m[1] };
 }
 
 export function RecipeScaler() {
@@ -67,56 +68,60 @@ export function RecipeScaler() {
   const f = Number(from);
   const t = Number(to);
   const factor = f > 0 && t > 0 ? t / f : NaN;
-  const lines = list.split('\n').map((l) => (Number.isFinite(factor) ? scaleLine(l, factor) : { text: l, scaled: false }));
+  const lines = list.split('\n').map((l) => (Number.isFinite(factor) ? scaleLine(l, factor) : { text: l, scaled: false, amount: '', lead: '' }));
   const output = lines.map((l) => l.text).join('\n');
 
-  const field =
-    'mt-1 w-full rounded-lg border border-bone-200 bg-white px-3 py-2 text-char-500 outline-none focus:border-ember-500 dark:border-char-400 dark:bg-char-600 dark:text-bone-50';
-  return (
-    <div className="my-8 rounded-2xl border border-bone-200 bg-bone-50 p-5 shadow-card dark:border-char-500 dark:bg-char-500 md:p-6">
-      <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-ember-500">Recipe scaler</p>
-      <div className="mt-3 flex flex-wrap items-end gap-3">
-        <div className="w-28">
-          <label htmlFor={`${id}-from`} className="block text-xs font-medium text-char-300 dark:text-bone-100">
-            Recipe serves
-          </label>
-          <input id={`${id}-from`} inputMode="numeric" value={from} onChange={(e) => setFrom(e.target.value)} className={`${field} text-lg font-semibold`} />
-        </div>
-        <div className="w-28">
-          <label htmlFor={`${id}-to`} className="block text-xs font-medium text-char-300 dark:text-bone-100">
-            You need
-          </label>
-          <input id={`${id}-to`} inputMode="numeric" value={to} onChange={(e) => setTo(e.target.value)} className={`${field} text-lg font-semibold`} />
-        </div>
-        <div className="flex flex-wrap gap-1.5">
-          {[
-            ['½×', 0.5],
-            ['2×', 2],
-            ['3×', 3],
-          ].map(([label, x]) => (
-            <button
-              key={label}
-              type="button"
-              onClick={() => setTo(String(Math.max(1, Math.round((Number(from) || 1) * Number(x) * 100) / 100)))}
-              className="rounded-full border border-bone-200 px-3 py-1 text-xs font-medium text-char-300 hover:border-ember-500 hover:text-ember-500 dark:border-char-400 dark:text-bone-100"
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-        {Number.isFinite(factor) && <p className="text-xs text-char-200">Multiplying every amount by {Math.round(factor * 100) / 100}</p>}
+  const stepper = (value: string, set: (v: string) => void, label: string, inputId: string) => (
+    <Field label={label} htmlFor={inputId}>
+      <div className="flex items-stretch overflow-hidden rounded-2xl border border-bone-300 bg-white focus-within:border-ember-500 focus-within:ring-4 focus-within:ring-ember-500/15 dark:border-char-400 dark:bg-char-500">
+        <button type="button" aria-label={`Fewer: ${label}`} onClick={() => set(String(Math.max(1, (Number(value) || 1) - 1)))} className="px-4 text-2xl text-char-200 hover:bg-bone-100 hover:text-ember-600 dark:hover:bg-char-400">
+          −
+        </button>
+        <input id={inputId} inputMode="numeric" value={value} onChange={(e) => set(e.target.value)} className="w-full min-w-0 bg-transparent py-3 text-center font-display text-3xl tabular-nums text-char-500 outline-none dark:text-bone-50" />
+        <button type="button" aria-label={`More: ${label}`} onClick={() => set(String((Number(value) || 0) + 1))} className="px-4 text-2xl text-char-200 hover:bg-bone-100 hover:text-ember-600 dark:hover:bg-char-400">
+          +
+        </button>
       </div>
+    </Field>
+  );
 
-      <div className="mt-4 grid gap-4 md:grid-cols-2">
+  return (
+    <ToolShell
+      icon="scale"
+      title="Recipe Scaler"
+      subtitle="Paste a recipe, choose the servings"
+      footnote="Lines without a number (to taste) stay as they are. Round eggs to whole ones, and check pan size and baking time yourself: they don't scale in a straight line."
+    >
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_auto] lg:items-end">
+        {stepper(from, setFrom, 'Recipe serves', `${id}-from`)}
+        {stepper(to, setTo, 'You need', `${id}-to`)}
+        <Presets
+          items={[
+            { label: 'Half', key: '0.5' },
+            { label: 'Double', key: '2' },
+            { label: 'Triple', key: '3' },
+          ]}
+          onPick={(x) => setTo(String(Math.max(1, Math.round((Number(from) || 1) * Number(x) * 100) / 100)))}
+        />
+      </div>
+      {Number.isFinite(factor) && (
+        <p className="inline-flex rounded-full bg-ember-50 px-3 py-1 text-xs font-semibold text-ember-700 dark:bg-char-500 dark:text-ember-200">
+          Every amount × {Math.round(factor * 100) / 100}
+        </p>
+      )}
+      <div className="grid gap-4 md:grid-cols-2">
+        <Field label="Ingredients, one per line" htmlFor={`${id}-list`}>
+          <textarea
+            id={`${id}-list`}
+            rows={9}
+            value={list}
+            onChange={(e) => setList(e.target.value)}
+            className="w-full rounded-2xl border border-bone-300 bg-white px-4 py-3 font-mono text-sm leading-7 text-char-500 outline-none focus:border-ember-500 focus:ring-4 focus:ring-ember-500/15 dark:border-char-400 dark:bg-char-500 dark:text-bone-50"
+          />
+        </Field>
         <div>
-          <label htmlFor={`${id}-list`} className="block text-xs font-medium text-char-300 dark:text-bone-100">
-            Ingredients, one per line
-          </label>
-          <textarea id={`${id}-list`} rows={9} value={list} onChange={(e) => setList(e.target.value)} className={`${field} font-mono text-sm`} />
-        </div>
-        <div>
-          <div className="flex items-center justify-between">
-            <p className="text-xs font-medium text-char-300 dark:text-bone-100">Scaled for {Number(to) || '—'}</p>
+          <div className="mb-1.5 flex items-center justify-between">
+            <p className="text-xs font-semibold uppercase tracking-wider text-char-200 dark:text-bone-100">Scaled for {Number(to) || '—'}</p>
             <button
               type="button"
               onClick={async () => {
@@ -128,24 +133,28 @@ export function RecipeScaler() {
                   // Clipboard blocked; the list can still be selected by hand.
                 }
               }}
-              className="text-xs font-medium text-ember-500 hover:underline"
+              className="rounded-full bg-ember-500 px-3 py-1 text-xs font-semibold text-white hover:bg-ember-600"
             >
               {copied ? 'Copied' : 'Copy list'}
             </button>
           </div>
-          <ul className="mt-1 min-h-[13.5rem] space-y-1 rounded-lg bg-white px-3 py-2 font-mono text-sm dark:bg-char-600" aria-live="polite">
+          <ul className="min-h-[15.5rem] space-y-0.5 rounded-2xl border border-ember-100 bg-ember-50/60 px-4 py-3 font-mono text-sm leading-7 dark:border-char-400 dark:bg-char-500" aria-live="polite">
             {lines.map((l, i) => (
               <li key={i} className={l.scaled ? 'text-char-500 dark:text-bone-50' : 'text-char-200'}>
-                {l.text || ' '}
+                {l.scaled ? (
+                  <>
+                    {l.lead}
+                    <strong className="font-bold text-ember-600 dark:text-ember-200">{l.amount}</strong>
+                    {l.text.slice(l.lead.length + l.amount.length)}
+                  </>
+                ) : (
+                  l.text || '\u00a0'
+                )}
               </li>
             ))}
           </ul>
         </div>
       </div>
-      <p className="mt-4 text-[11px] leading-relaxed text-char-200">
-        Lines without a number (a pinch, to taste) stay as they are. Round eggs to whole ones, and check pan size and baking time
-        yourself: they don&apos;t scale in a straight line.
-      </p>
-    </div>
+    </ToolShell>
   );
 }

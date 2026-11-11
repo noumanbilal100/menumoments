@@ -1,6 +1,7 @@
 'use client';
 
 import { useId, useState } from 'react';
+import { Field, Results, Segmented, ToolShell, selectInput } from './ui';
 
 /**
  * Safe internal temperatures (USDA FSIS minimums) and doneness targets for
@@ -68,66 +69,46 @@ export function MeatTemperature() {
   // Whole cuts keep cooking as they rest; take them off a few degrees early.
   const pull = meat.doneness ? target - 5 : null;
 
-  const field =
-    'mt-1 w-full rounded-lg border border-bone-200 bg-white px-3 py-2.5 text-sm text-char-500 outline-none focus:border-ember-500 dark:border-char-400 dark:bg-char-600 dark:text-bone-50';
+  const results = [
+    { value: `${target}°F`, label: `${toC(target)}°C · target temperature` },
+    ...(pull !== null ? [{ value: `${pull}°F`, label: `${toC(pull)}°C · take it off the heat` }] : []),
+    { value: meat.rest ? `${meat.rest} min` : 'No rest', label: meat.rest ? 'rest before cutting (USDA)' : 'needed before serving' },
+  ];
+
   return (
-    <div className="my-8 rounded-2xl border border-bone-200 bg-bone-50 p-5 shadow-card dark:border-char-500 dark:bg-char-500 md:p-6">
-      <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-ember-500">Meat temperature finder</p>
-      <div className="mt-3 grid gap-3 sm:grid-cols-2">
-        <div>
-          <label htmlFor={`${id}-meat`} className="block text-xs font-medium text-char-300 dark:text-bone-100">
-            What are you cooking?
-          </label>
-          <select id={`${id}-meat`} value={meatId} onChange={(e) => setMeatId(e.target.value)} className={field}>
-            {MEATS.map((m) => (
-              <option key={m.id} value={m.id}>
-                {m.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        {meat.doneness && (
-          <div>
-            <label htmlFor={`${id}-level`} className="block text-xs font-medium text-char-300 dark:text-bone-100">
-              How do you like it?
-            </label>
-            <select id={`${id}-level`} value={choice?.[0]} onChange={(e) => setLevel(e.target.value)} className={field}>
-              {meat.doneness.map(([name, f]) => (
-                <option key={name} value={name}>
-                  {name} ({f}°F)
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
-      </div>
-
-      <ul className="mt-5 grid gap-2 sm:grid-cols-3" aria-live="polite">
-        <li className="rounded-xl bg-white px-4 py-3 dark:bg-char-600">
-          <span className="block font-display text-3xl text-char-500 dark:text-bone-50">{target}°F</span>
-          <span className="text-xs text-char-200">{toC(target)}°C · target temperature</span>
-        </li>
-        {pull !== null && (
-          <li className="rounded-xl bg-white px-4 py-3 dark:bg-char-600">
-            <span className="block font-display text-3xl text-char-500 dark:text-bone-50">{pull}°F</span>
-            <span className="text-xs text-char-200">{toC(pull)}°C · take it off the heat</span>
-          </li>
-        )}
-        <li className="rounded-xl bg-white px-4 py-3 dark:bg-char-600">
-          <span className="block font-display text-3xl text-char-500 dark:text-bone-50">{meat.rest ? `${meat.rest} min` : 'None'}</span>
-          <span className="text-xs text-char-200">rest before cutting{meat.rest ? ' (USDA)' : ''}</span>
-        </li>
-      </ul>
-
-      <p className={`mt-4 rounded-lg px-3 py-2 text-xs leading-relaxed ${belowUsda ? 'bg-amber-50 text-amber-800 dark:bg-amber-900/30 dark:text-amber-200' : 'text-char-300 dark:text-bone-100'}`}>
+    <ToolShell
+      icon="thermometer"
+      title="Meat Temperature Finder"
+      subtitle="USDA safe temperatures and steak doneness"
+      footnote="Measure with an instant-read thermometer in the thickest part, away from bone, fat and gristle."
+    >
+      <Field label="What are you cooking?" htmlFor={`${id}-meat`}>
+        <select id={`${id}-meat`} value={meatId} onChange={(e) => setMeatId(e.target.value)} className={selectInput}>
+          {MEATS.map((m) => (
+            <option key={m.id} value={m.id}>
+              {m.name}
+            </option>
+          ))}
+        </select>
+      </Field>
+      {meat.doneness && (
+        <Field label="How do you like it?">
+          <Segmented label="Doneness" value={choice?.[0] ?? ''} onChange={setLevel} options={meat.doneness.map(([name]) => ({ value: name, label: name }))} />
+        </Field>
+      )}
+      <Results items={results} />
+      <p
+        className={`rounded-2xl px-4 py-3 text-sm leading-relaxed ${
+          belowUsda
+            ? 'border border-saffron-300 bg-saffron-50 text-char-300'
+            : 'border border-ember-100 bg-ember-50 text-ember-700 dark:border-char-400 dark:bg-char-500 dark:text-ember-200'
+        }`}
+      >
         {belowUsda
           ? `${choice?.[0]} is below the USDA safe minimum of ${meat.usda}°F (${toC(meat.usda)}°C) with a ${meat.rest}-minute rest. Many cooks serve it this way; children, older people, pregnant people and anyone with a weak immune system should not.`
           : `USDA safe minimum: ${meat.usda}°F (${toC(meat.usda)}°C)${meat.rest ? `, then rest ${meat.rest} minutes` : ''}.`}
         {meat.note ? ` ${meat.note}` : ''}
       </p>
-      <p className="mt-3 text-[11px] leading-relaxed text-char-200">
-        Measure with an instant-read thermometer in the thickest part, away from bone, fat and gristle.
-      </p>
-    </div>
+    </ToolShell>
   );
 }

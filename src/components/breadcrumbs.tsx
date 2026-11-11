@@ -6,10 +6,13 @@ export function Breadcrumbs({
   trail,
   className = 'mb-6 text-xs text-char-200',
   linkClassName = 'hover:text-ember-500',
+  hideCurrentOnMobile = false,
 }: {
   trail: Crumb[];
   className?: string;
   linkClassName?: string;
+  /** Leave the current page off on phones, where the H1 just below says the same. */
+  hideCurrentOnMobile?: boolean;
 }) {
   return (
     <nav aria-label="Breadcrumb" className={className}>
@@ -17,7 +20,7 @@ export function Breadcrumbs({
         {trail.map((c, i) => {
           const last = i === trail.length - 1;
           return (
-            <li key={c.path} className={last ? 'truncate' : 'flex items-center gap-1.5'}>
+            <li key={c.path} className={last ? (hideCurrentOnMobile ? 'hidden truncate sm:block' : 'truncate') : 'flex items-center gap-1.5'}>
               {last ? (
                 <span aria-current="page">{c.name}</span>
               ) : (

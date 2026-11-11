@@ -1,6 +1,7 @@
 'use client';
 
 import { useId, useState } from 'react';
+import { Field, Presets, Results, Segmented, ToolShell, bigInput } from './ui';
 
 /**
  * Oven temperatures between °F, °C and UK gas marks, with the usual
@@ -40,70 +41,56 @@ export function OvenTemperature() {
   const f = unit === 'F' ? n : unit === 'C' ? cToF(n) : mark ? mark.f : NaN;
   const ok = Number.isFinite(f) && f > 0;
   const gas = ok ? nearestMark(f) : null;
-  const fanF = f - 25;
-  const fanC = fToC(f) - 20;
 
   const results = [
-    unit !== 'F' && { value: ok ? `${Math.round(f)}°F` : '—', label: 'Fahrenheit' },
-    unit !== 'C' && { value: ok ? `${Math.round(fToC(f))}°C` : '—', label: 'Celsius' },
-    unit !== 'gas' && { value: gas ? `Gas ${gas.mark}` : '—', label: gas ? 'nearest gas mark' : 'outside the gas mark range' },
-    fan && { value: ok ? `${Math.round(fanF)}°F / ${Math.round(fanC)}°C` : '—', label: 'fan or convection oven' },
-  ].filter(Boolean) as { value: string; label: string }[];
+    ...(fan ? [{ value: ok ? `${Math.round(fToC(f) - 20)}°C` : '—', label: `fan oven · ${ok ? Math.round(f - 25) : '—'}°F` }] : []),
+    ...(unit !== 'C' ? [{ value: ok ? `${Math.round(fToC(f))}°C` : '—', label: 'Celsius' }] : []),
+    ...(unit !== 'F' ? [{ value: ok ? `${Math.round(f)}°F` : '—', label: 'Fahrenheit' }] : []),
+    ...(unit !== 'gas' ? [{ value: gas ? `Gas ${gas.mark}` : '—', label: gas ? 'nearest gas mark' : 'outside the gas mark range' }] : []),
+  ];
 
-  const field =
-    'mt-1 rounded-lg border border-bone-200 bg-white px-3 py-2 text-char-500 outline-none focus:border-ember-500 dark:border-char-400 dark:bg-char-600 dark:text-bone-50';
   return (
-    <div className="my-8 rounded-2xl border border-bone-200 bg-bone-50 p-5 shadow-card dark:border-char-500 dark:bg-char-500 md:p-6">
-      <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-ember-500">Oven temperature converter</p>
-      <div className="mt-3 flex flex-wrap items-end gap-3">
-        <div>
-          <label htmlFor={`${id}-temp`} className="block text-xs font-medium text-char-300 dark:text-bone-100">
-            Temperature
+    <ToolShell
+      icon="oven"
+      title="Oven Temperature Converter"
+      subtitle="Fahrenheit, Celsius and gas mark, with fan ovens"
+      footnote="Exact conversions, rounded to the nearest degree. Recipes often round them (350°F is printed as 175°C or 180°C). For a fan oven, lower the temperature by about 20°C (25°F) or follow your oven's manual."
+    >
+      <div className="grid gap-4 md:grid-cols-[11rem_minmax(0,1fr)] md:items-end">
+        <Field label="Temperature" htmlFor={`${id}-temp`}>
+          <input id={`${id}-temp`} inputMode="decimal" value={amount} onChange={(e) => setAmount(e.target.value)} className={bigInput} />
+        </Field>
+        <div className="flex flex-wrap items-end gap-4">
+          <Field label="Unit">
+            <Segmented
+              label="Unit"
+              value={unit}
+              onChange={setUnit}
+              options={[
+                { value: 'F', label: '°F' },
+                { value: 'C', label: '°C' },
+                { value: 'gas', label: 'Gas mark' },
+              ]}
+            />
+          </Field>
+          <label className="flex cursor-pointer items-center gap-3 rounded-2xl bg-bone-100 px-4 py-3 text-sm font-semibold text-char-300 dark:bg-char-500 dark:text-bone-100">
+            <span className="relative inline-flex">
+              <input type="checkbox" checked={fan} onChange={(e) => setFan(e.target.checked)} className="peer sr-only" />
+              <span className="h-6 w-11 rounded-full bg-bone-300 transition peer-checked:bg-ember-500 dark:bg-char-400" />
+              <span className="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow transition peer-checked:translate-x-5" />
+            </span>
+            Fan / convection oven
           </label>
-          <input id={`${id}-temp`} inputMode="decimal" value={amount} onChange={(e) => setAmount(e.target.value)} className={`${field} w-28 text-lg font-semibold`} />
-        </div>
-        <div>
-          <label htmlFor={`${id}-unit`} className="block text-xs font-medium text-char-300 dark:text-bone-100">
-            Unit
-          </label>
-          <select id={`${id}-unit`} value={unit} onChange={(e) => setUnit(e.target.value as Unit)} className={`${field} py-2.5 text-sm`}>
-            <option value="F">°F (Fahrenheit)</option>
-            <option value="C">°C (Celsius)</option>
-            <option value="gas">Gas mark</option>
-          </select>
-        </div>
-        <label className="mb-2 flex items-center gap-2 text-sm text-char-300 dark:text-bone-100">
-          <input type="checkbox" checked={fan} onChange={(e) => setFan(e.target.checked)} className="h-4 w-4 accent-ember-500" />
-          Fan / convection oven
-        </label>
-        <div className="flex flex-wrap gap-1.5">
-          {['325', '350', '375', '400', '425'].map((t) => (
-            <button
-              key={t}
-              type="button"
-              onClick={() => {
-                setAmount(t);
-                setUnit('F');
-              }}
-              className="rounded-full border border-bone-200 px-3 py-1 text-xs font-medium text-char-300 hover:border-ember-500 hover:text-ember-500 dark:border-char-400 dark:text-bone-100"
-            >
-              {t}°F
-            </button>
-          ))}
         </div>
       </div>
-      <ul className="mt-5 grid gap-2 sm:grid-cols-3" aria-live="polite">
-        {results.map((r) => (
-          <li key={r.label} className="rounded-xl bg-white px-4 py-3 dark:bg-char-600">
-            <span className="block font-display text-2xl text-char-500 dark:text-bone-50">{r.value}</span>
-            <span className="text-xs text-char-200">{r.label}</span>
-          </li>
-        ))}
-      </ul>
-      <p className="mt-4 text-[11px] leading-relaxed text-char-200">
-        Exact conversions, rounded to the nearest degree. Recipes often round them (350°F is printed as 175°C or 180°C). For a fan
-        oven, lower the temperature by about 20°C (25°F) or follow your oven&apos;s manual.
-      </p>
-    </div>
+      <Presets
+        items={['325', '350', '375', '400', '425'].map((t) => ({ label: `${t}°F`, key: t }))}
+        onPick={(t) => {
+          setAmount(t);
+          setUnit('F');
+        }}
+      />
+      <Results items={results} />
+    </ToolShell>
   );
 }

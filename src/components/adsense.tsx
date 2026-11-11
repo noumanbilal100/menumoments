@@ -74,6 +74,22 @@ export function AdSenseLoader({ adFreePaths }: { adFreePaths: string[] }) {
       if (document.getElementById(SCRIPT_ID)) window.location.reload();
       return;
     }
+    // A tool page puts the tool first: ads wait until the reader has scrolled past it.
+    const gate = document.querySelector('[data-ads-after]');
+    if (gate && !document.getElementById(SCRIPT_ID) && 'IntersectionObserver' in window) {
+      let stop = () => {};
+      const watch = new IntersectionObserver((entries) => {
+        if (entries.some((e) => !e.isIntersecting && e.boundingClientRect.bottom < 0)) {
+          watch.disconnect();
+          stop = whenSettled(loadAdSense);
+        }
+      });
+      watch.observe(gate);
+      return () => {
+        watch.disconnect();
+        stop();
+      };
+    }
     return whenSettled(loadAdSense);
   }, [pathname, adFreePaths]);
 

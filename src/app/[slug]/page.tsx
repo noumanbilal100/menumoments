@@ -23,6 +23,8 @@ import { PageShell } from '@/components/page-shell';
 import { HeroFigure } from '@/components/hero-figure';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { ArticleBody } from '@/components/article-body';
+import { ToolArticle } from '@/components/tool-article';
+import { toolForPost } from '@/data/tools';
 import { guideCluster, insertMidArticle, readNextFor, readNextHtml } from '@/lib/read-next';
 import { postTrail } from '@/lib/silo';
 import { cleanPostHtml } from '@/lib/clean-html';
@@ -192,6 +194,10 @@ export default async function PostPage({
   const trending = await listRecentPosts(6);
   const relatedFiltered = relatedPosts(post);
   const trendingFiltered = trending.filter((t) => t.slug !== post.slug).slice(0, 5);
+
+  // Kitchen tools: the tool first, above the fold and above any ad.
+  const tool = toolForPost(post.slug);
+  if (tool) return <ToolArticle post={post} tool={tool} />;
 
   // Buying guides / reviews get a dedicated Wirecutter-style layout.
   if (isAffiliateArticle(post)) {
