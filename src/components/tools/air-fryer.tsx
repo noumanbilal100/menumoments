@@ -2,6 +2,7 @@
 
 import { useId, useState } from 'react';
 import {
+  AIR_FRYER_CHART,
   AIR_FRYER_MAX_F,
   FOODS,
   LOAD,
@@ -70,6 +71,17 @@ export function convert(o: {
   return { tempF, minutes, checkFrom: Math.max(1, Math.round(minutes * 0.85)), halfway: Math.max(1, Math.round(minutes / 2)), capped: false, formula };
 }
 
+function PrinterIcon({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden>
+      <path d="M6 9V3h12v6" />
+      <rect x="3" y="9" width="18" height="8" rx="2" />
+      <path d="M6 14h12v7H6z" />
+      <path d="M17.5 12h.01" />
+    </svg>
+  );
+}
+
 function printChart() {
   document.body.classList.add('mm-print-chart');
   const done = () => {
@@ -132,10 +144,7 @@ export function AirFryerConverter() {
       footnote={
         <>
           Results are estimates for a typical basket air fryer, not guarantees: models, food size and thickness, and how full the basket is all change
-          cooking time. Start checking early and use a thermometer for meat and fish.{' '}
-          <button type="button" onClick={printChart} className="font-semibold text-ember-600 underline underline-offset-2 hover:text-ember-700 dark:text-ember-200">
-            Print the conversion chart
-          </button>
+          cooking time. Start checking early and use a thermometer for meat and fish.
         </>
       }
     >
@@ -232,6 +241,32 @@ export function AirFryerConverter() {
           Enter a temperature between {unit === 'F' ? '200 and 550°F' : '95 and 290°C'} and a time in minutes.
         </p>
       )}
+
+      {/* The printable chart, offered as its own card so it is easy to spot. */}
+      <div className="flex flex-col gap-4 rounded-2xl border-2 border-dashed border-saffron-300 bg-saffron-50 p-4 sm:flex-row sm:items-center sm:p-5 dark:border-char-400 dark:bg-char-500">
+        <span aria-hidden className="hidden h-12 w-12 shrink-0 place-items-center rounded-xl bg-saffron-300 text-char-500 sm:grid">
+          <PrinterIcon className="h-6 w-6" />
+        </span>
+        <div className="min-w-0 flex-1">
+          <p className="font-display text-lg leading-tight text-char-500 dark:text-bone-50">Free printable air fryer conversion chart</p>
+          <p className="mt-1 text-sm text-char-300 dark:text-bone-100">
+            {AIR_FRYER_CHART.length} common foods, oven vs air fryer times and temperatures, on one page for the fridge door.
+          </p>
+        </div>
+        <div className="flex shrink-0 flex-col gap-2 sm:items-end">
+          <button
+            type="button"
+            onClick={printChart}
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-char-500 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-ember-500 hover:shadow-embered focus:outline-none focus-visible:ring-4 focus-visible:ring-ember-500/30"
+          >
+            <PrinterIcon className="h-4 w-4" />
+            Print the chart
+          </button>
+          <a href="#air-fryer-chart" className="text-center text-xs font-semibold text-ember-600 underline-offset-2 hover:underline sm:text-right dark:text-ember-200">
+            View the chart below ↓
+          </a>
+        </div>
+      </div>
     </ToolShell>
   );
 }
