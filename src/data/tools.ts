@@ -8,7 +8,7 @@
  * tools are linked from the articles their readers come from. The first
  * matching tool wins, so the more specific ones come first.
  */
-export type ToolIconName = 'butter' | 'cup' | 'thermometer' | 'scale' | 'oven';
+export type ToolIconName = 'butter' | 'cup' | 'thermometer' | 'scale' | 'oven' | 'airfryer';
 
 export interface KitchenTool {
   /** The post that carries the tool. */
@@ -24,6 +24,15 @@ export interface KitchenTool {
 }
 
 export const KITCHEN_TOOLS: KitchenTool[] = [
+  {
+    slug: 'air-fryer-conversion-calculator',
+    name: 'Air fryer conversion calculator',
+    tool: 'air-fryer-converter',
+    icon: 'airfryer',
+    blurb: 'Oven recipes to air fryer time and temperature',
+    // First: an air fryer post is better served by this than by the meat or oven tools.
+    triggers: /\b(air[- ]?fry(er|ers|ing)?|air[- ]?fried)\b/i,
+  },
   {
     slug: 'butter-conversion-how-many-sticks-in-1-cup-measure-butter-in-grams',
     name: 'Butter converter',

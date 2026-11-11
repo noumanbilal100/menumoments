@@ -41,6 +41,14 @@ export function ToolIcon({ name, className = 'h-6 w-6' }: { name: ToolIconName; 
           <path d="M18 4v16M15.5 6.5 18 4l2.5 2.5M15.5 17.5 18 20l2.5-2.5" />
         </g>
       )}
+      {name === 'airfryer' && (
+        <g {...common}>
+          <path d="M6 4h12a2 2 0 0 1 2 2v12.5a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 18.5V6a2 2 0 0 1 2-2z" />
+          <path d="M4 12.5h16" />
+          <path d="M10 16h4" />
+          <circle cx="12" cy="8.2" r="1.6" />
+        </g>
+      )}
       {name === 'oven' && (
         <g {...common}>
           <rect x="3.5" y="3.5" width="17" height="17" rx="2.5" />

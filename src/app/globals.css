@@ -1084,3 +1084,23 @@ body {
 .prose-article .mm-scroll table {
   min-width: 520px;
 }
+
+/* "Print the conversion chart" (air fryer tool): only the chart is printed. */
+@media print {
+  body.mm-print-chart * {
+    visibility: hidden;
+  }
+  body.mm-print-chart #air-fryer-chart,
+  body.mm-print-chart #air-fryer-chart * {
+    visibility: visible;
+  }
+  body.mm-print-chart #air-fryer-chart {
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+  }
+  body.mm-print-chart #air-fryer-chart table {
+    min-width: 0;
+    font-size: 11pt;
+  }
+}

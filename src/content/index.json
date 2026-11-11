@@ -1,5 +1,24 @@
 [
   {
+    "slug": "air-fryer-conversion-calculator",
+    "title": "Air Fryer Conversion Calculator: Oven to Air Fryer Time and Temperature",
+    "excerpt": "Convert any oven recipe to the air fryer, or back: about 25°F lower and 20% less time, adjusted for the food, its thickness and how full the basket is.",
+    "publishedAt": "2026-11-11T04:33:22",
+    "readingMinutes": 5,
+    "heroImage": {
+      "src": "/img/uploads/2026/11/air-fryer-conversion-calculator-oven-to-air-fryer.webp",
+      "alt": "Air fryer conversion calculator: oven 400°F becomes air fryer 375°F, about 20% less time, shake or flip halfway"
+    },
+    "wpCategorySlugs": [
+      "kitchen-calculators",
+      "kitchen-appliances"
+    ],
+    "author": {
+      "name": "Menu Moments",
+      "avatar": null
+    }
+  },
+  {
     "slug": "cups-to-grams-converter",
     "title": "Cups to Grams Converter: Flour, Sugar, Butter and More",
     "excerpt": "Convert cups to grams for flour, sugar, butter, milk, oats and more: 1 cup of all-purpose flour is 120 g, 1 cup of sugar 200 g. Free converter and chart.",

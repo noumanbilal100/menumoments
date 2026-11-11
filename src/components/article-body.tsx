@@ -1,4 +1,5 @@
 import type { ComponentType } from 'react';
+import { AirFryerConverter } from './tools/air-fryer';
 import { ButterConverter } from './tools/butter-converter';
 import { CupsGramsConverter } from './tools/cups-grams-converter';
 import { MeatTemperature } from './tools/meat-temperature';
@@ -12,6 +13,7 @@ import { RecipeScaler } from './tools/recipe-scaler';
  * read the article as before.
  */
 export const TOOLS: Record<string, ComponentType> = {
+  'air-fryer-converter': AirFryerConverter,
   'butter-converter': ButterConverter,
   'cups-grams-converter': CupsGramsConverter,
   'meat-temperature': MeatTemperature,
