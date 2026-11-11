@@ -111,9 +111,12 @@ export default async function HomePage() {
             {feature && (
               <Link
                 href={`/${feature.slug}`}
-                className="zoom-parent group relative block overflow-hidden rounded-3xl bg-char-500 text-bone-50 shadow-card"
+                className="zoom-parent group relative flex flex-col overflow-hidden rounded-3xl bg-char-500 text-bone-50 shadow-card"
               >
-                <div className="relative aspect-[16/10] w-full lg:aspect-[16/11]">
+                {/* 16:9, the shape of the featured images, so none is cropped.
+                    The text sits under the picture on every screen: laid over
+                    it, it hid the picture and on phones ran past the card. */}
+                <div className="relative aspect-[16/9] w-full shrink-0">
                   {feature.heroImage ? (
                     <Image
                       src={feature.heroImage.src}
@@ -126,19 +129,16 @@ export default async function HomePage() {
                   ) : (
                     <div className="h-full w-full bg-gradient-to-br from-ember-300 to-ember-600" />
                   )}
-                  {/* On phones the text sits under the picture: over it, a long
-                      title and excerpt ran past the top of the card. */}
-                  <div className="absolute inset-0 hidden bg-gradient-to-t from-char-600 via-char-600/40 to-transparent md:block" />
                   <div className="absolute right-4 top-4 flex items-center gap-1.5 rounded-full bg-ember-500 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-white md:right-6 md:top-6">
                     <Sparkle size={12} /> This week's cover
                   </div>
                 </div>
-                <div className="relative p-6 md:absolute md:inset-x-0 md:bottom-0 md:p-8 lg:p-10">
-                  <h2 className="max-w-2xl font-display text-2xl leading-[1.1] md:text-4xl md:leading-[1.05] lg:text-5xl">
+                <div className="flex flex-1 flex-col justify-center p-6 md:p-8 lg:p-10">
+                  <h2 className="max-w-2xl font-display text-2xl leading-[1.1] group-hover:text-saffron-200 md:text-4xl md:leading-[1.05]">
                     {feature.title}
                   </h2>
                   {feature.excerpt && (
-                    <p className="mt-3 line-clamp-3 max-w-xl text-sm text-bone-100/80 md:mt-4 md:line-clamp-none md:text-base">
+                    <p className="mt-3 line-clamp-3 max-w-xl text-sm text-bone-100/80 md:mt-4 md:text-base">
                       {feature.excerpt}
                     </p>
                   )}
