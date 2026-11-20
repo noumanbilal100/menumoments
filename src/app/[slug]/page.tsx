@@ -31,6 +31,7 @@ import { cleanPostHtml } from '@/lib/clean-html';
 import { getSitePage, listSitePages } from '@/lib/site-pages';
 import { getFreshPost, getFreshSitePage } from '@/lib/fresh-content';
 import { blockForPost, splitBeforeHeading } from '@/data/post-products';
+import { splitAfterParagraph } from '@/lib/ad-placement';
 import { isAdFreePost, shouldShowAds } from '@/lib/ads';
 import { absoluteUrl, imageFor, postBreadcrumbJsonLd, postJsonLd, sitePageJsonLd } from '@/lib/structured-data';
 import { JsonLd } from '@/components/json-ld';
@@ -224,6 +225,8 @@ export default async function PostPage({
   const bodyHtml = insertMidArticle(post.html, readNextHtml(readNext));
   const productAnchor = blockForPost(post.slug)?.beforeHeading;
   const productSplit = productAnchor ? splitBeforeHeading(bodyHtml, productAnchor) : null;
+  const firstPart = productSplit ? productSplit[0] : bodyHtml;
+  const midSplit = adsOn && ADSENSE_SLOTS.inArticleMid ? splitAfterParagraph(firstPart, 2) : null;
 
   return (
     <article>
@@ -351,26 +354,22 @@ export default async function PostPage({
               <AdSlot slot={ADSENSE_SLOTS.inArticleTop} format="auto" className="mt-0 mb-10" />
             )}
 
-            {productSplit ? (
+            {/* "After paragraph 2" ad unit, between the opening paragraphs and the rest. */}
+            {midSplit ? (
               <>
-                <ArticleBody html={productSplit[0]} />
-                <ProductRecommendations slug={post.slug} />
-                <ArticleBody html={productSplit[1]} className="prose-article prose-continued" />
+                <ArticleBody html={midSplit[0]} />
+                <AdSlot slot={ADSENSE_SLOTS.inArticleMid} format="auto" className="my-10" />
+                <ArticleBody html={midSplit[1]} className="prose-article prose-continued" />
               </>
             ) : (
-              <>
-                <ArticleBody html={bodyHtml} />
-                <ProductRecommendations slug={post.slug} />
-              </>
+              <ArticleBody html={firstPart} />
             )}
+            <ProductRecommendations slug={post.slug} />
+            {productSplit && <ArticleBody html={productSplit[1]} className="prose-article prose-continued" />}
 
-            {adsOn && ADSENSE_SLOTS.inArticleMid && (
-              <AdSlot
-                slot={ADSENSE_SLOTS.inArticleMid}
-                format="fluid"
-                layout="in-article"
-                className="my-10"
-              />
+            {/* No good break in the text: the unit goes after it instead. */}
+            {adsOn && ADSENSE_SLOTS.inArticleMid && !midSplit && (
+              <AdSlot slot={ADSENSE_SLOTS.inArticleMid} format="auto" className="my-10" />
             )}
 
             {post.recipe && (

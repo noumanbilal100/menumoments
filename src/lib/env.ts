@@ -25,10 +25,19 @@ export const ADSENSE_CLIENT = (process.env.NEXT_PUBLIC_ADSENSE_CLIENT ?? '').tri
 // disable and rely only on manual <AdSlot /> placements.
 export const ADSENSE_AUTO_ADS =
   (process.env.NEXT_PUBLIC_ADSENSE_AUTO_ADS ?? 'true').toLowerCase() !== 'false';
-// Individual ad-unit slot IDs (per AdSense dashboard). Leave blank to hide.
+// Individual ad-unit slot IDs (AdSense → Ads → By ad unit). Slot IDs are
+// public (they are in every page's HTML), so the site's units are the
+// defaults; a build variable can still override one, or set it to "off".
+const slot = (value: string | undefined, fallback: string) => {
+  const v = value?.trim() || fallback;
+  return v.toLowerCase() === 'off' ? '' : v;
+};
 export const ADSENSE_SLOTS = {
-  inArticleTop: (process.env.NEXT_PUBLIC_ADSENSE_SLOT_ARTICLE_TOP ?? '').trim(),
-  inArticleMid: (process.env.NEXT_PUBLIC_ADSENSE_SLOT_ARTICLE_MID ?? '').trim(),
-  inArticleBottom: (process.env.NEXT_PUBLIC_ADSENSE_SLOT_ARTICLE_BOTTOM ?? '').trim(),
-  sidebar: (process.env.NEXT_PUBLIC_ADSENSE_SLOT_SIDEBAR ?? '').trim(),
+  /** "Before Content" display unit. */
+  inArticleTop: slot(process.env.NEXT_PUBLIC_ADSENSE_SLOT_ARTICLE_TOP, '4443867103'),
+  /** "After parahgrapgh 2" display unit. */
+  inArticleMid: slot(process.env.NEXT_PUBLIC_ADSENSE_SLOT_ARTICLE_MID, '6686887067'),
+  inArticleBottom: slot(process.env.NEXT_PUBLIC_ADSENSE_SLOT_ARTICLE_BOTTOM, ''),
+  /** "Side-bar 1" display unit. */
+  sidebar: slot(process.env.NEXT_PUBLIC_ADSENSE_SLOT_SIDEBAR, '9408435085'),
 };

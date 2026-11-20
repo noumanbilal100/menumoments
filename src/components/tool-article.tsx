@@ -7,6 +7,10 @@ import { JsonLd } from './json-ld';
 import { Breadcrumbs } from './breadcrumbs';
 import { ArticleBody, TOOLS } from './article-body';
 import { ToolIcon } from './tools/ui';
+import { AdSlot } from './ad-slot';
+import { ADSENSE_SLOTS } from '@/lib/env';
+import { isAdFreePost } from '@/lib/ads';
+import { splitAfterParagraph } from '@/lib/ad-placement';
 
 /**
  * The layout for a kitchen tool's page: a short header, then the tool right
@@ -36,6 +40,9 @@ export function ToolArticle({ post, tool }: { post: Post; tool: KitchenTool }) {
   const Tool = TOOLS[tool.tool];
   const others = KITCHEN_TOOLS.filter((t) => t.slug !== post.slug);
   const updated = post.updatedAt ?? post.publishedAt;
+  const adsOn = !isAdFreePost(post);
+  const body = withoutToolBlock(post.html);
+  const midSplit = adsOn && ADSENSE_SLOTS.inArticleMid ? splitAfterParagraph(body, 2) : null;
 
   return (
     <article>
@@ -59,7 +66,18 @@ export function ToolArticle({ post, tool }: { post: Post; tool: KitchenTool }) {
       </div>
 
       <div className="mx-auto max-w-3xl px-4 pb-14 pt-4 sm:px-6">
-        <ArticleBody html={withoutToolBlock(post.html)} />
+        {/* Ads only below the tool, never above it. The AdSense loader also
+            waits until the reader has scrolled past the tool. */}
+        {adsOn && ADSENSE_SLOTS.inArticleTop && <AdSlot slot={ADSENSE_SLOTS.inArticleTop} format="auto" className="mt-6 mb-10" />}
+        {midSplit ? (
+          <>
+            <ArticleBody html={midSplit[0]} />
+            <AdSlot slot={ADSENSE_SLOTS.inArticleMid} format="auto" className="my-10" />
+            <ArticleBody html={midSplit[1]} className="prose-article prose-continued" />
+          </>
+        ) : (
+          <ArticleBody html={body} />
+        )}
         <p className="mt-10 text-xs text-char-200">
           By {post.author.name} · Updated <time dateTime={updated}>{formatDate(updated)}</time>
         </p>
