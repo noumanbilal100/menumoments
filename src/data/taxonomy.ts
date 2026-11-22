@@ -46,8 +46,7 @@ export type CategorySlug =
   // Planning & shopping
   | 'meal-planning'
   | 'grocery-guides'
-  | 'ingredient-guides'
-  | 'pet-food'
+  | 'ingredient-guides'
   // Reviews & buying guides
   | 'food-reviews'
   | 'product-reviews'
@@ -129,8 +128,7 @@ export const CATEGORIES: Category[] = [
   // Planning
   { slug: 'meal-planning', name: 'Meal planning', section: 'planning', description: 'Frameworks for a workable week of meals.' },
   { slug: 'grocery-guides', name: 'Grocery guides', section: 'planning', description: 'What to buy, where, and when.' },
-  { slug: 'ingredient-guides', name: 'Ingredient guides', section: 'planning', description: 'Deep dives on the foods themselves.' },
-  { slug: 'pet-food', name: 'Pet food', section: 'planning', description: 'What dogs, cats, chickens and other pets can safely eat.', legacySlugs: ['dog-food-guide'] },
+  { slug: 'ingredient-guides', name: 'Ingredient guides', section: 'planning', description: 'Deep dives on the foods themselves.' },
 
   // Reviews
   { slug: 'food-reviews', name: 'Food reviews', section: 'reviews', description: 'Restaurants, chains and the dishes worth ordering.', legacySlugs: ['top-restaurant-menus', 'best-happy-hours', 'daily-specials'] },

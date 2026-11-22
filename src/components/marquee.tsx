@@ -27,7 +27,8 @@ export function Marquee() {
   );
 
   return (
-    <div className="relative overflow-hidden bg-char-500 py-2 text-bone-100">
+    // Hidden on phones, where the first screen belongs to the article.
+    <div className="relative hidden overflow-hidden bg-char-500 py-2 text-bone-100 md:block">
       <div className="marquee">
         <div className="animate-marquee flex">
           {row}

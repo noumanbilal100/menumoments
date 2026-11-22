@@ -215,11 +215,21 @@ function minutesAfter(label: string, text: string): number | undefined {
 }
 
 /** Titles that promise a list of recipes, or something that is not food at all. */
-const NOT_ONE_DISH =
-  /\brecipes\b|\b(soap|lotion|balm|bug spray|repellent|wax|shampoo|deodorant|horse|(dog|cat|puppy|fish|pet) food|organizer|menu|educational|informational|inspiration|global)\b/i;
+const NOT_FOOD =
+  /\b(soap|lotion|balm|bug spray|repellent|wax|shampoo|deodorant|horse|(dog|cat|puppy|fish|pet) food|organizer|menu|educational|inspiration|global)\b/i;
+
+/**
+ * "Best Orange Chicken Recipe – Easy Chicken Recipes" is one dish: only the
+ * main part of a title (before ":", "|" or a dash) says whether the post is
+ * a roundup. The ingredient and step checks still have to pass.
+ */
+function titleIsRoundup(title: string): boolean {
+  const main = title.split(/\s[:|–—-]\s|:\s|\|/)[0];
+  return /\brecipes\b/i.test(main);
+}
 
 export function extractRecipe(html: string, title: string): ExtractedRecipe | null {
-  if (NOT_ONE_DISH.test(title)) return null;
+  if (NOT_FOOD.test(title) || titleIsRoundup(title)) return null;
   const tokens = tokenize(html);
   const ingredients = extractIngredients(tokens);
   if (!ingredients) return null;

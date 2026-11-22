@@ -21,7 +21,7 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-cream-200 bg-cream-50/85 backdrop-blur-md dark:border-ink-500 dark:bg-ink-600/85">
-      <div className="mx-auto flex max-w-wide items-center justify-between gap-4 px-6 py-4">
+      <div className="mx-auto flex max-w-wide items-center justify-between gap-4 px-6 py-2.5 md:py-4">
         <Logo />
 
         <nav aria-label="Primary" className="hidden lg:block">

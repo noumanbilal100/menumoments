@@ -15,10 +15,6 @@ export const NOINDEX_POSTS = new Set<string>([
   'how-to-make-gentle-and-natural-breast-milk-soap-at-home-step-by-step-recipe',
   'french-mulberry-bug-spray-recipe-a-natural-beautyberry-based-insect-repellent',
   'measuring-and-recipe-educational-iep-goal-strategies-examples-and-life-skills-development',
-  'aquarium-fish-food-flakes-pellets-goldfish-brine-shrimp-feed',
-  'fenugreek-horse-treat-recipe-for-healthy-and-happy-horses',
-  'rabbit-diet-hay-pellets-for-bunnies-adult-young-rabbit-food',
-  'diamond-puppy-dry-dog-food-puppy-pet-food',
 ]);
 
 export function isNoindexPost(slug: string): boolean {

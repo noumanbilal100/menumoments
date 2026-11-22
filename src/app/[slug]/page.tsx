@@ -240,7 +240,7 @@ export default async function PostPage({
         <div className="pointer-events-none absolute -right-6 top-16 hidden text-ember-200 md:block">
           <Fork size={90} className="animate-float" />
         </div>
-        <div className="mx-auto max-w-4xl px-6 pt-14 pb-10 lg:pt-20">
+        <div className="mx-auto max-w-4xl px-6 pt-8 pb-8 sm:pt-14 sm:pb-10 lg:pt-20">
           <Breadcrumbs trail={postTrail(post)} />
 
           {/* Single friendly kind chip + primary category — no more
@@ -257,7 +257,7 @@ export default async function PostPage({
             </h1>
             <Squiggle className="mt-4 text-ember-300" />
             {post.excerpt && (
-              <p className="mt-6 max-w-prose text-lg leading-relaxed text-char-200">
+              <p className="mt-4 line-clamp-3 max-w-prose text-base leading-relaxed text-char-200 sm:mt-6 sm:line-clamp-none sm:text-lg">
                 {post.excerpt}
               </p>
             )}
