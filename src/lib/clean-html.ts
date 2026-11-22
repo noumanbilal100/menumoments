@@ -82,7 +82,8 @@ export function cleanPostHtml(html: string, title?: string): string {
 
   // Placeholder inside a product link: the link names the product.
   out = out.replace(
-    /<a\b[^>]*\bhref=(["'])([^"']+)\1[^>]*>\s*<img\b[^>]*>/gi,
+    // Some product boxes put a <br /> between the link and its image.
+    /<a\b[^>]*\bhref=(["'])([^"']+)\1[^>]*>\s*(?:<br\s*\/?>\s*)*<img\b[^>]*>/gi,
     (frag, _q, href: string) => swapPlaceholder(frag, href.match(ASIN_RE)?.[1]),
   );
   // Placeholder in a comparison-table row: the row's buy link names it.
