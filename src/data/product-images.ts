@@ -58,4 +58,16 @@ export const PRODUCT_IMAGES: Record<string, string> = {
   B01LXC4JPJ: 'https://m.media-amazon.com/images/I/71BtySVK6kL._AC_SL1500_.jpg', // Cuisinart Stand Mixer, 12 Speed, 5.5 Quart Stainless Steel B
   B0G4731TLT: 'https://m.media-amazon.com/images/I/71Lpd5ceFDL._AC_SL1500_.jpg', // KUCCU Stand Mixer, 6.5 Qt 660W, 6-Speed Tilt-Head Food Dough
   B00005UP2L: 'https://m.media-amazon.com/images/I/71+lgOjOMtL._AC_SL1500_.jpg', // KitchenAid Artisan, 5-Qt Tilt Head Stand Mixer, KSM150PS, On
+  B099F4321V: 'https://m.media-amazon.com/images/I/81plxu80mWL._AC_SL1500_.jpg', // EUHOMY 128 Can Mini Fridge, Beverage Refrigerator with Glass Door
+  B0CRL251LR: 'https://m.media-amazon.com/images/I/81gWKWpz8GL._AC_SL1500_.jpg', // Icyglee 24 Inch Beverage Refrigerator, 180 Can, Glass Door
+  B0CLLF2W9Y: 'https://m.media-amazon.com/images/I/81wpJz3yTjL._AC_SL1500_.jpg', // Manastin Beverage Refrigerator Cooler, 120 Cans, Glass Door
+  B08CXPX5NQ: 'https://m.media-amazon.com/images/I/812jTwftdhL._AC_SL1500_.jpg', // Weili 20 Inch Under Counter Beverage Refrigerator, 120 Can
+  B07TTHKLDD: 'https://m.media-amazon.com/images/I/81hDz9L-1fL._AC_SL1500_.jpg', // Phiestina Beverage Refrigerator 175 Cans, 24 inch, Glass Door
+  B01N9RPCT5: 'https://m.media-amazon.com/images/I/81FY39jPUEL._AC_SL1500_.jpg', // Kalamera 24 inch Beverage Refrigerator, 154 Cans
+  B07CTBHQZK: 'https://m.media-amazon.com/images/I/61Am3i23tGL._AC_SL1500_.jpg', // nutribullet Personal Blender, 600W, 24oz Cup, NBR-0601WM
+  B0D629BV2D: 'https://m.media-amazon.com/images/I/717hzTkbV6L._AC_SL1500_.jpg', // BlendJet 2 Portable Blender, 16oz, USB-C Rechargeable
+  B012T634SM: 'https://m.media-amazon.com/images/I/61w2Tj7r0BL._AC_SL1500_.jpg', // magic bullet Personal Blender, 22 oz Cup, 250 Watt, MBR-1101
+  B07P18SB8K: 'https://m.media-amazon.com/images/I/71J+Mv115IL._AC_SL1500_.jpg', // Aucma Stand Mixer, 6.5-QT 660W 6-Speed Tilt-Head
+  B0C37J6WN6: 'https://m.media-amazon.com/images/I/71JJKUXrlML._AC_SL1500_.jpg', // ZACME 7.4QT Household Stand Mixer 800W
+  B000P9CWNY: 'https://m.media-amazon.com/images/I/714nBEMOx2L._AC_SL1500_.jpg', // KitchenAid Pro 600 Series 6-Quart Bowl-Lift Stand Mixer KP26M1X
 };
