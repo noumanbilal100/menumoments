@@ -1,5 +1,6 @@
 import { getCategory } from '@/data/taxonomy';
 import { toolForTitle } from '@/data/tools';
+import { INDEX_BOOST } from '@/data/index-boost';
 import { isAffiliateArticle } from './affiliate';
 import { allListedPosts, pairHash, titleWords, type Post } from './content';
 import { readContentFile } from './content-files';
@@ -130,7 +131,9 @@ export async function readNextFor(post: Post, exclude: Set<string>, limit = 3): 
       let shared = 0;
       for (const w of titleWords(p.title)) if (words.has(w)) shared++;
       const n = counts[p.slug] ?? 0;
-      return { p, relevant: sameCategory || shared > 0, score: (sameCategory ? 6 : 0) + shared * 3 + (n === 0 ? 5 : n === 1 ? 2 : 0) };
+      // Posts Google hasn't indexed yet come first among equally relevant ones.
+      const boost = INDEX_BOOST.has(p.slug) ? 8 : 0;
+      return { p, relevant: sameCategory || shared > 0, score: (sameCategory ? 6 : 0) + shared * 3 + (n === 0 ? 5 : n === 1 ? 2 : 0) + boost };
     })
     .filter((x) => x.relevant)
     .sort((a, b) => b.score - a.score || pairHash(post.slug, a.p.slug) - pairHash(post.slug, b.p.slug));

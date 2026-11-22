@@ -1,5 +1,6 @@
 import { CONTENT_SOURCE, REVALIDATE, WP_API } from './env';
 import { legacyCategoriesFor } from '@/data/legacy-posts';
+import { INDEX_BOOST } from '@/data/index-boost';
 import { CATEGORIES, getCategory } from '@/data/taxonomy';
 import { deriveKindAndRecipe } from './recipe-derive';
 import {
@@ -123,6 +124,8 @@ export function relatedPosts(post: Post, limit = 6): Post[] {
       if (p.categories[0] === post.categories[0]) score += 6;
       for (const c of p.categories) if (post.categories.includes(c)) score += 1;
       for (const w of titleWords(p.title)) if (words.has(w)) score += 3;
+      // Not indexed yet: a head start among posts of the same section.
+      if (sameSilo && INDEX_BOOST.has(p.slug)) score += 5;
       return { p, score, tie: pairHash(post.slug, p.slug) };
     })
     .sort((a, b) => b.score - a.score || a.tie - b.tie)

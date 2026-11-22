@@ -20,7 +20,8 @@ import {
   DrawArrow,
   QuoteMark,
 } from '@/components/doodles';
-import { listPostsInCategory, listRecentPosts, getPost, allPostSlugs } from '@/lib/content';
+import { listPostsInCategory, listRecentPosts, getPost, allPostSlugs, allListedPosts } from '@/lib/content';
+import { INDEX_BOOST } from '@/data/index-boost';
 import { CATEGORIES, SECTIONS, SectionKey } from '@/data/taxonomy';
 import { liveCategoriesInSection } from '@/lib/category-map';
 import { COLLECTIONS } from '@/data/collections';
@@ -57,6 +58,12 @@ export default async function HomePage() {
   const [feature, second, ...others] = recent;
   const trendingList = recent.slice(2, 7);
   const moreToRead = recent.slice(7, 16);
+  // Not-indexed posts, twelve at a time, moving on each day (the page re-renders hourly).
+  const onPage = new Set(recent.slice(0, 16).map((p) => p.slug));
+  const boosted = allListedPosts().filter((p) => INDEX_BOOST.has(p.slug) && !onPage.has(p.slug));
+  const day = Math.floor(Date.now() / 86_400_000);
+  const start = boosted.length ? ((day * 12) % boosted.length) : 0;
+  const freshPicks = [...boosted.slice(start), ...boosted.slice(0, start)].slice(0, 12);
 
   const sectionCovers = await Promise.all(
     (Object.keys(SECTIONS) as SectionKey[]).map(async (key) => {
@@ -436,6 +443,26 @@ export default async function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* Fresh from the kitchen: posts not indexed yet, a different dozen each day. */}
+      {freshPicks.length > 0 && (
+        <section className="border-t border-bone-200 bg-bone-100/60 dark:border-char-500 dark:bg-char-500/50">
+          <div className="mx-auto max-w-wide px-6 py-14">
+            <h2 className="font-display text-2xl text-char-500 dark:text-bone-50 md:text-3xl">Fresh from the kitchen</h2>
+            <p className="mt-2 text-sm text-char-200">A different dozen from the archive every day.</p>
+            <ul className="mt-6 grid gap-x-8 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
+              {freshPicks.map((p) => (
+                <li key={p.slug} className="flex gap-2.5 text-[15px] leading-snug">
+                  <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-ember-500" />
+                  <Link href={`/${p.slug}/`} className="text-char-400 hover:text-ember-600 dark:text-bone-50">
+                    {p.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
 
       {/* Newsletter -------------------------------------------------- */}
       <section className="relative overflow-hidden border-t border-bone-200 bg-gradient-to-br from-ember-50 via-bone-100 to-ember-100 dark:border-char-500 dark:from-char-400 dark:via-char-500 dark:to-char-500">
