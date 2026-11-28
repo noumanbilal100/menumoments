@@ -62,6 +62,11 @@ export function stripPastedMarkup(html: string): string {
       const kept = value.split(/\s+/).filter((c) => CONTENT_CLASS.test(c));
       return kept.length ? ` class=${q}${kept.join(' ')}${q}` : '';
     })
+    // ChatGPT's page markup copied with the text: each answer is an <article>
+    // inside the post, carrying data-turn, data-start and similar attributes.
+    .replace(/<\/?article\b[^>]*>/gi, '')
+    .replace(/\s(?:data-(?:turn|turn-id|turn-role|testid|scroll-anchor|start|end|message-author-role|message-id|message-model-slug|writing-block|is-last-node|is-only-node|col-size|sheets-root)|dir|tabindex)(?:=(["'])[\s\S]*?\1)?(?=[\s/>])/gi, '')
+    .replace(/<h([1-6])\b[^>]*>(?:\s|&nbsp;|<br\s*\/?>|<(?:strong|b|em|span)\b[^>]*>\s*<\/(?:strong|b|em|span)>)*<\/h\1>/gi, '')
     .replace(/<p>(?:\s|&nbsp;|<br\s*\/?>)*<\/p>/gi, '')
     .replace(/\?utm_source=(?:chatgpt\.com|openai)(["'])/gi, '$1')
     .replace(/\?utm_source=(?:chatgpt\.com|openai)&(?:amp;)?/gi, '?')
