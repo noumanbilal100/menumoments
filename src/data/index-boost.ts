@@ -145,4 +145,6 @@ export const INDEX_BOOST = new Set<string>([
   'philz-coffee-menu-full-blend-guide-food-items-pricing-delivery-in-chicago',
   'how-to-make-a-bloody-molly-an-irish-twist-on-the-classic-bloody-mary-cocktail-recipe',
   'discover-the-best-deals-on-twin-peaks-menu-ultimate-guide-to-dishes-drinks-and-prices',
+  'is-a-coffee-maker-worth-it',
+  'microwave-wattage-explained',
 ]);

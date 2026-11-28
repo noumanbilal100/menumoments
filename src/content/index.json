@@ -1,5 +1,42 @@
 [
   {
+    "slug": "microwave-wattage-explained",
+    "title": "Microwave Wattage Explained: 700 vs 900 vs 1,000 Watts (Cooking Time Chart)",
+    "excerpt": "What microwave wattage means, how to find yours, and how to adjust package cooking times for a 700, 800, 900, 1,000 or 1,200-watt microwave, with a ready-made chart.",
+    "publishedAt": "2026-11-28T11:52:44",
+    "readingMinutes": 4,
+    "heroImage": {
+      "src": "/img/uploads/2026/11/microwave-wattage-explained-cooking-time-chart.webp",
+      "alt": "Microwave wattage explained: 700, 900 and 1,000-watt microwaves with a cooking time conversion chart"
+    },
+    "wpCategorySlugs": [
+      "kitchen-appliances",
+      "cooking-tips"
+    ],
+    "author": {
+      "name": "Menu Moments",
+      "avatar": null
+    }
+  },
+  {
+    "slug": "is-a-coffee-maker-worth-it",
+    "title": "Is a Coffee Maker Worth It? Cost per Cup, Home vs Coffee Shop",
+    "excerpt": "For a daily coffee drinker, almost always: home-brewed coffee costs well under a dollar a cup, so even a good machine pays for itself in weeks. Here is the math, and which type to buy.",
+    "publishedAt": "2026-11-28T11:52:44",
+    "readingMinutes": 5,
+    "heroImage": {
+      "src": "/img/uploads/2026/11/is-a-coffee-maker-worth-it-cost-per-cup.webp",
+      "alt": "Is a coffee maker worth it: cost per cup at home vs the coffee shop, with Ninja, Moccamaster and Hamilton Beach coffee makers"
+    },
+    "wpCategorySlugs": [
+      "kitchen-appliances"
+    ],
+    "author": {
+      "name": "Menu Moments",
+      "avatar": null
+    }
+  },
+  {
     "slug": "air-fryer-conversion-calculator",
     "title": "Oven to Air Fryer Conversion Calculator: Convert Recipe Times and Temperatures",
     "excerpt": "Convert any oven recipe to the air fryer, or back: about 25°F lower and 20% less cook time, adjusted for the food, its thickness and how full the basket is.",

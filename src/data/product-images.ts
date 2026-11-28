@@ -70,4 +70,5 @@ export const PRODUCT_IMAGES: Record<string, string> = {
   B07P18SB8K: 'https://m.media-amazon.com/images/I/71J+Mv115IL._AC_SL1500_.jpg', // Aucma Stand Mixer, 6.5-QT 660W 6-Speed Tilt-Head
   B0C37J6WN6: 'https://m.media-amazon.com/images/I/71JJKUXrlML._AC_SL1500_.jpg', // ZACME 7.4QT Household Stand Mixer 800W
   B000P9CWNY: 'https://m.media-amazon.com/images/I/714nBEMOx2L._AC_SL1500_.jpg', // KitchenAid Pro 600 Series 6-Quart Bowl-Lift Stand Mixer KP26M1X
+  B07S98411N: '/img/wp/60802a3e4b-81-hcygdo1l-ac-sx679.jpg', // Ninja CE251 12-Cup Programmable Coffee Brewer (local copy)
 };
